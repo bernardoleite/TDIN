@@ -16,3 +16,12 @@ C:\Users\Bernardo\Desktop\TDIN\Restaurant\Printer\obj\Debug\Printer.csproj.Gener
 C:\Users\Bernardo\Desktop\TDIN\Restaurant\Printer\obj\Debug\Printer.csproj.CoreCompileInputs.cache
 C:\Users\Bernardo\Desktop\TDIN\Restaurant\Printer\obj\Debug\Printer.exe
 C:\Users\Bernardo\Desktop\TDIN\Restaurant\Printer\obj\Debug\Printer.pdb
+C:\Users\Bernardo\source\repos\TDIN\Restaurant\Printer\bin\Debug\Printer.exe.config
+C:\Users\Bernardo\source\repos\TDIN\Restaurant\Printer\bin\Debug\Printer.exe
+C:\Users\Bernardo\source\repos\TDIN\Restaurant\Printer\bin\Debug\Printer.pdb
+C:\Users\Bernardo\source\repos\TDIN\Restaurant\Printer\obj\Debug\Printer.csprojAssemblyReference.cache
+C:\Users\Bernardo\source\repos\TDIN\Restaurant\Printer\obj\Debug\Printer.Properties.Resources.resources
+C:\Users\Bernardo\source\repos\TDIN\Restaurant\Printer\obj\Debug\Printer.csproj.GenerateResource.cache
+C:\Users\Bernardo\source\repos\TDIN\Restaurant\Printer\obj\Debug\Printer.csproj.CoreCompileInputs.cache
+C:\Users\Bernardo\source\repos\TDIN\Restaurant\Printer\obj\Debug\Printer.exe
+C:\Users\Bernardo\source\repos\TDIN\Restaurant\Printer\obj\Debug\Printer.pdb

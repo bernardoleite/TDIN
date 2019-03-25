@@ -16,3 +16,12 @@ C:\Users\Bernardo\Desktop\TDIN\Restaurant\KitchenBar\obj\Debug\KitchenBar.csproj
 C:\Users\Bernardo\Desktop\TDIN\Restaurant\KitchenBar\obj\Debug\KitchenBar.csproj.CoreCompileInputs.cache
 C:\Users\Bernardo\Desktop\TDIN\Restaurant\KitchenBar\obj\Debug\KitchenBar.exe
 C:\Users\Bernardo\Desktop\TDIN\Restaurant\KitchenBar\obj\Debug\KitchenBar.pdb
+C:\Users\Bernardo\source\repos\TDIN\Restaurant\KitchenBar\bin\Debug\KitchenBar.exe.config
+C:\Users\Bernardo\source\repos\TDIN\Restaurant\KitchenBar\bin\Debug\KitchenBar.exe
+C:\Users\Bernardo\source\repos\TDIN\Restaurant\KitchenBar\bin\Debug\KitchenBar.pdb
+C:\Users\Bernardo\source\repos\TDIN\Restaurant\KitchenBar\obj\Debug\KitchenBar.csprojAssemblyReference.cache
+C:\Users\Bernardo\source\repos\TDIN\Restaurant\KitchenBar\obj\Debug\KitchenBar.Properties.Resources.resources
+C:\Users\Bernardo\source\repos\TDIN\Restaurant\KitchenBar\obj\Debug\KitchenBar.csproj.GenerateResource.cache
+C:\Users\Bernardo\source\repos\TDIN\Restaurant\KitchenBar\obj\Debug\KitchenBar.csproj.CoreCompileInputs.cache
+C:\Users\Bernardo\source\repos\TDIN\Restaurant\KitchenBar\obj\Debug\KitchenBar.exe
+C:\Users\Bernardo\source\repos\TDIN\Restaurant\KitchenBar\obj\Debug\KitchenBar.pdb
