@@ -16,3 +16,6 @@ C:\Users\Bernardo\source\repos\TDIN\Restaurant\ListSingleton\obj\Debug\ListSingl
 C:\Users\Bernardo\source\repos\TDIN\Restaurant\ListSingleton\obj\Debug\ListSingleton.csproj.CoreCompileInputs.cache
 C:\Users\Bernardo\source\repos\TDIN\Restaurant\ListSingleton\obj\Debug\ListSingleton.dll
 C:\Users\Bernardo\source\repos\TDIN\Restaurant\ListSingleton\obj\Debug\ListSingleton.pdb
+C:\Users\Bernardo\Source\Repos\TDIN\Restaurant\ListSingleton\bin\Debug\Common.dll
+C:\Users\Bernardo\Source\Repos\TDIN\Restaurant\ListSingleton\bin\Debug\Common.pdb
+C:\Users\Bernardo\Source\Repos\TDIN\Restaurant\ListSingleton\obj\Debug\ListSingleton.csproj.CopyComplete

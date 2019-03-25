@@ -19,7 +19,6 @@ C:\Users\Bernardo\Desktop\TDIN\Restaurant\Terminal\obj\Debug\Terminal.pdb
 C:\Users\Bernardo\source\repos\TDIN\Restaurant\Terminal\bin\Debug\Terminal.exe.config
 C:\Users\Bernardo\source\repos\TDIN\Restaurant\Terminal\bin\Debug\Terminal.exe
 C:\Users\Bernardo\source\repos\TDIN\Restaurant\Terminal\bin\Debug\Terminal.pdb
-C:\Users\Bernardo\source\repos\TDIN\Restaurant\Terminal\obj\Debug\Terminal.csprojAssemblyReference.cache
 C:\Users\Bernardo\source\repos\TDIN\Restaurant\Terminal\obj\Debug\Terminal.Properties.Resources.resources
 C:\Users\Bernardo\source\repos\TDIN\Restaurant\Terminal\obj\Debug\Terminal.csproj.GenerateResource.cache
 C:\Users\Bernardo\source\repos\TDIN\Restaurant\Terminal\obj\Debug\Terminal.csproj.CoreCompileInputs.cache
