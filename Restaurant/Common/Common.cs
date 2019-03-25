@@ -4,10 +4,4 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common
-{
-    public class Class1
-    {
-        int i = 0;
-    }
-}
+public enum Operation { Added_Order, Changed_Order_State, Changed_Table_State };
