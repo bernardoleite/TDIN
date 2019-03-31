@@ -11,10 +11,12 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
     ArrayList orders;
     public event AlterDelegate alterEvent;
     int type = 1;
-
     public ListSingleton()
     {
-    
+        Console.WriteLine("Constructor called.");
+        orders = new ArrayList();
+        Order order = new Order(1, 10, new Product(100, "cocacola", 5), 2);
+        orders.Add(order);
     }
 
     public override object InitializeLifetimeService()

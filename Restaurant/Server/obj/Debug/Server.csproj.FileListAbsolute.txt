@@ -22,3 +22,5 @@ C:\Users\Bernardo\source\repos\TDIN\Restaurant\Server\obj\Debug\Server.pdb
 C:\Users\Bernardo\Source\Repos\TDIN\Restaurant\Server\bin\Debug\Common.dll
 C:\Users\Bernardo\Source\Repos\TDIN\Restaurant\Server\bin\Debug\Common.pdb
 C:\Users\Bernardo\Source\Repos\TDIN\Restaurant\Server\obj\Debug\Server.csproj.CopyComplete
+C:\Users\Bernardo\Source\Repos\TDIN\Restaurant\Server\bin\Debug\ListSingleton.dll
+C:\Users\Bernardo\Source\Repos\TDIN\Restaurant\Server\bin\Debug\ListSingleton.pdb

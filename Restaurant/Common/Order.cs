@@ -10,19 +10,19 @@ namespace Common
     public class Order
     {
         public int type { get; set; }
-        public int tableId { get; set; }
-        public Product product { get; set; }
-        public int quantity { get; set; }
-        public int totalPrice { get; set; }
+        public int TableId { get; set; }
+        public Product Product { get; set; }
+        public int Quantity { get; set; }
+        public int TotalPrice { get; set; }
         public enum State { Not_Processed, Processing, Finished, Delivered, Closed }
         public State StateProperty { get; set; }
 
         public Order(int type, int tableId, Product product, int qty)
         {
             Type = type;
-            this.tableId = tableId;
-            this.product = product;
-            this.quantity = qty;
+            this.TableId = tableId;
+            this.Product = product;
+            this.Quantity = qty;
             
         }
 
@@ -30,14 +30,14 @@ namespace Common
         {
             get
             {
-                return type;
+                return Type;
             }
             set
             {
                 if (value < 0)
-                    type = 999;
+                    Type = 999;
                 else
-                    type = value;
+                    Type = value;
             }
         }
 

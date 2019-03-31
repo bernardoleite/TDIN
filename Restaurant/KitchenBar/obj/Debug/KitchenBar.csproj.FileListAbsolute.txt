@@ -24,3 +24,4 @@ C:\Users\Bernardo\source\repos\TDIN\Restaurant\KitchenBar\obj\Debug\KitchenBar.c
 C:\Users\Bernardo\source\repos\TDIN\Restaurant\KitchenBar\obj\Debug\KitchenBar.csproj.CoreCompileInputs.cache
 C:\Users\Bernardo\source\repos\TDIN\Restaurant\KitchenBar\obj\Debug\KitchenBar.exe
 C:\Users\Bernardo\source\repos\TDIN\Restaurant\KitchenBar\obj\Debug\KitchenBar.pdb
+C:\Users\Bernardo\Source\Repos\TDIN\Restaurant\KitchenBar\obj\Debug\KitchenBar.csprojAssemblyReference.cache

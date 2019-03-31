@@ -24,13 +24,15 @@ namespace DinningRoom
 
         public ClientWindow()
         {
-            RemotingConfiguration.Configure("Client.exe.config", false);
+            RemotingConfiguration.Configure("DinningRoom.exe.config", false);
             InitializeComponent();
             listServer = (IListSingleton)RemoteNew.New(typeof(IListSingleton));
+            orders = new ArrayList();
             orders = listServer.getOrders();
+            Console.WriteLine("Orders: " + orders[0]);
             evRepeater = new AlterEventRepeater();
             //evRepeater.alterEvent += new AlterDelegate(DoAlterations);
-            listServer.alterEvent += new AlterDelegate(evRepeater.Repeater);
+            //listServer.alterEvent += new AlterDelegate(evRepeater.Repeater);
         }
 
         /* The client is also a remote object. The Server calls remotely the AlterEvent handler  *
@@ -53,7 +55,7 @@ namespace DinningRoom
             {
                 case Operation.New:
                     lvAdd = new LVAddDelegate(ordersListView.Items.Add);
-                    ListViewItem lvOrder = new ListViewItem(new string[] { order.Type.ToString(), order.tableId.ToString() });
+                    ListViewItem lvOrder = new ListViewItem(new string[] { order.Type.ToString(), order.TableId.ToString() });
                     BeginInvoke(lvAdd, new object[] { lvOrder });
                     break;
                 case Operation.Change:
@@ -69,7 +71,7 @@ namespace DinningRoom
             foreach (ListViewItem lvI in ordersListView.Items)
                 if (Convert.ToInt32(lvI.SubItems[0].Text) == it.Type)
                 {
-                    lvI.SubItems[2].Text = it.tableId.ToString();
+                    lvI.SubItems[2].Text = it.TableId.ToString();
                     break;
                 }
         }

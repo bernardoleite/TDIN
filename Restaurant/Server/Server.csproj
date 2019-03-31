@@ -54,6 +54,10 @@
       <Project>{1b8413e4-63b9-452b-89ca-6a535db75f94}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ListSingleton\ListSingleton.csproj">
+      <Project>{0ab0ff11-47b7-4ae1-adf1-d3133bd13275}</Project>
+      <Name>ListSingleton</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
