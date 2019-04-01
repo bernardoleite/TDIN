@@ -18,7 +18,7 @@ namespace DinningRoom
     {
         IListSingleton listServer;
         AlterEventRepeater evRepeater;
-        ArrayList orders;
+        List <Order> orders;
         delegate ListViewItem LVAddDelegate(ListViewItem lvOrder);
         delegate void ChCommDelegate(Order order);
 
@@ -27,9 +27,9 @@ namespace DinningRoom
             RemotingConfiguration.Configure("DinningRoom.exe.config", false);
             InitializeComponent();
             listServer = (IListSingleton)RemoteNew.New(typeof(IListSingleton));
-            orders = new ArrayList();
+            orders = new List<Order>();
             orders = listServer.getOrders();
-            Console.WriteLine("Orders: " + orders[0]);
+            Console.WriteLine("Orders: " + "\ntype - " + orders[0].type.ToString() + " TableId - " + orders[0].TableId.ToString()  + "  Quantity - " + orders[0].Quantity.ToString() + " Total Price - " + orders[0].TotalPrice.ToString() + " State - " + orders[0].StateProperty);
             evRepeater = new AlterEventRepeater();
             //evRepeater.alterEvent += new AlterDelegate(DoAlterations);
             //listServer.alterEvent += new AlterDelegate(evRepeater.Repeater);

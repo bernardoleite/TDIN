@@ -15,7 +15,7 @@ public interface IListSingleton
 {
     event AlterDelegate alterEvent;
 
-    ArrayList getOrders();
+    List<Order> getOrders();
     int GetNewType();
     void addOrder(Order order);
     void changeStatus(int type, Order.State newStatus);

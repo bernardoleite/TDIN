@@ -30,14 +30,14 @@ namespace Common
         {
             get
             {
-                return Type;
+                return type;
             }
             set
             {
                 if (value < 0)
-                    Type = 999;
+                    type = 999;
                 else
-                    Type = value;
+                    type = value;
             }
         }
 

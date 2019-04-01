@@ -8,13 +8,13 @@ using System.Threading;
 using System.Threading.Tasks;
 
 public class ListSingleton : MarshalByRefObject, IListSingleton {
-    ArrayList orders;
+    List <Order> orders;
     public event AlterDelegate alterEvent;
     int type = 1;
     public ListSingleton()
     {
         Console.WriteLine("Constructor called.");
-        orders = new ArrayList();
+        orders = new List<Order>();
         Order order = new Order(1, 10, new Product(100, "cocacola", 5), 2);
         orders.Add(order);
     }
@@ -24,7 +24,7 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
         return null;
     }
 
-    public ArrayList getOrders()
+    public List<Order> getOrders()
     {
         Console.WriteLine("getOrders() called.");
         return orders;
