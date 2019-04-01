@@ -9,8 +9,14 @@ namespace Common
     [Serializable]
     public class Table
     {
-
         public int Id;
         public enum State { Waiting, Done, Closed }
+        public State StateProperty { get; set; }
+
+        public Table(int id)
+        {
+            this.Id = id;
+            this.StateProperty = State.Closed;
+        }
     }
 }

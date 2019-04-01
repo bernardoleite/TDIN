@@ -19,6 +19,8 @@ namespace DinningRoom
         IListSingleton listServer;
         AlterEventRepeater evRepeater;
         List <Order> orders;
+        List <Table> tables;
+        List <Product> products;
         delegate ListViewItem LVAddDelegate(ListViewItem lvOrder);
         delegate void ChCommDelegate(Order order);
 
@@ -27,9 +29,22 @@ namespace DinningRoom
             RemotingConfiguration.Configure("DinningRoom.exe.config", false);
             InitializeComponent();
             listServer = (IListSingleton)RemoteNew.New(typeof(IListSingleton));
-            orders = new List<Order>();
+
             orders = listServer.getOrders();
             Console.WriteLine("Orders: " + "\ntype - " + orders[0].type.ToString() + " TableId - " + orders[0].TableId.ToString()  + "  Quantity - " + orders[0].Quantity.ToString() + " Total Price - " + orders[0].TotalPrice.ToString() + " State - " + orders[0].StateProperty);
+
+            /*tables = listServer.getTables();
+            foreach (var table in tables)
+            {
+                this.TablesComboBox.Items.Add(table.Id);
+            }*/
+
+            products = listServer.getProducts();
+            foreach (var product in products)
+            {
+                this.productsComboBox.Items.Add(product.Name);
+            }
+
             evRepeater = new AlterEventRepeater();
             //evRepeater.alterEvent += new AlterDelegate(DoAlterations);
             //listServer.alterEvent += new AlterDelegate(evRepeater.Repeater);
@@ -53,27 +68,67 @@ namespace DinningRoom
 
             switch (op)
             {
-                case Operation.New:
-                    lvAdd = new LVAddDelegate(ordersListView.Items.Add);
+                /*case Operation.New:
+                    //lvAdd = new LVAddDelegate(ordersListView.Items.Add);
                     ListViewItem lvOrder = new ListViewItem(new string[] { order.Type.ToString(), order.TableId.ToString() });
                     BeginInvoke(lvAdd, new object[] { lvOrder });
                     break;
                 case Operation.Change:
                     chComm = new ChCommDelegate(ChangeAItem);
                     BeginInvoke(chComm, new object[] { order });
-                    break;
+                    break;*/
             }
         }
 
 
         private void ChangeAItem(Order it)
         {
-            foreach (ListViewItem lvI in ordersListView.Items)
+            /*foreach (ListViewItem lvI in ordersListView.Items)
                 if (Convert.ToInt32(lvI.SubItems[0].Text) == it.Type)
                 {
                     lvI.SubItems[2].Text = it.TableId.ToString();
                     break;
-                }
+                }*/
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ClientWindow_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
 
         /* Client interface event handlers */

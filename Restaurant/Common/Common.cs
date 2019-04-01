@@ -15,6 +15,8 @@ public interface IListSingleton
 {
     event AlterDelegate alterEvent;
 
+    List<Table> getTables();
+    List<Product> getProducts();
     List<Order> getOrders();
     int GetNewType();
     void addOrder(Order order);

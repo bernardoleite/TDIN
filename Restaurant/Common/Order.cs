@@ -22,8 +22,7 @@ namespace Common
             Type = type;
             this.TableId = tableId;
             this.Product = product;
-            this.Quantity = qty;
-            
+            this.Quantity = qty;   
         }
 
         public int Type

@@ -12,12 +12,14 @@ namespace Common
         public int Id { get; set; }
         public string Name { get; set; }
         public float Price { get; set; }
-        public enum Type { Food, Drink };
+        public enum Type { Food, Drink }
+        public Type TypeProperty { get; set; }
 
-        public Product(int Identifier, string Name, float Price){
+        public Product(int Identifier, string Name, float Price, Type type){
             this.Id = Identifier;
             this.Name = Name;
             this.Price = Price;
+            this.TypeProperty = type;
         }
     }
 
