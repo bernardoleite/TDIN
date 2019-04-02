@@ -28,8 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ComboBox TablesComboBox;
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("");
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -45,31 +44,21 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            TablesComboBox = new System.Windows.Forms.ComboBox();
+            this.tablesComboBox = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // TablesComboBox
-            // 
-            TablesComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            TablesComboBox.FormattingEnabled = true;
-            TablesComboBox.Location = new System.Drawing.Point(3, 32);
-            TablesComboBox.Name = "TablesComboBox";
-            TablesComboBox.Size = new System.Drawing.Size(271, 26);
-            TablesComboBox.TabIndex = 1;
-            TablesComboBox.Tag = "";
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(TablesComboBox, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.productsComboBox, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.button1, 0, 6);
             this.tableLayoutPanel1.Controls.Add(this.textBox1, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.tablesComboBox, 0, 1);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(47, 93);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 7;
@@ -177,7 +166,7 @@
             this.columnHeader5});
             this.listView1.GridLines = true;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
+            listViewItem2});
             this.listView1.Location = new System.Drawing.Point(391, 93);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(397, 305);
@@ -206,6 +195,15 @@
             // columnHeader5
             // 
             this.columnHeader5.Text = "State";
+            // 
+            // tablesComboBox
+            // 
+            this.tablesComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.tablesComboBox.FormattingEnabled = true;
+            this.tablesComboBox.Location = new System.Drawing.Point(3, 32);
+            this.tablesComboBox.Name = "tablesComboBox";
+            this.tablesComboBox.Size = new System.Drawing.Size(271, 26);
+            this.tablesComboBox.TabIndex = 7;
             // 
             // ClientWindow
             // 
@@ -243,6 +241,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.ComboBox tablesComboBox;
     }
 }
 

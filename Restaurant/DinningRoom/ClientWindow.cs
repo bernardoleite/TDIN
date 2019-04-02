@@ -33,11 +33,11 @@ namespace DinningRoom
             orders = listServer.getOrders();
             Console.WriteLine("Orders: " + "\ntype - " + orders[0].type.ToString() + " TableId - " + orders[0].TableId.ToString()  + "  Quantity - " + orders[0].Quantity.ToString() + " Total Price - " + orders[0].TotalPrice.ToString() + " State - " + orders[0].StateProperty);
 
-            /*tables = listServer.getTables();
+            tables = listServer.getTables();
             foreach (var table in tables)
             {
-                this.TablesComboBox.Items.Add(table.Id);
-            }*/
+                this.tablesComboBox.Items.Add(table.Id);
+            }
 
             products = listServer.getProducts();
             foreach (var product in products)
@@ -127,6 +127,11 @@ namespace DinningRoom
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TablesComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
