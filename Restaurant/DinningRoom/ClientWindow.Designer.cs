@@ -34,8 +34,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.productsComboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.addOrderButton = new System.Windows.Forms.Button();
+            this.qntTextBox = new System.Windows.Forms.TextBox();
             this.tablesComboBox = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -57,8 +57,8 @@
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.productsComboBox, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.button1, 0, 6);
-            this.tableLayoutPanel1.Controls.Add(this.textBox1, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.addOrderButton, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.qntTextBox, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.tablesComboBox, 0, 1);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(47, 93);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -82,7 +82,6 @@
             this.label1.Size = new System.Drawing.Size(89, 18);
             this.label1.TabIndex = 2;
             this.label1.Text = "Select Table";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -93,7 +92,6 @@
             this.label2.Size = new System.Drawing.Size(105, 18);
             this.label2.TabIndex = 3;
             this.label2.Text = "Select Product";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // productsComboBox
             // 
@@ -103,7 +101,6 @@
             this.productsComboBox.Name = "productsComboBox";
             this.productsComboBox.Size = new System.Drawing.Size(271, 26);
             this.productsComboBox.TabIndex = 4;
-            this.productsComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -114,26 +111,25 @@
             this.label3.Size = new System.Drawing.Size(62, 18);
             this.label3.TabIndex = 5;
             this.label3.Text = "Quantity";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
-            // button1
+            // addOrderButton
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.button1.Location = new System.Drawing.Point(3, 276);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(271, 29);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Add Order";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.addOrderButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.addOrderButton.Location = new System.Drawing.Point(3, 276);
+            this.addOrderButton.Name = "addOrderButton";
+            this.addOrderButton.Size = new System.Drawing.Size(271, 29);
+            this.addOrderButton.TabIndex = 0;
+            this.addOrderButton.Text = "Add Order";
+            this.addOrderButton.UseVisualStyleBackColor = true;
+            this.addOrderButton.Click += new System.EventHandler(this.addOrderButton_Click);
             // 
-            // textBox1
+            // qntTextBox
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.textBox1.Location = new System.Drawing.Point(3, 210);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(271, 24);
-            this.textBox1.TabIndex = 6;
+            this.qntTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.qntTextBox.Location = new System.Drawing.Point(3, 210);
+            this.qntTextBox.Name = "qntTextBox";
+            this.qntTextBox.Size = new System.Drawing.Size(271, 24);
+            this.qntTextBox.TabIndex = 6;
             // 
             // tablesComboBox
             // 
@@ -153,7 +149,6 @@
             this.label4.Size = new System.Drawing.Size(112, 18);
             this.label4.TabIndex = 1;
             this.label4.Text = "NEW ORDER";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label5
             // 
@@ -164,7 +159,6 @@
             this.label5.Size = new System.Drawing.Size(79, 18);
             this.label5.TabIndex = 2;
             this.label5.Text = "ORDERS";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // ordersListView
             // 
@@ -187,7 +181,6 @@
             this.ordersListView.TabIndex = 3;
             this.ordersListView.UseCompatibleStateImageBehavior = false;
             this.ordersListView.View = System.Windows.Forms.View.Details;
-            this.ordersListView.SelectedIndexChanged += new System.EventHandler(this.ordersListView_SelectedIndexChanged);
             // 
             // columnHeader1
             // 
@@ -223,6 +216,7 @@
             this.button2.TabIndex = 4;
             this.button2.Text = "Delivered";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.deliveredButton_click);
             // 
             // ClientWindow
             // 
@@ -247,12 +241,12 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button addOrderButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox productsComboBox;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox qntTextBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ListView ordersListView;

@@ -44,7 +44,7 @@ namespace DinningRoom
             tables = listServer.getTables();
             foreach (var table in tables)
             {
-                this.tablesComboBox.Items.Add("Table #" + table.Id.ToString());
+                this.tablesComboBox.Items.Add(table.Id.ToString());
             }
         }
 
@@ -72,7 +72,7 @@ namespace DinningRoom
             ordersListView.Items.Clear();
             for (int i = 0; i < orders.Count; i++)
             {
-                ListViewItem listItem = new ListViewItem(new string[] { orders[i].Type.ToString(), orders[i].TableId.ToString(), orders[i].Product.Name, orders[i].Quantity.ToString(), orders[i].StateProperty.ToString() });
+                ListViewItem listItem = new ListViewItem(new string[] { orders[i].Id.ToString(), orders[i].TableId.ToString(), orders[i].Product.Name, orders[i].Quantity.ToString(), orders[i].StateProperty.ToString() });
                 ordersListView.Items.Add(listItem);
                 if (orders[i].StateProperty.Equals(Order.State.NOT_PROCESSED))
                 {
@@ -135,55 +135,28 @@ namespace DinningRoom
                 }*/
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        
+        private void addOrderButton_Click(object sender, EventArgs e)
         {
+            int tableID = Int32.Parse(tablesComboBox.SelectedItem.ToString());
+            String productName = productsComboBox.SelectedItem.ToString();
+            Product product = listServer.getProducts().Find(p => p.Name.Equals(productName));
+            int qnt = Int32.Parse(qntTextBox.Text);
 
+            Order order = new Order(tableID, product, qnt);
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void ClientWindow_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        private void deliveredButton_click(object sender, EventArgs e)
         {
 
         }
 
-        private void TablesComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ordersListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
 
         /* Client interface event handlers */
 

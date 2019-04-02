@@ -36,11 +36,11 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
 
         //ORDERS
         orders = new List<Order>();
-        Order order0 = new Order(0, 9, products[0], 2, Order.State.NOT_PROCESSED);
-        Order order1 = new Order(1, 8, products[1], 2, Order.State.PROCESSING);
-        Order order2 = new Order(2, 7, products[2], 2, Order.State.FINISHED);
-        Order order3 = new Order(3, 5, products[3], 2, Order.State.DELIVERED);
-        Order order4 = new Order(4, 2, products[5], 2, Order.State.CLOSED);
+        Order order0 = new Order(9, products[0], 2, Order.State.NOT_PROCESSED);
+        Order order1 = new Order(8, products[1], 2, Order.State.PROCESSING);
+        Order order2 = new Order(7, products[2], 2, Order.State.FINISHED);
+        Order order3 = new Order(5, products[3], 2, Order.State.DELIVERED);
+        Order order4 = new Order(2, products[5], 2, Order.State.CLOSED);
         orders.Add(order0);
         orders.Add(order1);
         orders.Add(order2);
@@ -77,18 +77,13 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
         return res;
     }
 
-    public int GetNewType()
-    {
-        return type++;
-    }
-
     public void addOrder(Order order)
     {
         orders.Add(order);
         NotifyClients(Operation.New, order);
     }
 
-    public void changeStatus(int type, Order.State newStatus)
+    /*public void changeStatus(int type, Order.State newStatus)
     {
         Order norder = null;
 
@@ -102,7 +97,7 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
             }
         }
         NotifyClients(Operation.Change, norder);
-    }
+    }*/
 
     void NotifyClients(Operation op, Order order)
     {

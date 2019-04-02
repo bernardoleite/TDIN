@@ -9,7 +9,7 @@ namespace Common
     [Serializable]
     public class Order
     {
-        public int type { get; set; }
+        public Guid Id { get; set; }
         public int TableId { get; set; }
         public Product Product { get; set; }
         public int Quantity { get; set; }
@@ -17,30 +17,23 @@ namespace Common
         public enum State { NOT_PROCESSED, PROCESSING, FINISHED, DELIVERED, CLOSED }
         public State StateProperty { get; set; }
 
-        public Order(int type, int tableId, Product product, int qty, State state)
+        public Order(int tableId, Product product, int qty, State state)
         {
-            Type = type;
+            Id = Guid.NewGuid();
             this.TableId = tableId;
             this.Product = product;
             this.Quantity = qty;
             this.StateProperty = state;
         }
 
-        public int Type
+        public Order(int tableId, Product product, int qty)
         {
-            get
-            {
-                return type;
-            }
-            set
-            {
-                if (value < 0)
-                    type = 999;
-                else
-                    type = value;
-            }
+            Id = Guid.NewGuid();
+            this.TableId = tableId;
+            this.Product = product;
+            this.Quantity = qty;
+            this.StateProperty = State.NOT_PROCESSED;
         }
-
 
     }
 
