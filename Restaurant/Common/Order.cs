@@ -14,15 +14,16 @@ namespace Common
         public Product Product { get; set; }
         public int Quantity { get; set; }
         public int TotalPrice { get; set; }
-        public enum State { Not_Processed, Processing, Finished, Delivered, Closed }
+        public enum State { NOT_PROCESSED, PROCESSING, FINISHED, DELIVERED, CLOSED }
         public State StateProperty { get; set; }
 
-        public Order(int type, int tableId, Product product, int qty)
+        public Order(int type, int tableId, Product product, int qty, State state)
         {
             Type = type;
             this.TableId = tableId;
             this.Product = product;
-            this.Quantity = qty;   
+            this.Quantity = qty;
+            this.StateProperty = state;
         }
 
         public int Type

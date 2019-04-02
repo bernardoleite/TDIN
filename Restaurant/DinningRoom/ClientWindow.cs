@@ -30,25 +30,69 @@ namespace DinningRoom
             InitializeComponent();
             listServer = (IListSingleton)RemoteNew.New(typeof(IListSingleton));
 
-            orders = listServer.getOrders();
-            Console.WriteLine("Orders: " + "\ntype - " + orders[0].type.ToString() + " TableId - " + orders[0].TableId.ToString()  + "  Quantity - " + orders[0].Quantity.ToString() + " Total Price - " + orders[0].TotalPrice.ToString() + " State - " + orders[0].StateProperty);
-
-            tables = listServer.getTables();
-            foreach (var table in tables)
-            {
-                this.tablesComboBox.Items.Add(table.Id);
-            }
-
-            products = listServer.getProducts();
-            foreach (var product in products)
-            {
-                this.productsComboBox.Items.Add(product.Name);
-            }
+            startTablesComboBox();
+            startProductsComboBox();
+            updateOrdersListView();
 
             evRepeater = new AlterEventRepeater();
             //evRepeater.alterEvent += new AlterDelegate(DoAlterations);
             //listServer.alterEvent += new AlterDelegate(evRepeater.Repeater);
         }
+
+        public void startTablesComboBox()
+        {
+            tables = listServer.getTables();
+            foreach (var table in tables)
+            {
+                this.tablesComboBox.Items.Add("Table #" + table.Id.ToString());
+            }
+        }
+
+        public void startProductsComboBox()
+        {
+            products = listServer.getProducts();
+            foreach (var product in products)
+            {
+                this.productsComboBox.Items.Add(product.Name);
+            }
+        }
+
+        public void updateOrdersListView()
+        {
+            List<Order> ordersNP = listServer.getOrders(Order.State.NOT_PROCESSED);
+            List<Order> ordersP = listServer.getOrders(Order.State.PROCESSING);
+            List<Order> ordersF = listServer.getOrders(Order.State.FINISHED);
+            List<Order> ordersD = listServer.getOrders(Order.State.DELIVERED);
+            orders = new List<Order>();
+            orders.AddRange(ordersNP);
+            orders.AddRange(ordersP);
+            orders.AddRange(ordersF);
+            orders.AddRange(ordersD);
+
+            ordersListView.Items.Clear();
+            for (int i = 0; i < orders.Count; i++)
+            {
+                ListViewItem listItem = new ListViewItem(new string[] { orders[i].Type.ToString(), orders[i].TableId.ToString(), orders[i].Product.Name, orders[i].Quantity.ToString(), orders[i].StateProperty.ToString() });
+                ordersListView.Items.Add(listItem);
+                if (orders[i].StateProperty.Equals(Order.State.NOT_PROCESSED))
+                {
+                    ordersListView.Items[i].BackColor = Color.Red;
+                }
+                else if (orders[i].StateProperty.Equals(Order.State.PROCESSING))
+                {
+                    ordersListView.Items[i].BackColor = Color.Yellow;
+                }
+                else if (orders[i].StateProperty.Equals(Order.State.FINISHED))
+                {
+                    ordersListView.Items[i].BackColor = Color.Green;
+                }
+                else if (orders[i].StateProperty.Equals(Order.State.DELIVERED))
+                {
+                    ordersListView.Items[i].BackColor = Color.Turquoise;
+                }
+            }
+        }
+
 
         /* The client is also a remote object. The Server calls remotely the AlterEvent handler  *
         * Infinite lifetime                                                                     */
@@ -132,6 +176,11 @@ namespace DinningRoom
         }
 
         private void TablesComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ordersListView_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

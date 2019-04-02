@@ -17,7 +17,7 @@ public interface IListSingleton
 
     List<Table> getTables();
     List<Product> getProducts();
-    List<Order> getOrders();
+    List<Order> getOrders(Order.State state);
     int GetNewType();
     void addOrder(Order order);
     void changeStatus(int type, Order.State newStatus);

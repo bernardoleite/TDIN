@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -36,15 +36,16 @@
             this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tablesComboBox = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.ordersListView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.tablesComboBox = new System.Windows.Forms.ComboBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -134,6 +135,15 @@
             this.textBox1.Size = new System.Drawing.Size(271, 24);
             this.textBox1.TabIndex = 6;
             // 
+            // tablesComboBox
+            // 
+            this.tablesComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.tablesComboBox.FormattingEnabled = true;
+            this.tablesComboBox.Location = new System.Drawing.Point(3, 32);
+            this.tablesComboBox.Name = "tablesComboBox";
+            this.tablesComboBox.Size = new System.Drawing.Size(271, 26);
+            this.tablesComboBox.TabIndex = 7;
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -156,61 +166,71 @@
             this.label5.Text = "ORDERS";
             this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
-            // listView1
+            // ordersListView
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ordersListView.CheckBoxes = true;
+            this.ordersListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4,
             this.columnHeader5});
-            this.listView1.GridLines = true;
-            this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem2});
-            this.listView1.Location = new System.Drawing.Point(391, 93);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(397, 305);
-            this.listView1.TabIndex = 3;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.ordersListView.FullRowSelect = true;
+            this.ordersListView.GridLines = true;
+            listViewItem1.StateImageIndex = 0;
+            this.ordersListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1});
+            this.ordersListView.Location = new System.Drawing.Point(391, 93);
+            this.ordersListView.MultiSelect = false;
+            this.ordersListView.Name = "ordersListView";
+            this.ordersListView.Size = new System.Drawing.Size(397, 270);
+            this.ordersListView.TabIndex = 3;
+            this.ordersListView.UseCompatibleStateImageBehavior = false;
+            this.ordersListView.View = System.Windows.Forms.View.Details;
+            this.ordersListView.SelectedIndexChanged += new System.EventHandler(this.ordersListView_SelectedIndexChanged);
             // 
             // columnHeader1
             // 
             this.columnHeader1.Text = "OrderId";
+            this.columnHeader1.Width = 49;
             // 
             // columnHeader2
             // 
             this.columnHeader2.Text = "TableId";
+            this.columnHeader2.Width = 49;
             // 
             // columnHeader3
             // 
             this.columnHeader3.Text = "Product";
-            this.columnHeader3.Width = 145;
+            this.columnHeader3.Width = 103;
             // 
             // columnHeader4
             // 
             this.columnHeader4.Text = "Quantity";
-            this.columnHeader4.Width = 65;
+            this.columnHeader4.Width = 53;
             // 
             // columnHeader5
             // 
             this.columnHeader5.Text = "State";
+            this.columnHeader5.Width = 137;
             // 
-            // tablesComboBox
+            // button2
             // 
-            this.tablesComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.tablesComboBox.FormattingEnabled = true;
-            this.tablesComboBox.Location = new System.Drawing.Point(3, 32);
-            this.tablesComboBox.Name = "tablesComboBox";
-            this.tablesComboBox.Size = new System.Drawing.Size(271, 26);
-            this.tablesComboBox.TabIndex = 7;
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.button2.Location = new System.Drawing.Point(391, 369);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(397, 29);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "Delivered";
+            this.button2.UseVisualStyleBackColor = true;
             // 
             // ClientWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(838, 447);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.ordersListView);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.tableLayoutPanel1);
@@ -235,13 +255,14 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView ordersListView;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ComboBox tablesComboBox;
+        private System.Windows.Forms.Button button2;
     }
 }
 
