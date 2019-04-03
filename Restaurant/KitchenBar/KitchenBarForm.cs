@@ -13,17 +13,27 @@ namespace KitchenBar
         IListSingleton listServer;
         AlterEventRepeater evRepeater;
         List<Order> orders;
+        public enum Type {KITCHEN, BAR};
+        public Product.Type ProductType;
         delegate ListViewItem LVAddDelegate(ListViewItem lvOrder);
         delegate void ChCommDelegate(Order order);
 
-        public KitchenBarForm()
+        public KitchenBarForm(KitchenBarForm.Type type)
         {
             RemotingConfiguration.Configure("KitchenBar.exe.config", false);
             InitializeComponent();
             listServer = (IListSingleton)RemoteNew.New(typeof(IListSingleton));
 
-            updateOrdersListView();
+            if (type.Equals(Type.KITCHEN))
+            {
+                this.ProductType = Product.Type.FOOD;
+                KitchenBarForm.Text = "Running Form";
+            }
+                
+            else if (type.Equals(Type.BAR))
+                this.ProductType = Product.Type.DRINK;
 
+            updateOrdersListView();
             evRepeater = new AlterEventRepeater();
             //evRepeater.alterEvent += new AlterDelegate(DoAlterations);
             //listServer.alterEvent += new AlterDelegate(evRepeater.Repeater);
@@ -32,12 +42,15 @@ namespace KitchenBar
 
         public void updateOrdersListView()
         {
-            List<Order> ordersNP = listServer.getOrders(Order.State.NOT_PROCESSED);
-            List<Order> ordersP = listServer.getOrders(Order.State.PROCESSING);
+
             orders = new List<Order>();
+            
+            List<Order> ordersNP = listServer.getOrdersByType(Order.State.NOT_PROCESSED, this.ProductType);
+            List<Order> ordersP = listServer.getOrdersByType(Order.State.PROCESSING, this.ProductType);
             orders.AddRange(ordersNP);
             orders.AddRange(ordersP);
-            
+       
+           
             ordersListView.Items.Clear();
             for (int i = 0; i < orders.Count; i++)
             {
@@ -109,7 +122,8 @@ namespace KitchenBar
                 for (int i = 0; i < ordersListView.CheckedItems.Count; i++)
                 {
                     String orderID = ordersListView.CheckedItems[i].Text.Substring(0, 36);
-                    Order order = listServer.getOrders(Order.State.NOT_PROCESSED).Find(o => o.Id.ToString().Equals(orderID));
+
+                    Order order = listServer.getOrdersByType(Order.State.NOT_PROCESSED, this.ProductType).Find(o => o.Id.ToString().Equals(orderID));
 
                     if (order != null)
                     {
@@ -127,7 +141,8 @@ namespace KitchenBar
                 for (int i = 0; i < ordersListView.CheckedItems.Count; i++)
                 {
                     String orderID = ordersListView.CheckedItems[i].Text.Substring(0, 36);
-                    Order order = listServer.getOrders(Order.State.PROCESSING).Find(o => o.Id.ToString().Equals(orderID));
+
+                    Order order = listServer.getOrdersByType(Order.State.PROCESSING, this.ProductType).Find(o => o.Id.ToString().Equals(orderID));
 
                     if (order != null)
                     {

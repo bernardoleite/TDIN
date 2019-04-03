@@ -130,7 +130,7 @@
             this.Controls.Add(this.ordersListView);
             this.Controls.Add(this.label4);
             this.Name = "KitchenBarForm";
-            this.Text = "Form1";
+            this.Text = "KitchenBar";
             this.ResumeLayout(false);
             this.PerformLayout();
 

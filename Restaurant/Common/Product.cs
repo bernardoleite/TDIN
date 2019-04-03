@@ -12,7 +12,7 @@ namespace Common
         public int Id { get; set; }
         public string Name { get; set; }
         public float Price { get; set; }
-        public enum Type { Food, Drink }
+        public enum Type { FOOD, DRINK }
         public Type TypeProperty { get; set; }
 
         public Product(int Identifier, string Name, float Price, Type type){

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace DinningRoom
 {
 
-    public partial class ClientWindow : Form
+    public partial class DinningRoomForm : Form
     {
         IListSingleton listServer;
         AlterEventRepeater evRepeater;
@@ -19,7 +19,7 @@ namespace DinningRoom
         delegate ListViewItem LVAddDelegate(ListViewItem lvOrder);
         delegate void ChCommDelegate(Order order);
 
-        public ClientWindow()
+        public DinningRoomForm()
         {
             RemotingConfiguration.Configure("DinningRoom.exe.config", false);
             InitializeComponent();
