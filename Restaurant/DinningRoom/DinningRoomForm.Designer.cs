@@ -1,6 +1,6 @@
 ﻿namespace DinningRoom
 {
-    partial class ClientWindow
+    partial class DinningRoomForm
     {
         /// <summary>
         /// Required designer variable.

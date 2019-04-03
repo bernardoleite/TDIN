@@ -2,13 +2,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.Remoting;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DinningRoom
@@ -162,14 +157,11 @@ namespace DinningRoom
 
         private void deliveredButton_click(object sender, EventArgs e)
         {
-
-            Console.WriteLine(ordersListView.CheckedItems.Count);
             if (ordersListView.CheckedItems != null)
             {
                for(int i=0; i<ordersListView.CheckedItems.Count; i++)
                {
                     String orderID = ordersListView.CheckedItems[i].Text.Substring(0, 36);
-                    Console.WriteLine(orderID);
                     Order order = listServer.getOrders(Order.State.FINISHED).Find(o => o.Id.ToString().Equals(orderID));
 
                     if (order != null)
@@ -180,7 +172,6 @@ namespace DinningRoom
                }
             }
         }
-
     }
 
     /* Mechanism for instanciating a remote object through its interface, using the config file */

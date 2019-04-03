@@ -16,7 +16,7 @@ namespace DinningRoom
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ClientWindow());
+            Application.Run(new DinningRoomForm());
         }
     }
 }
