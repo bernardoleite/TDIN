@@ -135,6 +135,8 @@ namespace DinningRoom
                 }*/
         }
 
+
+        /* Client interface event handlers */
         private void ClientWindow_Load(object sender, EventArgs e)
         {
 
@@ -152,7 +154,7 @@ namespace DinningRoom
 
                 Order order = new Order(tableID, product, qnt);
                 Console.WriteLine(order.Id + " " + order.TableId + " " + order.Product.Name + " " + order.TotalPrice);
-                //TODO: add order
+                //TODO: ADD ORDER EVENT
             }
 
         }
@@ -161,10 +163,23 @@ namespace DinningRoom
         private void deliveredButton_click(object sender, EventArgs e)
         {
 
+            Console.WriteLine(ordersListView.CheckedItems.Count);
+            if (ordersListView.CheckedItems != null)
+            {
+               for(int i=0; i<ordersListView.CheckedItems.Count; i++)
+               {
+                    String orderID = ordersListView.CheckedItems[i].Text.Substring(0, 36);
+                    Console.WriteLine(orderID);
+                    Order order = listServer.getOrders(Order.State.FINISHED).Find(o => o.Id.ToString().Equals(orderID));
+
+                    if (order != null)
+                    {
+                        Console.WriteLine(order.Id + " " + order.TableId + " " + order.Product.Name + " " + order.TotalPrice);
+                        //TODO: CHANGE ORDER STATE EVENT
+                    }
+               }
+            }
         }
-
-
-        /* Client interface event handlers */
 
     }
 

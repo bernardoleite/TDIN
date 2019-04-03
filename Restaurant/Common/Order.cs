@@ -23,6 +23,7 @@ namespace Common
             this.TableId = tableId;
             this.Product = product;
             this.Quantity = qty;
+            this.TotalPrice = this.Product.Price * this.Quantity;
             this.StateProperty = state;
         }
 
