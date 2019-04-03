@@ -27,7 +27,6 @@ namespace KitchenBar
             if (type.Equals(Type.KITCHEN))
             {
                 this.ProductType = Product.Type.FOOD;
-                KitchenBarForm.Text = "Running Form";
             }
                 
             else if (type.Equals(Type.BAR))

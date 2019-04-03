@@ -30,8 +30,8 @@ namespace DinningRoom
             updateOrdersListView();
 
             evRepeater = new AlterEventRepeater();
-            //evRepeater.alterEvent += new AlterDelegate(DoAlterations);
-            //listServer.alterEvent += new AlterDelegate(evRepeater.Repeater);
+            evRepeater.alterEvent += new AlterDelegate(DoAlterations);
+            listServer.alterEvent += new AlterDelegate(evRepeater.Repeater);
         }
 
         public void startTablesComboBox()
@@ -103,25 +103,34 @@ namespace DinningRoom
         public void DoAlterations(Operation op, Order order)
         {
             LVAddDelegate lvAdd;
-            ChCommDelegate chComm;
+            //ChCommDelegate chComm;
 
-            switch (op)
+            switch (op) 
             {
-                /*case Operation.New:
-                    //lvAdd = new LVAddDelegate(ordersListView.Items.Add);
-                    ListViewItem lvOrder = new ListViewItem(new string[] { order.Type.ToString(), order.TableId.ToString() });
+                case Operation.Added_Order:
+                    Console.WriteLine("Added new Order!");
+                    lvAdd = new LVAddDelegate(ordersListView.Items.Add);
+                    ListViewItem lvOrder = new ListViewItem(new string[] { order.Id.ToString(), order.TableId.ToString(), order.Product.Name, order.Quantity.ToString(), order.StateProperty.ToString() });
                     BeginInvoke(lvAdd, new object[] { lvOrder });
+                    //updateOrdersListView();
                     break;
-                case Operation.Change:
-                    chComm = new ChCommDelegate(ChangeAItem);
-                    BeginInvoke(chComm, new object[] { order });
-                    break;*/
+                case Operation.Changed_Order_State:
+                    Console.WriteLine("Changed Order State!");
+                    //updateOrdersListView();
+                    break;
+                case Operation.Changed_Table_State:
+                    Console.WriteLine("Changed Table State!");
+                    //updateOrdersListView();
+                    break;
             }
         }
 
 
         private void ChangeAItem(Order it)
         {
+
+            Console.WriteLine("Entered ChangeAItem!!");
+
             /*foreach (ListViewItem lvI in ordersListView.Items)
                 if (Convert.ToInt32(lvI.SubItems[0].Text) == it.Type)
                 {
@@ -148,9 +157,12 @@ namespace DinningRoom
                 int qnt = Int32.Parse(qntTextBox.Text);
 
                 Order order = new Order(tableID, product, qnt);
-                Console.WriteLine(order.Id + " " + order.TableId + " " + order.Product.Name + " " + order.TotalPrice);
+
                 //TODO: ADD ORDER EVENT
+                listServer.addOrder(order);
             }
+
+          
 
         }
 

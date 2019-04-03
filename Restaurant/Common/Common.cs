@@ -6,8 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-public enum Operation { New, Change };
+public enum Operation { Added_Order, Changed_Order_State, Changed_Table_State };
 
 public delegate void AlterDelegate(Operation op, Order order);
 

@@ -99,7 +99,7 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
     public void addOrder(Order order)
     {
         orders.Add(order);
-        NotifyClients(Operation.New, order);
+        NotifyClients(Operation.Added_Order, order);
     }
 
     /*public void changeStatus(int type, Order.State newStatus)
