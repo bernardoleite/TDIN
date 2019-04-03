@@ -27,12 +27,12 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
 
         //PRODUCTS
         products = new List<Product>();
-        products.Add(new Product(0, "Cocacola", 5, Product.Type.Drink));
-        products.Add(new Product(1, "Icetea", 5, Product.Type.Drink));
-        products.Add(new Product(2, "Water", 5, Product.Type.Drink));
-        products.Add(new Product(3, "Croissant", 5, Product.Type.Food));
-        products.Add(new Product(4, "Hamburguer", 5, Product.Type.Food));
-        products.Add(new Product(5, "Fish", 5, Product.Type.Food));
+        products.Add(new Product(0, "Cocacola", 1.5F, Product.Type.Drink));
+        products.Add(new Product(1, "Icetea", 2.5F, Product.Type.Drink));
+        products.Add(new Product(2, "Water", 3.5F, Product.Type.Drink));
+        products.Add(new Product(3, "Croissant", 4.5F, Product.Type.Food));
+        products.Add(new Product(4, "Hamburguer", 5.5F, Product.Type.Food));
+        products.Add(new Product(5, "Fish", 6.5F, Product.Type.Food));
 
         //ORDERS
         orders = new List<Order>();

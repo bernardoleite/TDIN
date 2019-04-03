@@ -76,19 +76,19 @@ namespace DinningRoom
                 ordersListView.Items.Add(listItem);
                 if (orders[i].StateProperty.Equals(Order.State.NOT_PROCESSED))
                 {
-                    ordersListView.Items[i].BackColor = Color.Red;
+                    ordersListView.Items[i].BackColor = Color.LightCoral;
                 }
                 else if (orders[i].StateProperty.Equals(Order.State.PROCESSING))
                 {
-                    ordersListView.Items[i].BackColor = Color.Yellow;
+                    ordersListView.Items[i].BackColor = Color.Gold;
                 }
                 else if (orders[i].StateProperty.Equals(Order.State.FINISHED))
                 {
-                    ordersListView.Items[i].BackColor = Color.Green;
+                    ordersListView.Items[i].BackColor = Color.YellowGreen;
                 }
                 else if (orders[i].StateProperty.Equals(Order.State.DELIVERED))
                 {
-                    ordersListView.Items[i].BackColor = Color.Turquoise;
+                    ordersListView.Items[i].BackColor = Color.CornflowerBlue;
                 }
             }
         }
@@ -135,22 +135,28 @@ namespace DinningRoom
                 }*/
         }
 
-        
-        private void addOrderButton_Click(object sender, EventArgs e)
-        {
-            int tableID = Int32.Parse(tablesComboBox.SelectedItem.ToString());
-            String productName = productsComboBox.SelectedItem.ToString();
-            Product product = listServer.getProducts().Find(p => p.Name.Equals(productName));
-            int qnt = Int32.Parse(qntTextBox.Text);
-
-            Order order = new Order(tableID, product, qnt);
-        }
-
-
         private void ClientWindow_Load(object sender, EventArgs e)
         {
 
         }
+
+
+        private void addOrderButton_Click(object sender, EventArgs e)
+        {
+            if(tablesComboBox.SelectedItem != null && productsComboBox.SelectedItem != null)
+            {
+                int tableID = Int32.Parse(tablesComboBox.SelectedItem.ToString());
+                String productName = productsComboBox.SelectedItem.ToString();
+                Product product = listServer.getProducts().Find(p => p.Name.Equals(productName));
+                int qnt = Int32.Parse(qntTextBox.Text);
+
+                Order order = new Order(tableID, product, qnt);
+                Console.WriteLine(order.Id + " " + order.TableId + " " + order.Product.Name + " " + order.TotalPrice);
+                //TODO: add order
+            }
+
+        }
+
 
         private void deliveredButton_click(object sender, EventArgs e)
         {

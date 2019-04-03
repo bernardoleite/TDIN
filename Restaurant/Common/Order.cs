@@ -13,7 +13,7 @@ namespace Common
         public int TableId { get; set; }
         public Product Product { get; set; }
         public int Quantity { get; set; }
-        public int TotalPrice { get; set; }
+        public float TotalPrice { get; set; }
         public enum State { NOT_PROCESSED, PROCESSING, FINISHED, DELIVERED, CLOSED }
         public State StateProperty { get; set; }
 
@@ -32,6 +32,7 @@ namespace Common
             this.TableId = tableId;
             this.Product = product;
             this.Quantity = qty;
+            this.TotalPrice = this.Product.Price * this.Quantity;
             this.StateProperty = State.NOT_PROCESSED;
         }
 
