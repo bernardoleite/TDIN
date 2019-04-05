@@ -24,3 +24,16 @@ C:\Users\Bernardo\source\repos\TDIN\Restaurant\PaymentTerminal\obj\Debug\Payment
 C:\Users\Bernardo\source\repos\TDIN\Restaurant\PaymentTerminal\obj\Debug\PaymentTerminal.csproj.CoreCompileInputs.cache
 C:\Users\Bernardo\source\repos\TDIN\Restaurant\PaymentTerminal\obj\Debug\PaymentTerminal.exe
 C:\Users\Bernardo\source\repos\TDIN\Restaurant\PaymentTerminal\obj\Debug\PaymentTerminal.pdb
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\PaymentTerminal\bin\Debug\PaymentTerminal.exe.config
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\PaymentTerminal\bin\Debug\PaymentTerminal.exe
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\PaymentTerminal\bin\Debug\PaymentTerminal.pdb
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\PaymentTerminal\bin\Debug\Common.dll
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\PaymentTerminal\bin\Debug\Common.pdb
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\PaymentTerminal\obj\Debug\PaymentTerminal.csprojAssemblyReference.cache
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\PaymentTerminal\obj\Debug\PaymentTerminal.PaymentTerminalForm.resources
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\PaymentTerminal\obj\Debug\PaymentTerminal.Properties.Resources.resources
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\PaymentTerminal\obj\Debug\PaymentTerminal.csproj.GenerateResource.cache
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\PaymentTerminal\obj\Debug\PaymentTerminal.csproj.CoreCompileInputs.cache
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\PaymentTerminal\obj\Debug\PaymentTerminal.csproj.CopyComplete
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\PaymentTerminal\obj\Debug\PaymentTerminal.exe
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\PaymentTerminal\obj\Debug\PaymentTerminal.pdb

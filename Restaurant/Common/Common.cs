@@ -14,10 +14,11 @@ public interface IListSingleton
 {
     event AlterDelegate alterEvent;
 
-    List<Table> getTables();
+    List<Table> getTables(Table.State state);
     List<Product> getProducts();
     List<Order> getOrders(Order.State state);
     List<Order> getOrdersByType(Order.State state, Product.Type type);
+    List<Order> getOrdersByTable(int tableId);
     void addOrder(Order order);
     //void changeStatus(int type, Order.State newStatus);
 }

@@ -20,10 +20,12 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
 
         //TABLES
         tables = new List<Table>();
-        for (int i = 0; i < 10; i++)
-        {
-            tables.Add(new Table(i));
-        }
+        tables.Add(new Table(0, Table.State.WAITING));
+        tables.Add(new Table(1, Table.State.WAITING));
+        tables.Add(new Table(2, Table.State.DONE));
+        tables.Add(new Table(3, Table.State.DONE));
+        tables.Add(new Table(4, Table.State.CLOSED));
+        tables.Add(new Table(5, Table.State.CLOSED));
 
         //PRODUCTS
         products = new List<Product>();
@@ -57,10 +59,16 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
         return null;
     }
 
-    public List<Table> getTables() //TODO: RECEBER ESTADO
+    public List<Table> getTables(Table.State state)
     {
         Console.WriteLine("getTables() called.");
-        return tables;
+        List<Table> res = new List<Table>();
+        foreach (Table table in tables)
+        {
+            if (table.StateProperty.Equals(state))
+                res.Add(table);
+        }
+        return res;
     }
 
     public List<Product> getProducts()
@@ -83,7 +91,7 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
 
     public List<Order> getOrdersByType(Order.State state, Product.Type type)
     {
-        Console.WriteLine("getOrders(state,type) called.");
+        Console.WriteLine("getOrdersByType(state,type) called.");
         List<Order> res = new List<Order>();
         foreach (Order order in orders)
         {
@@ -96,10 +104,32 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
         return res;
     }
 
-    public void addOrder(Order order)
+    public List<Order> getOrdersByTable(int tableId)
+    {
+        Console.WriteLine("getOrdersByTable(state,tableId) called.");
+        List<Order> res = new List<Order>();
+        foreach (Order order in orders)
+        {
+            if (order.TableId == tableId)
+            {
+                res.Add(order);
+            }
+
+        }
+        return res;
+    }
+
+    public void addOrder(Order order) //TODO: apagar order porque acho que é inutil?
     {
         orders.Add(order);
         NotifyClients(Operation.Added_Order, order);
+
+        Table table = tables.Find(t => t.Id.Equals(order.TableId));
+        if (!table.StateProperty.Equals(Table.State.WAITING))
+        {
+            table.StateProperty = Table.State.WAITING;
+            NotifyClients(Operation.Changed_Table_State, null);
+        }
     }
 
     /*public void changeStatus(int type, Order.State newStatus)
