@@ -16,7 +16,8 @@ namespace DinningRoom
         List <Order> orders;
         List <Table> tables;
         List <Product> products;
-        delegate ListViewItem LVAddDelegate(ListViewItem lvOrder);
+        //delegate ListViewItem LVAddDelegate(ListViewItem lvOrder);
+        delegate void LVUpdateDelegate();
         delegate void ChCommDelegate(Order order);
 
         public DinningRoomForm()
@@ -102,17 +103,19 @@ namespace DinningRoom
 
         public void DoAlterations(Operation op, Order order)
         {
-            LVAddDelegate lvAdd;
+            //LVAddDelegate lvAdd;
+            LVUpdateDelegate lvUpdate;
             //ChCommDelegate chComm;
 
             switch (op) 
             {
                 case Operation.Added_Order:
                     Console.WriteLine("Added new Order!");
-                    lvAdd = new LVAddDelegate(ordersListView.Items.Add);
-                    ListViewItem lvOrder = new ListViewItem(new string[] { order.Id.ToString(), order.TableId.ToString(), order.Product.Name, order.Quantity.ToString(), order.StateProperty.ToString() });
-                    BeginInvoke(lvAdd, new object[] { lvOrder });
-                    //updateOrdersListView();
+                    //lvAdd = new LVAddDelegate(ordersListView.Items.Add);
+                    //ListViewItem lvOrder = new ListViewItem(new string[] { order.Id.ToString(), order.TableId.ToString(), order.Product.Name, order.Quantity.ToString(), order.StateProperty.ToString() });
+                    //BeginInvoke(lvAdd, new object[] { lvOrder });
+                    lvUpdate = new LVUpdateDelegate(updateOrdersListView);
+                    BeginInvoke(lvUpdate);
                     break;
                 case Operation.Changed_Order_State:
                     Console.WriteLine("Changed Order State!");
@@ -158,12 +161,8 @@ namespace DinningRoom
 
                 Order order = new Order(tableID, product, qnt);
 
-                //TODO: ADD ORDER EVENT
                 listServer.addOrder(order);
             }
-
-          
-
         }
 
 

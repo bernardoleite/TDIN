@@ -141,8 +141,5 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
             }
         }
     }
-
-
-
 }
 
