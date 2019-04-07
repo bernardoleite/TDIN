@@ -183,6 +183,15 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
                 NotifyClients(Operation.Changed_Table_State, null);
             }
         }
+        else if (istableDone != true)
+        {
+            Table table = tables.Find(t => t.Id.Equals(tableId));
+            if (!table.StateProperty.Equals(Table.State.WAITING))
+            {
+                table.StateProperty = Table.State.WAITING;
+                NotifyClients(Operation.Changed_Table_State, null);
+            }
+        }
 
     }
 
