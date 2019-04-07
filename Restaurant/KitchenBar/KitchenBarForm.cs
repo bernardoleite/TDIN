@@ -97,7 +97,8 @@ namespace KitchenBar
                     break;
                 case Operation.Changed_Table_State:
                     Console.WriteLine("Changed Table State!");
-                    //updateOrdersListView();
+                    lvUpdate = new LVUpdateDelegate(updateOrdersListView);
+                    BeginInvoke(lvUpdate);
                     break;
             }
         }

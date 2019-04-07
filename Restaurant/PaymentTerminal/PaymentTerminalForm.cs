@@ -14,6 +14,7 @@ namespace PaymentTerminal
         AlterEventRepeater evRepeater;
         List<Table> tables;
         delegate ListViewItem LVAddDelegate(ListViewItem lvOrder);
+        delegate void LVUpdateDelegate();
         delegate void ChCommDelegate(Order order);
 
         public PaymentTerminalForm()
@@ -23,8 +24,8 @@ namespace PaymentTerminal
             listServer = (IListSingleton)RemoteNew.New(typeof(IListSingleton));
             updateTablesListView();
             evRepeater = new AlterEventRepeater();
-            //evRepeater.alterEvent += new AlterDelegate(DoAlterations);
-            //listServer.alterEvent += new AlterDelegate(evRepeater.Repeater);
+            evRepeater.alterEvent += new AlterDelegate(DoAlterations);
+            listServer.alterEvent += new AlterDelegate(evRepeater.Repeater);
         }
 
         public void updateTablesListView()
@@ -68,20 +69,17 @@ namespace PaymentTerminal
 
         public void DoAlterations(Operation op, Order order)
         {
-            LVAddDelegate lvAdd;
-            ChCommDelegate chComm;
+
+            LVUpdateDelegate lvUpdate;
 
             switch (op)
             {
-                /*case Operation.New:
-                    //lvAdd = new LVAddDelegate(ordersListView.Items.Add);
-                    ListViewItem lvOrder = new ListViewItem(new string[] { order.Type.ToString(), order.TableId.ToString() });
-                    BeginInvoke(lvAdd, new object[] { lvOrder });
+                case Operation.Changed_Table_State:
+                    Console.WriteLine("Changed Order State!");
+                    lvUpdate = new LVUpdateDelegate(updateTablesListView);
+                    BeginInvoke(lvUpdate);
                     break;
-                case Operation.Change:
-                    chComm = new ChCommDelegate(ChangeAItem);
-                    BeginInvoke(chComm, new object[] { order });
-                    break;*/
+
             }
         }
 

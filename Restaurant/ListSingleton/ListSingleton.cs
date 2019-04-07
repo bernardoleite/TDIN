@@ -147,16 +147,43 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
     {
         Order norder = null;
 
+        bool istableDone = true;
+
+        int tableId = 0;
+
         foreach (Order it in orders)
         {
             if (it.Id == orderId)
             {
                 it.StateProperty = newStatus;
                 norder = it;
+                tableId = norder.TableId;
                 break;
             }
+
         }
         NotifyClients(Operation.Changed_Order_State, norder);
+
+        foreach (Order it in orders)
+        {
+            if (it.TableId == tableId && !it.StateProperty.Equals(Order.State.DELIVERED) && !it.StateProperty.Equals(Order.State.CLOSED))
+            {
+                istableDone = false;
+                break;
+            }
+
+        }
+
+        if(istableDone == true)
+        {
+            Table table = tables.Find(t => t.Id.Equals(tableId));
+            if (!table.StateProperty.Equals(Table.State.DONE))
+            {
+                table.StateProperty = Table.State.DONE;
+                NotifyClients(Operation.Changed_Table_State, null);
+            }
+        }
+
     }
 
     void NotifyClients(Operation op, Order order)
