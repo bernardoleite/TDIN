@@ -28,15 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.productsComboBox = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.addOrderButton = new System.Windows.Forms.Button();
             this.tablesComboBox = new System.Windows.Forms.ComboBox();
             this.qntTextBox = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.ordersListView = new System.Windows.Forms.ListView();
@@ -74,16 +74,6 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(149, 342);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Calibri Light", 14F);
-            this.label1.Location = new System.Drawing.Point(3, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 23);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Select Table";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -103,16 +93,6 @@
             this.productsComboBox.Name = "productsComboBox";
             this.productsComboBox.Size = new System.Drawing.Size(143, 31);
             this.productsComboBox.TabIndex = 4;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Calibri Light", 14F);
-            this.label3.Location = new System.Drawing.Point(3, 187);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(76, 23);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Quantity";
             // 
             // addOrderButton
             // 
@@ -154,6 +134,26 @@
             0,
             0});
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Calibri Light", 14F);
+            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(99, 23);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Select Table";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Calibri Light", 14F);
+            this.label3.Location = new System.Drawing.Point(3, 187);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(76, 23);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Quantity";
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -186,9 +186,9 @@
             this.ordersListView.Font = new System.Drawing.Font("Calibri Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ordersListView.ForeColor = System.Drawing.SystemColors.WindowText;
             this.ordersListView.GridLines = true;
-            listViewItem2.StateImageIndex = 0;
+            listViewItem1.StateImageIndex = 0;
             this.ordersListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem2});
+            listViewItem1});
             this.ordersListView.Location = new System.Drawing.Point(246, 93);
             this.ordersListView.MultiSelect = false;
             this.ordersListView.Name = "ordersListView";
@@ -196,6 +196,7 @@
             this.ordersListView.TabIndex = 3;
             this.ordersListView.UseCompatibleStateImageBehavior = false;
             this.ordersListView.View = System.Windows.Forms.View.Details;
+            this.ordersListView.SelectedIndexChanged += new System.EventHandler(this.ordersListView_SelectedIndexChanged);
             // 
             // columnHeader1
             // 
@@ -233,7 +234,7 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.deliveredButton_click);
             // 
-            // ClientWindow
+            // DinningRoomForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -243,7 +244,7 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "ClientWindow";
+            this.Name = "DinningRoomForm";
             this.Text = "Dinning Room";
             this.Load += new System.EventHandler(this.ClientWindow_Load);
             this.tableLayoutPanel1.ResumeLayout(false);

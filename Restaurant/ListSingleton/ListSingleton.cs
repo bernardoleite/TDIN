@@ -71,6 +71,17 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
         return res;
     }
 
+    public List<Table> getTables()
+    {
+        Console.WriteLine("getTables() called.");
+        List<Table> res = new List<Table>();
+        foreach (Table table in tables)
+        {
+                res.Add(table);
+        }
+        return res;
+    }
+
     public List<Product> getProducts()
     {
         Console.WriteLine("getProducts() called.");
@@ -132,21 +143,21 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
         }
     }
 
-    /*public void changeStatus(int type, Order.State newStatus)
+    public void changeStatus(Guid orderId, Order.State newStatus)
     {
         Order norder = null;
 
         foreach (Order it in orders)
         {
-            if (it.Type == type)
+            if (it.Id == orderId)
             {
                 it.StateProperty = newStatus;
                 norder = it;
                 break;
             }
         }
-        NotifyClients(Operation.Change, norder);
-    }*/
+        NotifyClients(Operation.Changed_Order_State, norder);
+    }
 
     void NotifyClients(Operation op, Order order)
     {

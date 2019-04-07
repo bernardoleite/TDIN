@@ -111,15 +111,13 @@ namespace DinningRoom
             {
                 case Operation.Added_Order:
                     Console.WriteLine("Added new Order!");
-                    //lvAdd = new LVAddDelegate(ordersListView.Items.Add);
-                    //ListViewItem lvOrder = new ListViewItem(new string[] { order.Id.ToString(), order.TableId.ToString(), order.Product.Name, order.Quantity.ToString(), order.StateProperty.ToString() });
-                    //BeginInvoke(lvAdd, new object[] { lvOrder });
                     lvUpdate = new LVUpdateDelegate(updateOrdersListView);
                     BeginInvoke(lvUpdate);
                     break;
                 case Operation.Changed_Order_State:
                     Console.WriteLine("Changed Order State!");
-                    //updateOrdersListView();
+                    lvUpdate = new LVUpdateDelegate(updateOrdersListView);
+                    BeginInvoke(lvUpdate);
                     break;
                 case Operation.Changed_Table_State:
                     Console.WriteLine("Changed Table State!");
@@ -178,10 +176,16 @@ namespace DinningRoom
                     if (order != null)
                     {
                         Console.WriteLine(order.Id + " " + order.TableId + " " + order.Product.Name + " " + order.TotalPrice);
-                        //TODO: CHANGE ORDER STATE EVENT
+                        //TODO: CHANGE ORDER STATE EVENT 
+                        listServer.changeStatus(order.Id, Order.State.DELIVERED); 
                     }
                }
             }
+        }
+
+        private void ordersListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

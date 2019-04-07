@@ -16,6 +16,7 @@ namespace KitchenBar
         public enum Type {KITCHEN, BAR};
         public Product.Type ProductType;
         delegate ListViewItem LVAddDelegate(ListViewItem lvOrder);
+        delegate void LVUpdateDelegate();
         delegate void ChCommDelegate(Order order);
 
         public KitchenBarForm(KitchenBarForm.Type type)
@@ -34,8 +35,8 @@ namespace KitchenBar
 
             updateOrdersListView();
             evRepeater = new AlterEventRepeater();
-            //evRepeater.alterEvent += new AlterDelegate(DoAlterations);
-            //listServer.alterEvent += new AlterDelegate(evRepeater.Repeater);
+            evRepeater.alterEvent += new AlterDelegate(DoAlterations);
+            listServer.alterEvent += new AlterDelegate(evRepeater.Repeater);
 
         }
 
@@ -79,20 +80,25 @@ namespace KitchenBar
 
         public void DoAlterations(Operation op, Order order)
         {
-            LVAddDelegate lvAdd;
-            ChCommDelegate chComm;
+
+            LVUpdateDelegate lvUpdate;
 
             switch (op)
             {
-                /*case Operation.New:
-                    //lvAdd = new LVAddDelegate(ordersListView.Items.Add);
-                    ListViewItem lvOrder = new ListViewItem(new string[] { order.Type.ToString(), order.TableId.ToString() });
-                    BeginInvoke(lvAdd, new object[] { lvOrder });
+                case Operation.Added_Order:
+                    Console.WriteLine("Added new Order!");
+                    lvUpdate = new LVUpdateDelegate(updateOrdersListView);
+                    BeginInvoke(lvUpdate);
                     break;
-                case Operation.Change:
-                    chComm = new ChCommDelegate(ChangeAItem);
-                    BeginInvoke(chComm, new object[] { order });
-                    break;*/
+                case Operation.Changed_Order_State:
+                    Console.WriteLine("Changed Order State!");
+                    lvUpdate = new LVUpdateDelegate(updateOrdersListView);
+                    BeginInvoke(lvUpdate);
+                    break;
+                case Operation.Changed_Table_State:
+                    Console.WriteLine("Changed Table State!");
+                    //updateOrdersListView();
+                    break;
             }
         }
 
@@ -128,6 +134,8 @@ namespace KitchenBar
                     {
                         Console.WriteLine(order.Id + " " + order.TableId + " " + order.Product.Name + " " + order.TotalPrice);
                         //TODO: CHANGE ORDER STATE EVENT
+                        listServer.changeStatus(order.Id, Order.State.PROCESSING);
+                        
                     }
                 }
             }
@@ -147,9 +155,15 @@ namespace KitchenBar
                     {
                         Console.WriteLine(order.Id + " " + order.TableId + " " + order.Product.Name + " " + order.TotalPrice);
                         //TODO: CHANGE ORDER STATE EVENT
+                        listServer.changeStatus(order.Id, Order.State.FINISHED);
                     }
                 }
             }
+        }
+
+        private void ordersListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

@@ -16,7 +16,7 @@ namespace KitchenBar
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new KitchenBarForm(KitchenBarForm.Type.KITCHEN));
+            Application.Run(new KitchenBarForm(KitchenBarForm.Type.BAR));
         }
     }
 }
