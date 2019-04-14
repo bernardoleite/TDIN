@@ -13,6 +13,7 @@ namespace PaymentTerminal
         IListSingleton listServer;
         AlterEventRepeater evRepeater;
         List<Table> tables;
+        int nTablesServed = 0;
         delegate ListViewItem LVAddDelegate(ListViewItem lvOrder);
         delegate void LVUpdateDelegate();
         delegate void ChCommDelegate(Order order);
@@ -47,6 +48,17 @@ namespace PaymentTerminal
                 ListViewItem listItem = new ListViewItem(new string[] { tables[i].Id.ToString(), totalValue.ToString()+"€" });
                 tablesListView.Items.Add(listItem);
             }
+
+            //Total Value Collected
+            List<Order> orders = listServer.getOrders(Order.State.CLOSED);
+            float value = 0F;
+            for (int i = 0; i < orders.Count; i++)
+            {
+                value = value + orders[i].TotalPrice;
+            }
+            totalValue.Text = value.ToString();
+            tablesServed.Text = nTablesServed.ToString();
+
         }
 
         private void closeButton_Click(object sender, EventArgs e)
@@ -62,6 +74,7 @@ namespace PaymentTerminal
                     {
                         listServer.changeTableStatus(Int32.Parse(tableId), Table.State.CLOSED);
                         Console.WriteLine("CLOSED " + table.Id);
+                        nTablesServed++;
                         //TODO: PRINT RECIBO
                     }
                 }

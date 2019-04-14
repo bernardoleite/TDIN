@@ -41,13 +41,12 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
         Order order0 = new Order(9, products[0], 2, Order.State.NOT_PROCESSED); //drink
         Order order1 = new Order(8, products[1], 4, Order.State.PROCESSING); //drink
         Order order2 = new Order(7, products[2], 7, Order.State.FINISHED); //drink
-        Order order4 = new Order(2, products[5], 10, Order.State.CLOSED); //food
+        Order order4 = new Order(2, products[5], 10, Order.State.FINISHED); //food
         Order order5 = new Order(9, products[4], 2, Order.State.NOT_PROCESSED); //food
         Order order6 = new Order(8, products[5], 4, Order.State.PROCESSING); //food
         orders.Add(order0);
         orders.Add(order1);
         orders.Add(order2);
-        orders.Add(order3);
         orders.Add(order4);
         orders.Add(order5);
         orders.Add(order6);

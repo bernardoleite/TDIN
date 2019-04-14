@@ -49,7 +49,7 @@ namespace DinningRoom
             products = listServer.getProducts();
             foreach (var product in products)
             {
-                this.productsComboBox.Items.Add(product.Name);
+                this.productsComboBox.Items.Add(product.Name+" - "+product.Price+"€");
             }
         }
 
@@ -68,7 +68,7 @@ namespace DinningRoom
             ordersListView.Items.Clear();
             for (int i = 0; i < orders.Count; i++)
             {
-                ListViewItem listItem = new ListViewItem(new string[] { orders[i].Id.ToString(), orders[i].TableId.ToString(), orders[i].Product.Name, orders[i].Quantity.ToString(), orders[i].StateProperty.ToString() });
+                ListViewItem listItem = new ListViewItem(new string[] { orders[i].Id.ToString(), orders[i].TableId.ToString(), orders[i].Product.Name, orders[i].Quantity.ToString(), orders[i].TotalPrice.ToString() + "€", orders[i].StateProperty.ToString() });
                 ordersListView.Items.Add(listItem);
                 if (orders[i].StateProperty.Equals(Order.State.NOT_PROCESSED))
                 {
@@ -153,7 +153,8 @@ namespace DinningRoom
             if(tablesComboBox.SelectedItem != null && productsComboBox.SelectedItem != null)
             {
                 int tableID = Int32.Parse(tablesComboBox.SelectedItem.ToString());
-                String productName = productsComboBox.SelectedItem.ToString();
+                String productName = productsComboBox.SelectedItem.ToString().Substring(0, productsComboBox.SelectedItem.ToString().LastIndexOf(" - "));
+                Console.WriteLine(productName);
                 Product product = listServer.getProducts().Find(p => p.Name.Equals(productName));
                 int qnt = Int32.Parse(qntTextBox.Text);
 

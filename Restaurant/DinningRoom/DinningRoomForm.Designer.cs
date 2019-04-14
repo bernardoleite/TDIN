@@ -46,6 +46,7 @@
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.button2 = new System.Windows.Forms.Button();
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.qntTextBox)).BeginInit();
             this.SuspendLayout();
@@ -182,7 +183,8 @@
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4,
-            this.columnHeader5});
+            this.columnHeader5,
+            this.columnHeader6});
             this.ordersListView.Font = new System.Drawing.Font("Calibri Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ordersListView.ForeColor = System.Drawing.SystemColors.WindowText;
             this.ordersListView.GridLines = true;
@@ -216,12 +218,12 @@
             // columnHeader4
             // 
             this.columnHeader4.Text = "Quantity";
-            this.columnHeader4.Width = 85;
+            this.columnHeader4.Width = 70;
             // 
             // columnHeader5
             // 
-            this.columnHeader5.Text = "State";
-            this.columnHeader5.Width = 226;
+            this.columnHeader5.Text = "Total Price";
+            this.columnHeader5.Width = 86;
             // 
             // button2
             // 
@@ -233,6 +235,11 @@
             this.button2.Text = "Delivered";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.deliveredButton_click);
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "State";
+            this.columnHeader6.Width = 150;
             // 
             // DinningRoomForm
             // 
@@ -274,6 +281,7 @@
         private System.Windows.Forms.ComboBox tablesComboBox;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.NumericUpDown qntTextBox;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
     }
 }
 
