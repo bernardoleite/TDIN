@@ -46,7 +46,8 @@ namespace PaymentTerminal
                 }
 
                 ListViewItem listItem = new ListViewItem(new string[] { tables[i].Id.ToString(), totalValue.ToString()+"€" });
-                tablesListView.Items.Add(listItem);
+                if(totalValue != 0)
+                    tablesListView.Items.Add(listItem);
             }
 
             //Total Value Collected

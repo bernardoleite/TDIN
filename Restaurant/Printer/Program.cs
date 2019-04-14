@@ -25,7 +25,6 @@ namespace Printer
 
         public Program()
         {
-            Console.WriteLine("hello im there");
             RemotingConfiguration.Configure("Printer.exe.config", false);
             listServer = (IListSingleton)RemoteNew.New(typeof(IListSingleton));
             evRepeater = new AlterEventRepeater();
@@ -52,6 +51,9 @@ namespace Printer
 
         public void printBill(int tableId)
         {
+
+            float totalBill = 0;
+
             tables = listServer.getTables();
 
             Table table = tables.Find(t => t.Id.Equals(tableId));
@@ -64,8 +66,10 @@ namespace Printer
                 for (int j = 0; j < tableOrders.Count; j++)
                 {
                     listServer.changeOrderStatus(tableOrders[j].Id, Order.State.CLOSED);
-                    Console.WriteLine(tableOrders[j].Id + " " + tableOrders[j].TableId + " " + tableOrders[j].Product.Name + " " + tableOrders[j].TotalPrice);
+                    Console.WriteLine(tableOrders[j].Id + " " + tableOrders[j].TableId + " " + tableOrders[j].Product.Name + " " + tableOrders[j].TotalPrice + "eur");
+                    totalBill = totalBill + tableOrders[j].TotalPrice;
                 }
+                Console.WriteLine("Total: " + totalBill + "eur");
             }
 
         }
