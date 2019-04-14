@@ -31,10 +31,8 @@ namespace PaymentTerminal
         public void updateTablesListView()
         {
             tables = new List<Table>();
-
-            List<Table> tablesD = listServer.getTables(Table.State.DONE);
-            tables.AddRange(tablesD);
-           
+            tables = listServer.getTables(Table.State.DONE);
+                       
             tablesListView.Items.Clear();
             for (int i = 0; i < tables.Count; i++)
             {             
@@ -53,7 +51,21 @@ namespace PaymentTerminal
 
         private void closeButton_Click(object sender, EventArgs e)
         {
+            if (tablesListView.CheckedItems != null)
+            {
+                for (int i = 0; i < tablesListView.CheckedItems.Count; i++)
+                {
+                    String tableId = tablesListView.CheckedItems[i].Text.Substring(0, 1);
+                    Table table = listServer.getTables(Table.State.DONE).Find(o => o.Id.ToString().Equals(tableId));
 
+                    if (table != null)
+                    {
+                        listServer.changeTableStatus(Int32.Parse(tableId), Table.State.CLOSED);
+                        Console.WriteLine("CLOSED " + table.Id);
+                        //TODO: PRINT RECIBO
+                    }
+                }
+            }
         }
 
         /* The client is also a remote object. The Server calls remotely the AlterEvent handler  *
@@ -75,11 +87,10 @@ namespace PaymentTerminal
             switch (op)
             {
                 case Operation.Changed_Table_State:
-                    Console.WriteLine("Changed Order State!");
+                    Console.WriteLine("Changed Table State!");
                     lvUpdate = new LVUpdateDelegate(updateTablesListView);
                     BeginInvoke(lvUpdate);
                     break;
-
             }
         }
 

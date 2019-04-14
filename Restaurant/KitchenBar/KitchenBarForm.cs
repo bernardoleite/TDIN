@@ -42,15 +42,13 @@ namespace KitchenBar
 
         public void updateOrdersListView()
         {
-
             orders = new List<Order>();
             
             List<Order> ordersNP = listServer.getOrdersByType(Order.State.NOT_PROCESSED, this.ProductType);
             List<Order> ordersP = listServer.getOrdersByType(Order.State.PROCESSING, this.ProductType);
             orders.AddRange(ordersNP);
             orders.AddRange(ordersP);
-       
-           
+      
             ordersListView.Items.Clear();
             for (int i = 0; i < orders.Count; i++)
             {
@@ -135,8 +133,7 @@ namespace KitchenBar
                     {
                         Console.WriteLine(order.Id + " " + order.TableId + " " + order.Product.Name + " " + order.TotalPrice);
                         //TODO: CHANGE ORDER STATE EVENT
-                        listServer.changeStatus(order.Id, Order.State.PROCESSING);
-                        
+                        listServer.changeOrderStatus(order.Id, Order.State.PROCESSING); 
                     }
                 }
             }
@@ -156,7 +153,7 @@ namespace KitchenBar
                     {
                         Console.WriteLine(order.Id + " " + order.TableId + " " + order.Product.Name + " " + order.TotalPrice);
                         //TODO: CHANGE ORDER STATE EVENT
-                        listServer.changeStatus(order.Id, Order.State.FINISHED);
+                        listServer.changeOrderStatus(order.Id, Order.State.FINISHED);
                     }
                 }
             }

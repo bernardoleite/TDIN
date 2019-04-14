@@ -21,7 +21,8 @@ public interface IListSingleton
     List<Order> getOrdersByType(Order.State state, Product.Type type);
     List<Order> getOrdersByTable(int tableId);
     void addOrder(Order order);
-    void changeStatus(Guid orderId, Order.State newStatus);
+    void changeOrderStatus(Guid orderId, Order.State newStatus);
+    void changeTableStatus(int tableId, Table.State newStatus);
 }
 
 public class AlterEventRepeater : MarshalByRefObject

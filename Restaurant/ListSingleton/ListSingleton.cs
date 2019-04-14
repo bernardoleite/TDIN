@@ -20,10 +20,10 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
 
         //TABLES
         tables = new List<Table>();
-        tables.Add(new Table(0, Table.State.WAITING));
-        tables.Add(new Table(1, Table.State.WAITING));
-        tables.Add(new Table(2, Table.State.DONE));
-        tables.Add(new Table(3, Table.State.DONE));
+        tables.Add(new Table(0, Table.State.CLOSED));
+        tables.Add(new Table(1, Table.State.CLOSED));
+        tables.Add(new Table(2, Table.State.CLOSED));
+        tables.Add(new Table(3, Table.State.CLOSED));
         tables.Add(new Table(4, Table.State.CLOSED));
         tables.Add(new Table(5, Table.State.CLOSED));
 
@@ -41,7 +41,6 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
         Order order0 = new Order(9, products[0], 2, Order.State.NOT_PROCESSED); //drink
         Order order1 = new Order(8, products[1], 4, Order.State.PROCESSING); //drink
         Order order2 = new Order(7, products[2], 7, Order.State.FINISHED); //drink
-        Order order3 = new Order(5, products[3], 9, Order.State.DELIVERED); //food
         Order order4 = new Order(2, products[5], 10, Order.State.CLOSED); //food
         Order order5 = new Order(9, products[4], 2, Order.State.NOT_PROCESSED); //food
         Order order6 = new Order(8, products[5], 4, Order.State.PROCESSING); //food
@@ -143,12 +142,10 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
         }
     }
 
-    public void changeStatus(Guid orderId, Order.State newStatus)
+    public void changeOrderStatus(Guid orderId, Order.State newStatus)
     {
         Order norder = null;
-
         bool istableDone = true;
-
         int tableId = 0;
 
         foreach (Order it in orders)
@@ -171,13 +168,12 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
                 istableDone = false;
                 break;
             }
-
         }
 
         if(istableDone == true)
         {
             Table table = tables.Find(t => t.Id.Equals(tableId));
-            if (!table.StateProperty.Equals(Table.State.DONE))
+            if (table != null && !table.StateProperty.Equals(Table.State.DONE))
             {
                 table.StateProperty = Table.State.DONE;
                 NotifyClients(Operation.Changed_Table_State, null);
@@ -186,13 +182,28 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
         else if (istableDone != true)
         {
             Table table = tables.Find(t => t.Id.Equals(tableId));
-            if (!table.StateProperty.Equals(Table.State.WAITING))
+            if (table!= null && !table.StateProperty.Equals(Table.State.WAITING))
             {
                 table.StateProperty = Table.State.WAITING;
                 NotifyClients(Operation.Changed_Table_State, null);
             }
         }
+    }
 
+    public void changeTableStatus(int tableId, Table.State newStatus)
+    {
+        if (newStatus.Equals(Table.State.CLOSED))
+        {
+            List<Order> tableOrders = getOrdersByTable(tableId);
+            for (int j = 0; j < tableOrders.Count; j++)
+            {
+                changeOrderStatus(tableOrders[j].Id, Order.State.CLOSED);
+            }
+        }
+
+        Table table = tables.Find(t => t.Id.Equals(tableId));
+        table.StateProperty = newStatus;
+        NotifyClients(Operation.Changed_Table_State, null);
     }
 
     void NotifyClients(Operation op, Order order)

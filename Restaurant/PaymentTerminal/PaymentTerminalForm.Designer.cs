@@ -34,7 +34,6 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label4 = new System.Windows.Forms.Label();
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // closeButton
@@ -53,7 +52,6 @@
             this.tablesListView.CheckBoxes = true;
             this.tablesListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
-            this.columnHeader2,
             this.columnHeader3});
             this.tablesListView.Font = new System.Drawing.Font("Calibri Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tablesListView.ForeColor = System.Drawing.SystemColors.WindowText;
@@ -89,11 +87,6 @@
             this.label4.TabIndex = 6;
             this.label4.Text = "TABLES";
             // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "State";
-            this.columnHeader2.Width = 100;
-            // 
             // PaymentTerminalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -116,7 +109,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
     }
 }
 

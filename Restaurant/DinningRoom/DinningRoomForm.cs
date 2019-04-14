@@ -177,7 +177,7 @@ namespace DinningRoom
                     {
                         Console.WriteLine(order.Id + " " + order.TableId + " " + order.Product.Name + " " + order.TotalPrice);
                         //TODO: CHANGE ORDER STATE EVENT 
-                        listServer.changeStatus(order.Id, Order.State.DELIVERED); 
+                        listServer.changeOrderStatus(order.Id, Order.State.DELIVERED); 
                     }
                }
             }
