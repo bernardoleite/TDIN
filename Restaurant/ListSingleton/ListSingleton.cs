@@ -128,16 +128,31 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
         return res;
     }
 
+    public List<Order> getOrdersByTable(int tableId, Order.State state)
+    {
+        Console.WriteLine("getOrdersByTable(state,tableId) called.");
+        List<Order> res = new List<Order>();
+        foreach (Order order in orders)
+        {
+            if (order.TableId == tableId && order.StateProperty.Equals(state))
+            {
+                res.Add(order);
+            }
+
+        }
+        return res;
+    }
+
     public void addOrder(Order order) //TODO: apagar order porque acho que é inutil?
     {
         orders.Add(order);
-        NotifyClients(Operation.Added_Order, order);
+        NotifyClients(Operation.Added_Order, order, 0);
 
         Table table = tables.Find(t => t.Id.Equals(order.TableId));
         if (!table.StateProperty.Equals(Table.State.WAITING))
         {
             table.StateProperty = Table.State.WAITING;
-            NotifyClients(Operation.Changed_Table_State, null);
+            NotifyClients(Operation.Changed_Table_State, null, 0);
         }
     }
 
@@ -158,7 +173,7 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
             }
 
         }
-        NotifyClients(Operation.Changed_Order_State, norder);
+        NotifyClients(Operation.Changed_Order_State, norder, tableId);
 
         foreach (Order it in orders)
         {
@@ -175,7 +190,7 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
             if (table != null && !table.StateProperty.Equals(Table.State.DONE))
             {
                 table.StateProperty = Table.State.DONE;
-                NotifyClients(Operation.Changed_Table_State, null);
+                NotifyClients(Operation.Changed_Table_State, null, tableId);
             }
         }
         else if (istableDone != true)
@@ -184,28 +199,20 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
             if (table!= null && !table.StateProperty.Equals(Table.State.WAITING))
             {
                 table.StateProperty = Table.State.WAITING;
-                NotifyClients(Operation.Changed_Table_State, null);
+                NotifyClients(Operation.Changed_Table_State, null, tableId);
             }
         }
     }
 
     public void changeTableStatus(int tableId, Table.State newStatus)
     {
-        if (newStatus.Equals(Table.State.CLOSED))
-        {
-            List<Order> tableOrders = getOrdersByTable(tableId);
-            for (int j = 0; j < tableOrders.Count; j++)
-            {
-                changeOrderStatus(tableOrders[j].Id, Order.State.CLOSED);
-            }
-        }
-
         Table table = tables.Find(t => t.Id.Equals(tableId));
         table.StateProperty = newStatus;
-        NotifyClients(Operation.Changed_Table_State, null);
+        NotifyClients(Operation.Changed_Table_State, null, tableId);
+
     }
 
-    void NotifyClients(Operation op, Order order)
+    void NotifyClients(Operation op, Order order, int tableId)
     {
         if (alterEvent != null)
         {
@@ -216,7 +223,7 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
                 new Thread(() => {
                     try
                     {
-                        handler(op, order);
+                        handler(op, order, tableId);
                         Console.WriteLine("Invoking event handler");
                     }
                     catch (Exception)

@@ -37,7 +37,7 @@ namespace PaymentTerminal
             tablesListView.Items.Clear();
             for (int i = 0; i < tables.Count; i++)
             {             
-                List<Order> tableOrders = listServer.getOrdersByTable(tables[i].Id);
+                List<Order> tableOrders = listServer.getOrdersByTable(tables[i].Id, Order.State.DELIVERED);
                 float totalValue = 0;
 
                 foreach(Order order in tableOrders)
@@ -92,7 +92,7 @@ namespace PaymentTerminal
         /* Event handler for the remote AlterEvent subscription and other auxiliary methods */
 
 
-        public void DoAlterations(Operation op, Order order)
+        public void DoAlterations(Operation op, Order order, int tableId)
         {
 
             LVUpdateDelegate lvUpdate;

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 public enum Operation { Added_Order, Changed_Order_State, Changed_Table_State };
 
-public delegate void AlterDelegate(Operation op, Order order);
+public delegate void AlterDelegate(Operation op, Order order, int tableId);
 
 public interface IListSingleton
 {
@@ -20,6 +20,7 @@ public interface IListSingleton
     List<Order> getOrders(Order.State state);
     List<Order> getOrdersByType(Order.State state, Product.Type type);
     List<Order> getOrdersByTable(int tableId);
+    List<Order> getOrdersByTable(int tableId, Order.State state);
     void addOrder(Order order);
     void changeOrderStatus(Guid orderId, Order.State newStatus);
     void changeTableStatus(int tableId, Table.State newStatus);
@@ -34,9 +35,9 @@ public class AlterEventRepeater : MarshalByRefObject
         return null;
     }
 
-    public void Repeater(Operation op, Order order)
+    public void Repeater(Operation op, Order order, int tableId)
     {
         if (alterEvent != null)
-            alterEvent(op, order);
+            alterEvent(op, order, tableId);
     }
 }

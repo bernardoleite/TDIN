@@ -21,4 +21,3 @@ C:\Users\Bernardo\Source\Repos\TDIN\Restaurant\Common\bin\Debug\Common.pdb
 C:\Users\Bernardo\Source\Repos\TDIN\Restaurant\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
 C:\Users\Bernardo\Source\Repos\TDIN\Restaurant\Common\obj\Debug\Common.dll
 C:\Users\Bernardo\Source\Repos\TDIN\Restaurant\Common\obj\Debug\Common.pdb
-C:\Users\Bernardo\Source\Repos\TDIN\Restaurant\Common\obj\Debug\Common.csprojAssemblyReference.cache

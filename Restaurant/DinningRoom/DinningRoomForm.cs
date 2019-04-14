@@ -101,7 +101,7 @@ namespace DinningRoom
         /* Event handler for the remote AlterEvent subscription and other auxiliary methods */
 
 
-        public void DoAlterations(Operation op, Order order)
+        public void DoAlterations(Operation op, Order order, int tableId)
         {
             //LVAddDelegate lvAdd;
             LVUpdateDelegate lvUpdate;
