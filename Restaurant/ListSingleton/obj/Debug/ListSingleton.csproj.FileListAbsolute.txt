@@ -10,15 +10,6 @@ C:\Users\Bernardo\Desktop\TDIN\Restaurant\ListSingleton\obj\Debug\ListSingleton.
 C:\Users\Bernardo\Desktop\TDIN\Restaurant\ListSingleton\obj\Debug\ListSingleton.csproj.CoreCompileInputs.cache
 C:\Users\Bernardo\Desktop\TDIN\Restaurant\ListSingleton\obj\Debug\ListSingleton.dll
 C:\Users\Bernardo\Desktop\TDIN\Restaurant\ListSingleton\obj\Debug\ListSingleton.pdb
-C:\Users\FF\Documents\GitHub\TDIN\Restaurant\ListSingleton\bin\Debug\ListSingleton.dll
-C:\Users\FF\Documents\GitHub\TDIN\Restaurant\ListSingleton\bin\Debug\ListSingleton.pdb
-C:\Users\FF\Documents\GitHub\TDIN\Restaurant\ListSingleton\bin\Debug\Common.dll
-C:\Users\FF\Documents\GitHub\TDIN\Restaurant\ListSingleton\bin\Debug\Common.pdb
-C:\Users\FF\Documents\GitHub\TDIN\Restaurant\ListSingleton\obj\Debug\ListSingleton.csprojAssemblyReference.cache
-C:\Users\FF\Documents\GitHub\TDIN\Restaurant\ListSingleton\obj\Debug\ListSingleton.csproj.CoreCompileInputs.cache
-C:\Users\FF\Documents\GitHub\TDIN\Restaurant\ListSingleton\obj\Debug\ListSingleton.csproj.CopyComplete
-C:\Users\FF\Documents\GitHub\TDIN\Restaurant\ListSingleton\obj\Debug\ListSingleton.dll
-C:\Users\FF\Documents\GitHub\TDIN\Restaurant\ListSingleton\obj\Debug\ListSingleton.pdb
 C:\Users\Bernardo\Source\Repos\TDIN\Restaurant\ListSingleton\bin\Debug\ListSingleton.dll
 C:\Users\Bernardo\Source\Repos\TDIN\Restaurant\ListSingleton\bin\Debug\ListSingleton.pdb
 C:\Users\Bernardo\Source\Repos\TDIN\Restaurant\ListSingleton\bin\Debug\Common.dll
