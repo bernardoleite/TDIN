@@ -8,3 +8,13 @@ C:\Users\Bernardo\Source\Repos\TDIN\Restaurant\Printer\obj\Debug\Printer.csproj.
 C:\Users\Bernardo\Source\Repos\TDIN\Restaurant\Printer\obj\Debug\Printer.exe
 C:\Users\Bernardo\Source\Repos\TDIN\Restaurant\Printer\obj\Debug\Printer.pdb
 C:\Users\Bernardo\Source\Repos\TDIN\Restaurant\Printer\obj\Debug\Printer.csprojAssemblyReference.cache
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\Printer\bin\Debug\Printer.exe.config
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\Printer\bin\Debug\Printer.exe
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\Printer\bin\Debug\Printer.pdb
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\Printer\bin\Debug\Common.dll
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\Printer\bin\Debug\Common.pdb
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\Printer\obj\Debug\Printer.csprojAssemblyReference.cache
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\Printer\obj\Debug\Printer.csproj.CoreCompileInputs.cache
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\Printer\obj\Debug\Printer.csproj.CopyComplete
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\Printer\obj\Debug\Printer.exe
+C:\Users\FF\Documents\GitHub\TDIN\Restaurant\Printer\obj\Debug\Printer.pdb

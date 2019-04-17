@@ -1,11 +1,7 @@
 ﻿using Common;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 public class ListSingleton : MarshalByRefObject, IListSingleton {
     List <Order> orders;
@@ -38,7 +34,7 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
 
         //ORDERS
         orders = new List<Order>();
-        Order order0 = new Order(9, products[0], 2, Order.State.NOT_PROCESSED); //drink
+        /*Order order0 = new Order(9, products[0], 2, Order.State.NOT_PROCESSED); //drink
         Order order1 = new Order(8, products[1], 4, Order.State.PROCESSING); //drink
         Order order2 = new Order(7, products[2], 7, Order.State.FINISHED); //drink
         Order order4 = new Order(2, products[5], 10, Order.State.FINISHED); //food
@@ -49,7 +45,7 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
         orders.Add(order2);
         orders.Add(order4);
         orders.Add(order5);
-        orders.Add(order6);
+        orders.Add(order6);*/
     }
 
     public override object InitializeLifetimeService()
@@ -143,7 +139,7 @@ public class ListSingleton : MarshalByRefObject, IListSingleton {
         return res;
     }
 
-    public void addOrder(Order order) //TODO: apagar order porque acho que é inutil?
+    public void addOrder(Order order)
     {
         orders.Add(order);
         NotifyClients(Operation.Added_Order, order, 0);

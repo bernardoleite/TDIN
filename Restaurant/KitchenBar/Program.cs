@@ -12,11 +12,15 @@ namespace KitchenBar
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new KitchenBarForm(KitchenBarForm.Type.BAR));
+            if(args[0].Equals("bar"))
+                Application.Run(new KitchenBarForm(KitchenBarForm.Type.BAR));
+            else if(args[0].Equals("kitchen"))
+                Application.Run(new KitchenBarForm(KitchenBarForm.Type.KITCHEN));
+
         }
     }
 }

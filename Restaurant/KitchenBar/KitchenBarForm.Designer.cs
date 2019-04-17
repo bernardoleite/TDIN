@@ -72,7 +72,6 @@
             this.ordersListView.TabIndex = 4;
             this.ordersListView.UseCompatibleStateImageBehavior = false;
             this.ordersListView.View = System.Windows.Forms.View.Details;
-            this.ordersListView.SelectedIndexChanged += new System.EventHandler(this.ordersListView_SelectedIndexChanged);
             // 
             // columnHeader1
             // 

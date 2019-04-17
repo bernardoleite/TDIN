@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
             this.closeButton = new System.Windows.Forms.Button();
             this.tablesListView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -60,9 +60,9 @@
             this.tablesListView.Font = new System.Drawing.Font("Calibri Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tablesListView.ForeColor = System.Drawing.SystemColors.WindowText;
             this.tablesListView.GridLines = true;
-            listViewItem4.StateImageIndex = 0;
+            listViewItem1.StateImageIndex = 0;
             this.tablesListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem4});
+            listViewItem1});
             this.tablesListView.Location = new System.Drawing.Point(47, 93);
             this.tablesListView.MultiSelect = false;
             this.tablesListView.Name = "tablesListView";
@@ -70,6 +70,7 @@
             this.tablesListView.TabIndex = 7;
             this.tablesListView.UseCompatibleStateImageBehavior = false;
             this.tablesListView.View = System.Windows.Forms.View.Details;
+            this.tablesListView.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.tablesListView_ItemCheck);
             // 
             // columnHeader1
             // 

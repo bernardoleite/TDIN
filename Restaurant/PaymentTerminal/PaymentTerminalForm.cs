@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Runtime.Remoting;
 using System.Windows.Forms;
 
@@ -76,9 +75,23 @@ namespace PaymentTerminal
                         listServer.changeTableStatus(Int32.Parse(tableId), Table.State.CLOSED);
                         Console.WriteLine("CLOSED " + table.Id);
                         nTablesServed++;
-                        //TODO: PRINT RECIBO
                     }
                 }
+            }
+        }
+
+        private void tablesListView_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            var listView = sender as ListView;
+            if (listView != null)
+            {
+                var checkedCount = listView.CheckedItems.Count;
+                listView.ItemCheck -= tablesListView_ItemCheck;
+                for (var i = 0; i < checkedCount; i++)
+                {
+                    listView.CheckedItems[i].Checked = false;
+                }
+                listView.ItemCheck += tablesListView_ItemCheck;
             }
         }
 
@@ -108,23 +121,6 @@ namespace PaymentTerminal
             }
         }
 
-        private void ChangeAItem(Order it)
-        {
-            /*foreach (ListViewItem lvI in ordersListView.Items)
-                if (Convert.ToInt32(lvI.SubItems[0].Text) == it.Type)
-                {
-                    lvI.SubItems[2].Text = it.TableId.ToString();
-                    break;
-                }*/
-        }
-
-
-        /* Client interface event handlers */
-        private void ClientWindow_Load(object sender, EventArgs e)
-        {
-
-        }
-
         /* Mechanism for instanciating a remote object through its interface, using the config file */
 
         class RemoteNew
@@ -148,5 +144,6 @@ namespace PaymentTerminal
                 return RemotingServices.Connect(type, entry.ObjectUrl);
             }
         }
+
     }
 }

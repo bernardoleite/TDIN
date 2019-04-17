@@ -28,16 +28,18 @@ namespace KitchenBar
             if (type.Equals(Type.KITCHEN))
             {
                 this.ProductType = Product.Type.FOOD;
+                this.Text = "Kitchen";
+            }
+            else if (type.Equals(Type.BAR))
+            {
+                this.ProductType = Product.Type.DRINK;
+                this.Text = "Bar";
             }
                 
-            else if (type.Equals(Type.BAR))
-                this.ProductType = Product.Type.DRINK;
-
             updateOrdersListView();
             evRepeater = new AlterEventRepeater();
             evRepeater.alterEvent += new AlterDelegate(DoAlterations);
             listServer.alterEvent += new AlterDelegate(evRepeater.Repeater);
-
         }
 
         public void updateOrdersListView()
@@ -101,24 +103,6 @@ namespace KitchenBar
             }
         }
 
-
-        private void ChangeAItem(Order it)
-        {
-            /*foreach (ListViewItem lvI in ordersListView.Items)
-                if (Convert.ToInt32(lvI.SubItems[0].Text) == it.Type)
-                {
-                    lvI.SubItems[2].Text = it.TableId.ToString();
-                    break;
-                }*/
-        }
-
-
-        /* Client interface event handlers */
-        private void ClientWindow_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void processingButton_click(object sender, EventArgs e)
         {
             if (ordersListView.CheckedItems != null)
@@ -132,7 +116,6 @@ namespace KitchenBar
                     if (order != null)
                     {
                         Console.WriteLine(order.Id + " " + order.TableId + " " + order.Product.Name + " " + order.TotalPrice);
-                        //TODO: CHANGE ORDER STATE EVENT
                         listServer.changeOrderStatus(order.Id, Order.State.PROCESSING); 
                     }
                 }
@@ -152,16 +135,10 @@ namespace KitchenBar
                     if (order != null)
                     {
                         Console.WriteLine(order.Id + " " + order.TableId + " " + order.Product.Name + " " + order.TotalPrice);
-                        //TODO: CHANGE ORDER STATE EVENT
                         listServer.changeOrderStatus(order.Id, Order.State.FINISHED);
                     }
                 }
             }
-        }
-
-        private void ordersListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 

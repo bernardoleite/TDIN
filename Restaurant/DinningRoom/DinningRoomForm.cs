@@ -13,9 +13,9 @@ namespace DinningRoom
     {
         IListSingleton listServer;
         AlterEventRepeater evRepeater;
-        List <Order> orders;
-        List <Table> tables;
-        List <Product> products;
+        List<Order> orders;
+        List<Table> tables;
+        List<Product> products;
         //delegate ListViewItem LVAddDelegate(ListViewItem lvOrder);
         delegate void LVUpdateDelegate();
         delegate void ChCommDelegate(Order order);
@@ -49,7 +49,7 @@ namespace DinningRoom
             products = listServer.getProducts();
             foreach (var product in products)
             {
-                this.productsComboBox.Items.Add(product.Name+" - "+product.Price+"€");
+                this.productsComboBox.Items.Add(product.Name + " - " + product.Price + "€");
             }
         }
 
@@ -107,7 +107,7 @@ namespace DinningRoom
             LVUpdateDelegate lvUpdate;
             //ChCommDelegate chComm;
 
-            switch (op) 
+            switch (op)
             {
                 case Operation.Added_Order:
                     Console.WriteLine("Added new Order!");
@@ -126,31 +126,9 @@ namespace DinningRoom
             }
         }
 
-
-        private void ChangeAItem(Order it)
-        {
-
-            Console.WriteLine("Entered ChangeAItem!!");
-
-            /*foreach (ListViewItem lvI in ordersListView.Items)
-                if (Convert.ToInt32(lvI.SubItems[0].Text) == it.Type)
-                {
-                    lvI.SubItems[2].Text = it.TableId.ToString();
-                    break;
-                }*/
-        }
-
-
-        /* Client interface event handlers */
-        private void ClientWindow_Load(object sender, EventArgs e)
-        {
-
-        }
-
-
         private void addOrderButton_Click(object sender, EventArgs e)
         {
-            if(tablesComboBox.SelectedItem != null && productsComboBox.SelectedItem != null)
+            if (tablesComboBox.SelectedItem != null && productsComboBox.SelectedItem != null)
             {
                 int tableID = Int32.Parse(tablesComboBox.SelectedItem.ToString());
                 String productName = productsComboBox.SelectedItem.ToString().Substring(0, productsComboBox.SelectedItem.ToString().LastIndexOf(" - "));
@@ -169,24 +147,18 @@ namespace DinningRoom
         {
             if (ordersListView.CheckedItems != null)
             {
-               for(int i=0; i<ordersListView.CheckedItems.Count; i++)
-               {
+                for (int i = 0; i < ordersListView.CheckedItems.Count; i++)
+                {
                     String orderID = ordersListView.CheckedItems[i].Text.Substring(0, 36);
                     Order order = listServer.getOrders(Order.State.FINISHED).Find(o => o.Id.ToString().Equals(orderID));
 
                     if (order != null)
                     {
                         Console.WriteLine(order.Id + " " + order.TableId + " " + order.Product.Name + " " + order.TotalPrice);
-                        //TODO: CHANGE ORDER STATE EVENT 
-                        listServer.changeOrderStatus(order.Id, Order.State.DELIVERED); 
+                        listServer.changeOrderStatus(order.Id, Order.State.DELIVERED);
                     }
-               }
+                }
             }
-        }
-
-        private void ordersListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 

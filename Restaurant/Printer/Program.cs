@@ -35,11 +35,8 @@ namespace Printer
             Console.ReadLine();
         }
 
-
-
         public void DoAlterations(Operation op, Order order, int tableId)
         {
-
             switch (op)
             {
                 case Operation.Changed_Table_State:
@@ -53,7 +50,7 @@ namespace Printer
         {
 
             float totalBill = 0;
-
+  
             tables = listServer.getTables();
 
             Table table = tables.Find(t => t.Id.Equals(tableId));
@@ -71,10 +68,7 @@ namespace Printer
                 }
                 Console.WriteLine("Total: " + totalBill + "eur");
             }
-
         }
-
-
     }
 
 

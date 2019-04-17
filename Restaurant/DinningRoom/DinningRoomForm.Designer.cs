@@ -45,8 +45,8 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.button2 = new System.Windows.Forms.Button();
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.button2 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.qntTextBox)).BeginInit();
             this.SuspendLayout();
@@ -198,7 +198,6 @@
             this.ordersListView.TabIndex = 3;
             this.ordersListView.UseCompatibleStateImageBehavior = false;
             this.ordersListView.View = System.Windows.Forms.View.Details;
-            this.ordersListView.SelectedIndexChanged += new System.EventHandler(this.ordersListView_SelectedIndexChanged);
             // 
             // columnHeader1
             // 
@@ -225,6 +224,11 @@
             this.columnHeader5.Text = "Total Price";
             this.columnHeader5.Width = 86;
             // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "State";
+            this.columnHeader6.Width = 150;
+            // 
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Calibri Light", 14F);
@@ -235,11 +239,6 @@
             this.button2.Text = "Delivered";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.deliveredButton_click);
-            // 
-            // columnHeader6
-            // 
-            this.columnHeader6.Text = "State";
-            this.columnHeader6.Width = 150;
             // 
             // DinningRoomForm
             // 
@@ -253,7 +252,6 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "DinningRoomForm";
             this.Text = "Dinning Room";
-            this.Load += new System.EventHandler(this.ClientWindow_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.qntTextBox)).EndInit();
