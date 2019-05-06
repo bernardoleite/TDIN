@@ -10,4 +10,4 @@ starts on index.js
 exports on 'config/database'
 model on 'models'
 
-Ensure you have installed postegreSQL and have created 'storedb' with password '123'
+Ensure you have installed postgreSQL and have created 'storedb' with password '123'
