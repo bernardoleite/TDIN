@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 const router = express.Router();
 const db = require('../../config/database');
 const Client = require('../../models/Client');
@@ -12,4 +12,4 @@ router.get('/', (req, res) =>
       })
     .catch(err => console.log(err)));
 
-module.exports = router;
+module.exports = router;*/

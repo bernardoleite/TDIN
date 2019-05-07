@@ -2,13 +2,11 @@ const express = require('express');
 const path = require ('path');
 const exphbs = require('express-handlebars');
 
-// Database
-const db = require('./config/database')
+// DB connection
+require("./src/database/connection");
 
-// Test db
-db.authenticate()
-    .then(() => console.log('Database connected...'))
-    .catch(err => console.log('Error:' + err))
+require("./src/bootstrap")();
+
 
 const app = express();
 
@@ -21,10 +19,10 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 //Set static Folder
-app.use(express.static(path.join(__dirname,'public')));
+//app.use(express.static(path.join(__dirname,'public')));
 
 //Store API Routes
-app.use('/api/store', require('./routes/api/store'));
+//app.use('/api/store', require('./routes/api/store'));
 
 //Homepage Route
 // app.get('/', (req,res) => res.render('index'));
