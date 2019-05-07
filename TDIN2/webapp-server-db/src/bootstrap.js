@@ -24,5 +24,5 @@ module.exports = async () => {
     const clients = await Client.findAll({ where: { name: 'Bernardo'}, include: [{model: Order, as: "Orders"}]}).catch(errHandler);
 
 
-    console.log(clients[0].name);
+    //console.log(clients[0].name);
 }

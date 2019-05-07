@@ -22,7 +22,7 @@ app.use(express.urlencoded({extended: false}));
 //app.use(express.static(path.join(__dirname,'public')));
 
 //Store API Routes
-//app.use('/api/store', require('./routes/api/store'));
+app.use('/api/store', require('./routes/api/store'));
 
 //Homepage Route
 // app.get('/', (req,res) => res.render('index'));
