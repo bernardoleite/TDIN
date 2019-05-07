@@ -5,9 +5,10 @@ Steps:
 -- During installation choose any password, i.e '12345678'
 
 -- After installation change password to null:
-	Type mysql -u root -p
-	Type ALTER USER 'root'@'localhost' IDENTIFIED BY '';
-	FLUSH PRIVILEGES;
+	Type this: mysql -u root -p
+	Enter password: '12345678'
+	mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';
+	mysql> FLUSH PRIVILEGES;
 
 -- If everything is ok should appear 'mysql> '
 
@@ -29,7 +30,7 @@ Useful ommands:
 --Create table:
 sequelize migration:create --name create_NAME_table
 
---Migrate tables:
+--Migrate all tables:
 sequelize db:migrate
 
 --Delete all migrations (tables):
