@@ -18,7 +18,7 @@ Steps:
 
 -- Migrate tables with 'sequelize db:migrate'
 
--- Go inside 'webapp-server-db', open a new terminal and type: 'npm install' followed by 'node index'
+-- Open a new terminal inside 'webapp-server-db' and type: 'npm install' followed by 'node index'
 
 -- Return to database terminal on step 7 and type 'show tables;'. If everything is ok it should list current tables
 
