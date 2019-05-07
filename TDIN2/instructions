@@ -1,25 +1,30 @@
 Steps:
 
---1 Install MySQL Community Server
+-- Install MySQL Community Server
 
---2 During installation choose password '12345678'
+-- During installation choose any password, i.e '12345678'
 
---2.1 After installation change password to null:
+-- After installation change password to null:
 	Type mysql -u root -p
 	Type ALTER USER 'root'@'localhost' IDENTIFIED BY '';
 	FLUSH PRIVILEGES;
 
---5 If everything is ok should appear 'mysql> '
+-- If everything is ok should appear 'mysql> '
 
---6 Type this for creating database: 'CREATE DATABASE storedb;'
+-- Type this for creating database: 'CREATE DATABASE storedb;'
 
---7 Type this for using database: 'USE storedb;'
+-- Type this for using database: 'USE storedb;'
+
+-- Migrate tables with 'sequelize db:migrate'
 
 -- Go inside 'webapp-server-db', open a new terminal and type: 'npm install' followed by 'node index'
 
 -- Return to database terminal on step 7 and type 'show tables;'. If everything is ok it should list current tables
 
-Other commands:
+-- Webpages on 'public' folder
+
+
+Useful ommands:
 
 --Create table:
 sequelize migration:create --name create_NAME_table
@@ -30,5 +35,3 @@ sequelize db:migrate
 --Delete all migrations (tables):
 sequelize db:migrate:undo:all
 
-
-On MySQL
