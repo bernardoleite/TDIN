@@ -24,6 +24,8 @@ app.use(express.urlencoded({extended: false}));
 //Store API Routes
 app.use('/api/store', require('./routes/api/store'));
 
+
+
 //Homepage Route
 // app.get('/', (req,res) => res.render('index'));
 
@@ -37,6 +39,8 @@ app.use('/api/store', require('./routes/api/store'));
 // app.get ('/about', (req,res) => {
 //     res.sendFile(path.join(__dirname, 'public', 'about.html'));
 // });
+
+
 
 const PORT = process.env.PORT || 5000;
 
