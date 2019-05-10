@@ -1,15 +1,17 @@
 const Sequelize = require("sequelize");
+var DataTypes = require('sequelize/lib/data-types');
 
 module.exports = sequelize.define("Order", {
 
     id: {
-        type: Sequelize.INTEGER(11),
+        type: DataTypes.UUID,
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
     },
-    quantity: Sequelize.STRING(300),
-    product: Sequelize.STRING(300),
     clientId: Sequelize.INTEGER(11),
-
+    bookId: Sequelize.INTEGER(11),
+    quantity: Sequelize.INTEGER(11),
+    totalPrice: Sequelize.FLOAT,
+    dispatchedDate: Sequelize.DATE,
+    state: Sequelize.STRING(300),
 });
