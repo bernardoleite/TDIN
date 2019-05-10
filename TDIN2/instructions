@@ -14,13 +14,15 @@ Steps:
 
 -- Type this for creating database: 'CREATE DATABASE storedb;'
 
--- Type this for using database: 'USE storedb;'
+--(*) Type this for using database: 'USE storedb;'
+
+-- Open a new terminal inside 'webapp-server-db'
 
 -- Migrate tables with 'sequelize db:migrate'
 
--- Open a new terminal inside 'webapp-server-db' and type: 'npm install' followed by 'node index'
+-- Start server and db with: 'npm install' followed by 'node index'
 
--- Return to database terminal on step 7 and type 'show tables;'. If everything is ok it should list current tables
+-- Return to database terminal on step (*) and type 'show tables;'. If everything is ok it should list current tables
 
 -- Webpages on 'public' folder
 
