@@ -20,6 +20,7 @@
   @import url('https://fonts.googleapis.com/css?family=Nunito');
   body{
     font-family: 'Nunito', sans-serif;
+    background-color: #f3f3f3ff;
   }
 </style>
 

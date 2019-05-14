@@ -1,26 +1,38 @@
 <template>
     <div>
-        <h1>BOOKS</h1>
-        <v-data-table
-            v-model="selected" :headers="headers" :items="desserts" item-key="name" select-all class="elevation-1">
-            <template v-slot:items="props">
-            <td>
-                <v-checkbox
-                v-model="props.selected"
-                primary
-                hide-details
-                ></v-checkbox>
-            </td>
-            <td>{{ props.item.name }}</td>
-            <td class="text-xs-right">{{ props.item.calories }}</td>
-            <td class="text-xs-right">{{ props.item.fat }}</td>
-            <td class="text-xs-right">{{ props.item.carbs }}</td>
-            <td class="text-xs-right">{{ props.item.protein }}</td>
-            <td class="text-xs-right">{{ props.item.iron }}</td>
-            </template>
-        </v-data-table>
+        <div class="title-wrapper">
+            <hr>
+            <h1>Books</h1>
+            <hr>
+        </div>
+        <div class="table-wrapper">
+            <v-text-field
+            v-model="search"
+            append-icon="search"
+            label="Search"
+            single-line
+            hide-details
+            ></v-text-field>
+            <v-data-table
+                v-model="selected" :headers="headers" :items="desserts" :search="search" item-key="name" select-all hide-actions class="elevation-1">
+                <template v-slot:items="props">
+                <td>
+                    <v-checkbox
+                    v-model="props.selected"
+                    primary
+                    hide-details
+                    ></v-checkbox>
+                </td>
+                <td>{{ props.item.name }}</td>
+                <td class="text-xs-right">{{ props.item.calories }}</td>
+                <td class="text-xs-right">{{ props.item.fat }}</td>
+                <td class="text-xs-right">{{ props.item.carbs }}</td>
+                <td class="text-xs-right">{{ props.item.protein }}</td>
+                <td class="text-xs-right">{{ props.item.iron }}</td>
+                </template>
+            </v-data-table>
+        </div>
     </div>
-    
  </template>
   
 <script>
@@ -28,6 +40,7 @@
         name: 'books',
         data () {
         return {
+            search: '',
             selected: [],
             headers: [
             {
@@ -130,5 +143,57 @@
 </script>
   
 <style>
+    div.title-wrapper{
+        display:flex;
+        align-items: center;
+        margin-top:1em;
+    }
+    div.title-wrapper hr{
+        width: 100%;
+        border-top: .2em solid #76a5af;
+    }
+    div.title-wrapper hr:first-child{
+        width: 17.5%;
+        height:1px;
+    }
+    div.title-wrapper h1{
+        color: #76a5af;
+        font-size: 2em;
+        padding-right: .6em;
+        padding-left: .6em;
+    }
+    div.table-wrapper{
+        display: flex;
+        flex-direction: column;
+        margin-left: 15%;
+        margin-right: 15%;
+        margin-top:1.5em;
+    }
 
+    div.table-wrapper .v-text-field{
+        margin-bottom:1.5em;
+        width: 50%;
+        align-self: center;
+    }
+
+     div.table-wrapper .v-text-field label{
+        font-size: 1.2em;
+    }
+
+
+    div.table-wrapper .v-text-field input{
+        font-size: 1.2em;
+    }
+
+    th.column{
+        font-weight: bold !important;
+        font-size: 1.2em !important;
+    }
+    th.column i{
+        font-size: 1.2em !important;
+    }
+
+    td{
+        font-size: 1.2em !important;
+    }
 </style>
