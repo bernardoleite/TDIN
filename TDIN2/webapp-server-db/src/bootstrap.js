@@ -28,7 +28,7 @@ module.exports = async () => {
     }).catch(errHandler);
 
     const order = await Order.create({ 
-        id: uuidv1(),
+        uuid: uuidv1(),
         clientId: client.id,
         bookId: book.id,
         quantity: 2,

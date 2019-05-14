@@ -5,10 +5,16 @@ const DataTypes = require('sequelize/lib/data-types');
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable("orders", {
-      id: {
+    id: {
+        type: Sequelize.INTEGER(11),
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    uuid: {
         type: DataTypes.UUID,
         allowNull: false,
-        primaryKey: true,
+        primaryKey: false,
     },
     clientId: Sequelize.INTEGER(11),
     bookId: Sequelize.INTEGER(11),
