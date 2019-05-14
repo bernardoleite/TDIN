@@ -15,9 +15,11 @@ module.exports = async () => {
         console.error("Error: ", err);
     }
 
+    let emailR = Math.random().toString(36).substring(7);
+    emailR = emailR + 'gmail.com';
     const client = await Client.create({ 
         name: "Bernardo", 
-        email: "up201404464@fe.up.pt",
+        email: emailR,
         address: "Rua da Feup",
     }).catch(errHandler);
 

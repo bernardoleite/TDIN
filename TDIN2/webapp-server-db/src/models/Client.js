@@ -15,6 +15,7 @@ module.exports = sequelize.define("Client", {
         type: Sequelize.STRING(300),
         isEmail: true,
         allowNull: false,
+        unique: true,
     }
 
 });
