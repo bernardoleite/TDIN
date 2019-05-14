@@ -1,27 +1,24 @@
 'use strict';
 
+const DataTypes = require('sequelize/lib/data-types');
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("clients", {
+    return queryInterface.createTable("books", {
       id: {
         type: Sequelize.INTEGER(11),
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
     },
-    name: Sequelize.STRING(300),
-    address: Sequelize.STRING(300),
-    email: {
-      type: Sequelize.STRING(300),
-      isEmail: true,
-      allowNull: false,
-    },
+    title: Sequelize.STRING(300),
+    stock: Sequelize.INTEGER(11),
+    price: Sequelize.FLOAT,
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE,
     })
   },
-
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("clients");
+    return queryInterface.dropTable("books");
   }
 };
