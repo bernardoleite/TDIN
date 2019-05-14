@@ -51,10 +51,12 @@
     }
   },
   "dependencies": {
-    "vue": "^2.5.16",
     "axios": "^0.18.0",
+    "material-design-icons-iconfont": "^5.0.1",
+    "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuetify": "^1.5.14"
   },
   "devDependencies": {
     "ajv": "^6.5.0",
