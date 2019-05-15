@@ -1,5 +1,9 @@
 Steps:
 
+-- Install Erlang (needed for RabbitMQ) https://www.erlang.org/downloads
+
+-- Install RabbitMQ https://www.rabbitmq.com/install-windows.html
+
 -- Install MySQL Community Server
 
 -- During installation choose any password, i.e '12345678'
@@ -16,15 +20,13 @@ Steps:
 
 --(*) Type this for using database: 'USE storedb;'
 
--- Open a new terminal inside 'webapp-server-db'
+-- Open a new terminal inside 'store-server-db'
 
 -- Migrate tables with 'sequelize db:migrate'
 
 -- Start server and db with: 'npm install' followed by 'node index'
 
 -- Return to database terminal on step (*) and type 'show tables;'. If everything is ok it should list current tables
-
--- Webpages on 'public' folder
 
 
 Useful ommands:
