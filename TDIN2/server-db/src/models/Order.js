@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 var DataTypes = require('sequelize/lib/data-types');
+const uuidv1 = require('uuid/v1');
 
 module.exports = sequelize.define("Order", {
 
@@ -11,6 +12,7 @@ module.exports = sequelize.define("Order", {
     },
     uuid: {
         type: DataTypes.UUID,
+        defaultValue: uuidv1(),
         allowNull: false,
         primaryKey: false,
     },

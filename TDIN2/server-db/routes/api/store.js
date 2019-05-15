@@ -126,8 +126,8 @@ router.put('/updateBookStock', (req, res) => {
 
 //Create Order (clientId, bookTitle, quantity, state)
 router.post('/createOrder', (req, res) => {
-  let sql = `INSERT INTO books (clientId, bookId, quantity, totalPrice, dispatchedDate, state) VALUES ('${req.body.clientId}', '${req.body.bookId}', '${req.body.quantity}', '${req.body.totalPrice}', '${req.body.dispatchedDate}', '${req.body.state}')`;
-  db.query(sql, { type: Sequelize.QueryTypes.INSERT }, () => {})
+  let sql = `INSERT INTO orders (clientId, bookId, quantity, totalPrice, dispatchedDate, state) VALUES ('${req.body.clientId}', '${req.body.bookId}', '${req.body.quantity}', '${req.body.totalPrice}', '${req.body.dispatchedDate}', '${req.body.state}')`;
+  db.query(sql, { type: Sequelize.QueryTypes.INSERT }, {})
   .then(rows => {
     res.sendStatus(200);
   })
@@ -136,6 +136,17 @@ router.post('/createOrder', (req, res) => {
 
 
 //Update Order State (clientId, bookTitle, quantity, state)
+router.put('/updateOrder/:orderId', (req, res) => {
+  let sql = `UPDATE orders SET state = '${req.body.newstate}' WHERE id = ${req.params.orderId}`;
+  db.query(sql,  {})
+  .then(rows => {
+    if(rows[0].affectedRows == 0) 
+      res.sendStatus(404)
+    else if(rows[0].affectedRows == 1)
+      res.sendStatus(200);
+  })
+  .catch(err => res.send(err));
+});
 
 // Get Client by name
 router.get('/getclientByName/:name', (req, res) => {
