@@ -1,6 +1,4 @@
-module.exports = async (variavel) => {
-
-    console.log(variavel);
+module.exports = async (newRequest) => {
 
     var amqp = require('amqplib/callback_api');
 
@@ -13,8 +11,8 @@ module.exports = async (variavel) => {
                 throw error1;
             }
     
-            var queue = 'hello';
-            var msg = 'Hello World 1111222222!';
+            var queue = 'store_warehouse';
+            var msg = newRequest;
     
             channel.assertQueue(queue, {
                 durable: false

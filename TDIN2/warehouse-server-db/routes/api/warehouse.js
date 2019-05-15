@@ -4,5 +4,41 @@ const db = require('../../src/database/connection');
 const Request = require('../../src/models/Request');
 const Sequelize = require('sequelize');
 
+//Insert Request (orderId, bookTitle, quantity, state)
+router.post('/insertRequest', (req, res) => {
+    let sql = `INSERT INTO requests (orderId, bookTitle, quantity, state) VALUES (${req.body.orderId}, '${req.body.bookTitle}', ${req.body.quantity}, '${req.body.state}' )`;
+    db.query(sql, { type: Sequelize.QueryTypes.INSERT }, () => {})
+    .then(rows => {
+      res.sendStatus(200);
+    })
+    .catch(err => res.send(err));
+  });
+
+//Update Request State by orderId
+router.put('/updateRequestStateByOrderId/:orderId', (req, res) => {
+    let sql = `UPDATE requests SET state = '${req.body.newstate}' WHERE orderId = ${req.params.orderId}`;
+    db.query(sql,  {})
+    .then(rows => {
+      if(rows[0].affectedRows == 0) 
+        res.sendStatus(404)
+      else if(rows[0].affectedRows == 1)
+        res.sendStatus(200);
+    })
+    .catch(err => res.send(err));
+  });
+
+//Update Request State by internal Id
+router.put('/updateRequestStateById/:id', (req, res) => {
+    let sql = `UPDATE requests SET state = '${req.body.newstate}' WHERE id = ${req.params.id}`;
+    db.query(sql,  {})
+    .then(rows => {
+      if(rows[0].affectedRows == 0) 
+        res.sendStatus(404)
+      else if(rows[0].affectedRows == 1)
+        res.sendStatus(200);
+    })
+    .catch(err => res.send(err));
+  });
+
 
 module.exports = router;

@@ -1,12 +1,15 @@
 const express = require('express');
 var amqp = require('amqplib/callback_api');
+const newRequest = require("./src/createRequest");
 
 // DB connection
 require("./src/database/connection");
 
+// Populate Database
 require("./src/bootstrap")();
 
 const app = express();
+
 
 amqp.connect('amqp://localhost', function(error0, connection) {
     if (error0) {
@@ -17,7 +20,7 @@ amqp.connect('amqp://localhost', function(error0, connection) {
             throw error1;
         }
 
-        var queue = 'hello';
+        var queue = 'store_warehouse';
 
         channel.assertQueue(queue, {
             durable: false
@@ -27,6 +30,7 @@ amqp.connect('amqp://localhost', function(error0, connection) {
 
         channel.consume(queue, function(msg) {
             console.log(" [x] Received %s", msg.content.toString());
+            newRequest(msg.content.toString());
         }, {
             noAck: true
         });

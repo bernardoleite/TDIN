@@ -1,17 +1,16 @@
 const express = require('express');
 const path = require ('path');
 const exphbs = require('express-handlebars');
-
+const myqueue = require("./src/queue");
 
 // DB connection
 require("./src/database/connection");
 
 require("./src/bootstrap")();
 
-require("./src/queue")("a minha variavel");
-
 const app = express();
 
+myqueue("request");
 
 //Handlebars middleware
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
@@ -26,7 +25,6 @@ app.use(express.urlencoded({extended: false}));
 
 //Store API Routes
 app.use('/api/store', require('./routes/api/store'));
-
 
 //Homepage Route
 // app.get('/', (req,res) => res.render('index'));
