@@ -42,7 +42,7 @@
         font-weight: lighter;
     }
     a.router-link-active{
-        color: #76a5af;
+        color: #45818e;;
         font-weight: bold;
     }
 
