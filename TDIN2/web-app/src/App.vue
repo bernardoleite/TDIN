@@ -1,8 +1,8 @@
 <template>
-  <div id="app">
+  <v-app id="app">
     <nav-bar></nav-bar>
     <router-view></router-view>
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -17,10 +17,12 @@
 </script>
 
 <style>
-  @import url('https://fonts.googleapis.com/css?family=Nunito');
+  @import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
   body{
-    font-family: 'Nunito', sans-serif;
     background-color: #f3f3f3ff;
+  }
+  .application{
+    font-family: 'Nunito', sans-serif;
   }
 </style>
 

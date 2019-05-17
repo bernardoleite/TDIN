@@ -6,10 +6,10 @@ import Vuetify from 'vuetify'
 
 Vue.use(Vuetify, {
   theme: {
-    primary: '#3f51b5',
-    secondary: '#b0bec5',
-    accent: '#8c9eff',
-    error: '#b71c1c'
+    primary: '#45818e',
+    secondary: '#cc0000',
+    accent: '#76a5af',
+    error: '#e06666'
   }
 })
 

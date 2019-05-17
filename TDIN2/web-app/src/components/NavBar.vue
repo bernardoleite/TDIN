@@ -29,20 +29,21 @@
         font-size: 3em;
         color: #45818e;
         user-select: none;
+        font-style: underline;
     }
     h1.logo span{
-        font-weight: bold;
+        font-weight: 800;
     }
     a.nav-link{
         font-size: 1.5em;
-        color: #cc0000;
+        color: #45818e;
         margin-left:1em;
         text-decoration: none;
-        font-weight: bolder;
+        font-weight: lighter;
     }
     a.router-link-active{
-        color: #e06666;
-        border-bottom:3px solid #e06666
+        color: #76a5af;
+        font-weight: bold;
     }
 
 
