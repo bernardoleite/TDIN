@@ -21,11 +21,11 @@ router.get('/welcome', (req, res) => res.sendFile(path.join(__dirname, '../../pu
 
 //Register handler
 router.post('/register', (req,res) => {
-    const {name, email, password, password2} = req.body;
+    const {name, address, email, password, password2} = req.body;
     let errors = [];
     console.log(req.body);
 
-  if (!name || !email || !password || !password2) {
+  if (!name || !email || !password || !password2 || !address) {
     errors.push({ msg: 'Please enter all fields' });
   }
 
@@ -55,6 +55,7 @@ router.post('/register', (req,res) => {
     else  {
         const newUser = new Client({
             name,
+            address,
             email,
             password
         });
