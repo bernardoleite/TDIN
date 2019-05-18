@@ -4,6 +4,7 @@ const path = require ('path');
 const db = require('../../src/database/connection');
 const Client = require('../../src/models/Client');
 const bcrypt = require('bcryptjs');
+const passport = require('passport');
 
 router.get('/', (req, res) => res.send('welcome to users api'));
 
@@ -12,6 +13,10 @@ router.get('/login', (req, res) => res.sendFile(path.join(__dirname, '../../publ
 
 // Register Page
 router.get('/register', (req, res) => res.sendFile(path.join(__dirname, '../../public', 'register.html')));
+
+router.get('/dashboard', (req, res) => res.sendFile(path.join(__dirname, '../../public', 'dashboard.html')));
+
+router.get('/welcome', (req, res) => res.sendFile(path.join(__dirname, '../../public', 'welcome.html')));
 
 
 //Register handler
@@ -63,7 +68,7 @@ router.post('/register', (req,res) => {
                 .save()
                 .then(user => {   
                   //OK, registered - Redirect to Login
-                   res.sendStatus(200);
+                  res.sendFile(path.join(__dirname, '../../public', 'login.html'));
                 })
                 .catch(err => console.log(err));
             });
@@ -74,6 +79,22 @@ router.post('/register', (req,res) => {
  
     });
 
+});
+
+// Login
+router.post('/login', 
+    passport.authenticate('local'),
+    function(req, res) {
+  // If this function gets called, authentication was successful.
+  // `req.user` contains the authenticated user.
+ res.sendFile(path.join(__dirname, '../../public', 'dashboard.html'));
+});
+
+  // Logout
+  router.get('/logout', function(req, res){
+    req.session.destroy();
+    console.log('youre logout');
+    res.sendFile(path.join(__dirname, '../../public', 'welcome.html'));
 });
 
 module.exports = router;
