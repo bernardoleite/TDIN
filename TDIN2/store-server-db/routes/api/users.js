@@ -92,8 +92,7 @@ router.post('/login',
 
   // Logout
   router.get('/logout', function(req, res){
-    req.session.destroy();
-    console.log('youre logout');
+    req.logout();
     res.sendFile(path.join(__dirname, '../../public', 'welcome.html'));
 });
 
