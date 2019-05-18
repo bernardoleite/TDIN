@@ -15,7 +15,15 @@
             hide-details
             ></v-text-field>
             <v-data-table
-                v-model="selected" :headers="headers" :items="books" :search="search" item-key="id" select-all hide-actions class="elevation-1">
+                :loading="isLoading"
+                v-model="selected"
+                :headers="headers"
+                :items="books"
+                :search="search"
+                item-key="id"
+                select-all
+                hide-actions
+                class="elevation-1">
                 <template v-slot:items="props">
                     <td>
                         <v-checkbox
@@ -26,7 +34,7 @@
                     </td>
                     <td>{{ props.item.id }}</td>
                     <td class="text-xs-right">{{ props.item.title }}</td>
-                    <td class="text-xs-right">{{ props.item.price }}</td>
+                    <td class="text-xs-right">{{ props.item.unitprice }} €</td>
                     <td class="text-xs-right">{{ props.item.stock }}</td>
                     <td class="text-xs-right">
                         <v-text-field
@@ -37,15 +45,13 @@
                             autofocus
                         ></v-text-field>
                     </td>
+                    <td class="text-xs-right">{{ props.item.totalprice }} €</td>
                 </template>
             </v-data-table>
-            <v-snackbar v-model="snack" :timeout="3000" :color="snackColor">
-                    {{ snackText }}
-                <v-btn flat @click="snack = false">Close</v-btn>
-            </v-snackbar>
         </div>
+        <div class="total-price"><p>{{totalPrice}} €</p></div>
         <div class="text-xs-right button-wrapper">
-            <v-btn round color="accent">Buy</v-btn>
+            <v-btn round color="accent" v-on:click.native="buy">Buy</v-btn>
         </div>
     </div>
  </template>
@@ -55,100 +61,128 @@
         name: 'books',
         data () {
         return {
-            snack: false,
-            snackColor: '',
-            snackText: '',
+            isLoading: true,
             integerRule: v=> /^[0-9]*$/.test(v) || 'Input must be a integer',
             search: '',
             selected: [],
             headers: [
             { text: 'ID', align: 'left', value:'id'},
             { text: 'Title', align: 'right', value: 'title' },
-            { text: 'Price (€)', align: 'right', value: 'price' },
+            { text: 'Unit Price', align: 'right', value: 'unitprice' },
             { text: 'Stock', align: 'right', value: 'stock' },
             { text: 'Desired Quantity', align: 'right', value: 'qnt' },
+            { text: 'Total Price', align: 'right', value:'totalprice'  },
             ],
             books: [
             {
                 id: 0,
                 title: 'Frozen Yogurt',
-                price: 159,
+                unitprice: 10,
                 stock: 6,
                 qnt: '',
+                totalprice: 0,
             },
             {
                 id: 1,
                 title: 'Ice cream sandwich',
-                price: 237,
+                unitprice: 25,
                 stock: 9,
                 qnt: '',
+                totalprice: 0,
             },
             {
                 id: 2,
                 title: 'Eclair',
-                price: 262,
+                unitprice: 15,
                 stock: 16,
                 qnt: '',
+                totalprice: 0,
             },
             {
                 id: 3,
                 title: 'Cupcake',
-                price: 305,
+                unitprice: 22,
                 stock: 3,
                 qnt: '',
+                totalprice: 0,
             },
             {
                 id: 4,
                 title: 'Gingerbread',
-                price: 356,
+                unitprice: 11,
                 stock: 16,
                 qnt: '',
+                totalprice: 0,
             },
             {
                 id: 5,
                 title: 'Jelly bean',
-                price: 375,
+                unitprice: 9,
                 stock: 0,
                 qnt: '',
+                totalprice: 0,
             },
             {
                 id: 6,
                 title: 'Lollipop',
-                price: 392,
+                unitprice: 6,
                 stock: 2,
-                qnt: '',           
+                qnt: '',
+                totalprice: 0,           
             },
-            ]
+            ],
+            oldbooks:[],
+            totalPrice: 0,
         }
     },
-    methods: {
-        save () {
-            this.snack = true
-            this.snackColor = 'success'
-            this.snackText = 'Data saved'
-        },
-        cancel () {
-            this.snack = true
-            this.snackColor = 'error'
-            this.snackText = 'Canceled'
-        },
-        open () {
-            this.snack = true
-            this.snackColor = 'info'
-            this.snackText = 'Dialog opened'
-        },
-        close () {
-            console.log('Dialog closed')
-        },
-        dialogInput (val) {
-            var isLetter = 65<= val.keyCode & val.keyCode <=90;
-            var isCharacter = (val.keyCode == 188 | val.keyCode ==190| val.keyCode == 191 | val.keyCode == 192 | val.keyCode == 219 | val.keyCode == 220| val.keyCode ==221| val.keyCode ==222| val.keyCode ==186| val.keyCode ==187| val.keyCode ==189);
+    watch: {
+        books: {
+            handler: function (after, before) {
+                var vm = this;
+                var changed = after.filter( function( p, idx ) {
+                    return Object.keys(p).some( function( prop ) {
+                        return p[prop] !== vm.$data.oldbooks[idx][prop];
+                    })
+                })
+                var difference = changed[0].totalprice - this.oldbooks.find(x => x.id ===  changed[0].id).totalprice;
 
-            if (isLetter|isCharacter) {
-                val.preventDefault();
-            }
+                vm.setValue();
+                var obj = changed[0];
+                if(!isNaN(obj.qnt) && Number.isInteger(parseFloat(obj.qnt,10))){
+                    obj.totalprice=obj.qnt*obj.unitprice;
+                }
+                else{
+                    obj.totalprice=0;
+                }
+                this.totalPrice = this.totalPrice + difference;
+                
+            },
+            deep: true
         }
-    }
+    },
+    mounted(){
+        this.setValue();   
+    },
+    methods: {
+       setValue: function() {
+            var _ = require('lodash');
+            this.$data.oldbooks = _.cloneDeep(this.$data.books);
+        },
+        buy(event) {
+            //TODO: get client id
+            console.log(this.selected);
+           
+
+            for(let i = 0; i < this.selected.length; i++){
+                if(!isNaN(this.selected[i].qnt) && Number.isInteger(parseFloat(this.selected[i].qnt, 10))){
+                    console.log(parseFloat(this.selected[i].qnt, 10));
+            
+                    //TODO: make order
+                }       
+            }  
+        }
+    },
+    
   }
 </script>
   
@@ -178,6 +212,19 @@
         margin-left: 15%;
         margin-right: 15%;
         margin-top:1.5em;
+    }
+    div.total-price{
+        margin-left: 15%;
+        margin-right: 15%;
+        margin-top:1em;
+    }
+
+    div.total-price p{
+        width: 100%;
+        text-align: right;
+        font-weight: bold;
+        font-size: 1.7em;
+        padding-right: 1em;
     }
 
     div.button-wrapper{
@@ -223,6 +270,9 @@
     }
 
     .desired-input{
+        width: 60%;
+        margin-right: 0;
+        margin-left: auto;
         text-align: right;
         padding:0;
         padding-bottom: .5em

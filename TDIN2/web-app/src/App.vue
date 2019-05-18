@@ -14,6 +14,7 @@
       'nav-bar':NavBar
     }
   }
+  document.title = 'BookShop'
 </script>
 
 <style>
