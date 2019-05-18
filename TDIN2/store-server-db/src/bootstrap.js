@@ -15,11 +15,13 @@ module.exports = async () => {
         console.error("Error: ", err);
     }
 
+    
     let emailR = Math.random().toString(36).substring(7);
-    emailR = emailR + 'gmail.com';
+    emailR = emailR + '@gmail.com';
     const client = await Client.create({ 
         name: "Bernardo", 
         email: emailR,
+        password: 'fsmf4wfsdb2',
         address: "Rua da Feup",
     }).catch(errHandler);
 
@@ -43,6 +45,4 @@ module.exports = async () => {
 
     const clients = await Client.findAll({ where: { name: 'Bernardo'}, include: [{model: Order, as: "Orders"}]}).catch(errHandler);
 
-
-    //console.log(clients[0].name);
 }

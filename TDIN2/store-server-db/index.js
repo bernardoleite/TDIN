@@ -1,36 +1,51 @@
 const express = require('express');
 const path = require ('path');
-const exphbs = require('express-handlebars');
 const myqueue = require("./src/queue");
+const passport = require('passport');
+const session = require('express-session');
 
 // DB connection
 require("./src/database/connection");
 
+//Populate database
 require("./src/bootstrap")();
 
 const app = express();
 
-myqueue("request");
+// Passport Config
+require('./config/passport')(passport);
 
-//Handlebars middleware
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
+//myqueue("request");
 
 //Body Parser Middleware
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: true}));
+
+// Express session
+app.use(
+    session({
+      secret: 'secret',
+      resave: true,
+      saveUninitialized: true
+    })
+  );
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+//Homepage Route
+//app.get('/', (req,res) => res.render('index'));
 
 //Set static Folder
-//app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname,'public')));
 
 //Store API Routes
 app.use('/api/store', require('./routes/api/store'));
 
-//Homepage Route
-// app.get('/', (req,res) => res.render('index'));
+//Users API Routes
+app.use('/api/users', require('./routes/api/users'));
 
-//Members API Routes
-// app.use('/api/members', require('./routes/api/members'));
 
 // app.get ('/index', (req,res) => {
 //     res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -39,8 +54,6 @@ app.use('/api/store', require('./routes/api/store'));
 // app.get ('/about', (req,res) => {
 //     res.sendFile(path.join(__dirname, 'public', 'about.html'));
 // });
-
-
 
 const PORT = process.env.PORT || 5000;
 
