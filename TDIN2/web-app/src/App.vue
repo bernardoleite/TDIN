@@ -1,6 +1,6 @@
 <template>
   <v-app id="app">
-    <nav-bar></nav-bar>
+    <nav-bar v-if="isAuth()""></nav-bar>
     <router-view></router-view>
   </v-app>
 </template>
@@ -12,9 +12,13 @@
     name: 'web-app',
     components: {
       'nav-bar':NavBar
-    }
+    },
+    methods: {
+      isAuth() {
+        return this.$route.path !== "/login";
+      }
+    },
   }
-  document.title = 'BookShop'
 </script>
 
 <style>
