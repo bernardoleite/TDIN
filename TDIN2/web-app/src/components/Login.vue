@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="auth">
         <h1 class="logo"><span>Book</span>Shop</h1>
         <div class="title-wrapper">
             <hr>
@@ -25,7 +25,11 @@
               type="password"
               autocomplete
             ></v-text-field>
-            <v-btn round color="accent" @click="submit">Submit</v-btn>
+            <div class="login-buttons">
+                <router-link to="/register">Register</router-link>
+                <v-btn class="submit-login" round color="accent" @click="submit">Login</v-btn>
+            </div>
+            
         </form>
     </div>
 </template>
@@ -59,7 +63,7 @@
             passwordErrors () {
                 const errors = []
                 if (!this.$v.password.$dirty) return errors
-                !this.$v.password.required && errors.push('E-mail is required')
+                !this.$v.password.required && errors.push('Password is required')
                 return errors
             }
         },
@@ -73,5 +77,42 @@
 </script>
     
 <style>
+
+.auth h1.logo{ 
+    font-size: 6.2em;
+    margin-left: 39.5%;
+    margin-top: 1.7em;
+}
+
+.auth div.title-wrapper {
+    margin-bottom: 2em;
+}
+
+.auth div.title-wrapper hr:first-child{
+    width: 70%;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    margin-left: 40%;
+    width: 28em;
+}
+
+form div.v-input__control{
+    margin-bottom: 1.2em;
+}
+
+div.login-buttons{
+    margin-right: 0;
+    margin-left: auto;
+}
+
+div.login-buttons a{
+    text-decoration: none;
+    font-size: 1.1em;
+    padding: 0;
+    padding-right: .7em;
+}
 
 </style>

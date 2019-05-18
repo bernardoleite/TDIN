@@ -4,6 +4,7 @@
         <div>
             <router-link class="nav-link" to="/books">Books</router-link>
             <router-link  class="nav-link" to="/orders">My Orders</router-link>
+            <router-link  class="nav-link" to="/login">Logout</router-link>
         </div>
     </nav>
 </template>
@@ -44,6 +45,9 @@
     a.router-link-active{
         color: #45818e;;
         font-weight: bold;
+    }
+    a.nav-link:last-child{
+        font-style:italic;
     }
 
 
