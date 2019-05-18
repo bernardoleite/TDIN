@@ -5,7 +5,14 @@ import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
 
-Vue.use(Vuetify)
+Vue.use(Vuetify, {
+  theme: {
+    primary: '#45818e',
+    secondary: '#cc0000',
+    accent: '#76a5af',
+    error: '#e06666'
+  }
+})
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
