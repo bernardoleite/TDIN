@@ -5,6 +5,7 @@ const db = require('../../src/database/connection');
 const Client = require('../../src/models/Client');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const { ensureAuthenticated } = require('../../config/auth');
 
 router.get('/', (req, res) => res.send('welcome to users api'));
 
@@ -16,6 +17,8 @@ router.get('/register', (req, res) => res.sendFile(path.join(__dirname, '../../p
 
 router.get('/dashboard', (req, res) => res.sendFile(path.join(__dirname, '../../public', 'dashboard.html')));
 
+router.get('/about',ensureAuthenticated, (req, res) => res.sendFile(path.join(__dirname, '../../public', 'about.html')));
+
 router.get('/welcome', (req, res) => res.sendFile(path.join(__dirname, '../../public', 'welcome.html')));
 
 
@@ -23,23 +26,24 @@ router.get('/welcome', (req, res) => res.sendFile(path.join(__dirname, '../../pu
 router.post('/register', (req,res) => {
     const {name, address, email, password, password2} = req.body;
     let errors = [];
-    console.log(req.body);
 
   if (!name || !email || !password || !password2 || !address) {
-    errors.push({ msg: 'Please enter all fields' });
+    errors.push('Please enter all fields');
   }
 
   if (password != password2) {
-    errors.push({ msg: 'Passwords do not match' });
+    errors.push('Passwords do not match');
   }
 
   if (password.length < 6) {
-    errors.push({ msg: 'Password must be at least 6 characters' });
+    errors.push('Password must be at least 6 characters');
   }
 
   if (errors.length > 0) {
-    res.sendStatus(500);
+    res.status(500).send(errors);
   } 
+
+  else {
 
   Client.findOne({
     where: {
@@ -50,7 +54,7 @@ router.post('/register', (req,res) => {
 
     // if user is found, return the message
     if (user){
-        res.sendStatus(500);
+        res.status(500).send("User already exists.");
     }
     else  {
         const newUser = new Client({
@@ -69,7 +73,7 @@ router.post('/register', (req,res) => {
                 .save()
                 .then(user => {   
                   //OK, registered - Redirect to Login
-                  res.sendFile(path.join(__dirname, '../../public', 'login.html'));
+                  res.status(200).send("Register success.");
                 })
                 .catch(err => console.log(err));
             });
@@ -80,6 +84,8 @@ router.post('/register', (req,res) => {
  
     });
 
+}
+
 });
 
 // Login
@@ -88,13 +94,13 @@ router.post('/login',
     function(req, res) {
   // If this function gets called, authentication was successful.
   // `req.user` contains the authenticated user.
- res.sendFile(path.join(__dirname, '../../public', 'dashboard.html'));
+  res.status(200).send(req.user);
 });
 
   // Logout
   router.get('/logout', function(req, res){
     req.logout();
-    res.sendFile(path.join(__dirname, '../../public', 'welcome.html'));
+    res.status(200).send("Logout success.");
 });
 
 module.exports = router;

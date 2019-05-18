@@ -3,12 +3,12 @@ module.exports = {
       if (req.isAuthenticated()) {
         return next();
       }
-      res.send('redirect to login');
+      res.status(500).send("Please login to access this.");
     },
     forwardAuthenticated: function(req, res, next) {
       if (!req.isAuthenticated()) {
         return next();
       }
-      res.send('redirect do dashboard');      
+      res.status(200);
     }
   };
