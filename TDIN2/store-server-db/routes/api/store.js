@@ -3,6 +3,21 @@ const router = express.Router();
 const db = require('../../src/database/connection');
 const Client = require('../../src/models/Client');
 const Sequelize = require('sequelize');
+let q = 'store_warehouse2';
+let open = require('amqplib').connect('amqp://localhost');
+
+
+function sendRequestToQueue(msg){
+
+  open.then(function(conn) {
+    return conn.createChannel();
+  }).then(function(ch) {
+    return ch.assertQueue(q).then(function(ok) {
+      return ch.sendToQueue(q, Buffer.from(msg));
+    });
+  }).catch(console.warn);
+
+}
 
 // Just an experiment
 router.get('/', (req, res) => 
@@ -34,6 +49,12 @@ router.get('/getclientById/:id', (req, res) => {
       res.send(rows);
   })
   .catch(err => res.send(err));
+
+  // Send Request to Queue
+
+  let msg = 'something to do';
+  sendRequestToQueue(msg);
+
 });
 
 //Delete Client (clientid)

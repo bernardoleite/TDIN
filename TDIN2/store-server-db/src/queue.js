@@ -11,7 +11,7 @@ module.exports = async (newRequest) => {
                 throw error1;
             }
     
-            var queue = 'store_warehouse';
+            var queue = 'store_warehouse2';
             var msg = newRequest;
     
             channel.assertQueue(queue, {
@@ -22,6 +22,7 @@ module.exports = async (newRequest) => {
             console.log(" [x] Sent %s", msg);
         });
         setTimeout(function() {
+            console.log("it will close...");
             connection.close();
             process.exit(0);
         }, 500);
