@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require ('path');
-const myqueue = require("./src/queue");
+//const myqueue = require("./src/queue");
 const passport = require('passport');
 const session = require('express-session');
 
@@ -15,7 +15,6 @@ const app = express();
 // Passport Config
 require('./config/passport')(passport);
 
-//myqueue("request");
 
 //Body Parser Middleware
 app.use(express.json());
@@ -45,6 +44,10 @@ app.use('/api/store', require('./routes/api/store'));
 
 //Users API Routes
 app.use('/api/users', require('./routes/api/users'));
+
+//myqueue("request");
+//myqueue("request2");
+//myqueue("request3");
 
 
 // app.get ('/index', (req,res) => {
