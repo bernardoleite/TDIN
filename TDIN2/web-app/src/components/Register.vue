@@ -41,6 +41,16 @@
                 type="password"
                 autocomplete
             ></v-text-field>
+            <v-text-field
+                v-model="repeatpassword"
+                :error-messages="repeatpasswordErrors"
+                label="Repeat Password"
+                required
+                @input="$v.repeatpassword.$touch()"
+                @blur="$v.repeatpassword.$touch()"
+                type="password"
+                autocomplete
+            ></v-text-field>
             <div class="login-buttons">
                 <v-btn class="submit-login" round color="accent" @click="submit">Register</v-btn>
             </div>
@@ -50,7 +60,7 @@
     
 <script>
     import { validationMixin } from 'vuelidate'
-    import { required, maxLength, email } from 'vuelidate/lib/validators'
+    import { required, maxLength, email, sameAs } from 'vuelidate/lib/validators'
 
     export default {
         name: 'register',
@@ -61,6 +71,9 @@
             address: { required },
             email: { required, email },
             password: { required },
+            repeatpassword: {
+                sameAsPassword: sameAs('password')
+            }
         },
 
         data: () => ({
@@ -68,6 +81,7 @@
         address:'',
         email: '',
         password: '',
+        repeatpassword: '',
 
         }),
 
@@ -95,6 +109,12 @@
                 const errors = []
                 if (!this.$v.password.$dirty) return errors
                 !this.$v.password.required && errors.push('Password is required')
+                return errors
+            },
+            repeatpasswordErrors () {
+                const errors = []
+                if (!this.$v.repeatpassword.$dirty) return errors
+                !this.$v.repeatpassword.sameAsPassword && errors.push('This field must match the password field')                
                 return errors
             }
         },
