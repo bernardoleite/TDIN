@@ -42,7 +42,6 @@
                             class="desired-input"
                             :rules="[integerRule]"
                             single-line
-                            autofocus
                         ></v-text-field>
                     </td>
                     <td class="text-xs-right">{{ props.item.totalprice }} €</td>
