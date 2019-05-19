@@ -29,7 +29,7 @@
                     <td class="text-xs-right">{{ props.item.unitprice }} €</td>
                     <td class="text-xs-right">{{ props.item.qnt }}</td>
                     <td class="text-xs-right">{{ props.item.totalprice }} €</td>
-                    <td class="text-xs-right">{{ props.item.state }}</td>
+                    <td class="text-xs-right">{{ props.item.state }} {{ props.item.date }}</td>
                 </template>
             </v-data-table>
         </div>
@@ -58,8 +58,8 @@
                 unitprice: 10,
                 qnt: 3,
                 totalprice: 30,
-                state: 'Waiting Expedition'
-                
+                state: 'Waiting Expedition',
+                date: ''
             },
             {
                 id: 1,
@@ -67,7 +67,8 @@
                 unitprice: 15,
                 qnt: 4,
                 totalprice: 60,
-                state: 'Dispatch Will Occur at 19/05/2019'
+                state: 'Dispatch Will Occur at',
+                date: '19/05/2019'
             },
             {
                 id: 2,
@@ -75,7 +76,8 @@
                 unitprice: 20,
                 qnt: 2,
                 totalprice: 40,
-                state: 'Sold'
+                state: 'Sold',
+                date: '',
             },
             {
                 id: 3,
@@ -83,7 +85,8 @@
                 unitprice: 5,
                 qnt: 3,
                 totalprice: 15,
-                state: 'Dispatched at 17/05/2019'
+                state: 'Dispatched at',
+                date: '17/05/2019'
             },
             {
                 id: 4,
@@ -91,7 +94,8 @@
                 unitprice: 10,
                 qnt: 1,
                 totalprice: 10,
-                state: 'Dispatched at 17/05/2019'
+                state: 'Dispatched at',
+                date: '17/05/2019'
             },
             {
                 id: 5,
@@ -99,7 +103,8 @@
                 unitprice: 40,
                 qnt: 2,
                 totalprice: 80,
-                state: 'Dispatch Will Occur at 19/05/2019'
+                state: 'Dispatch Will Occur at',
+                date: '19/05/2019'
             },
             {
                 id: 6,
@@ -107,7 +112,8 @@
                 unitprice: 17,
                 qnt: 4,
                 totalprice: 68,
-                state: 'Sold'           
+                state: 'Sold',
+                date: ''           
             },
             ]
         }

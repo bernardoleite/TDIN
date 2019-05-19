@@ -207,18 +207,5 @@
         padding: 1em;
     }
 
-    .desired-input{
-        width: 60%;
-        margin-right: 0;
-        margin-left: auto;
-        text-align: right;
-        padding:0;
-        padding-bottom: .5em
-    }
-
-    .desired-input input{
-        text-align: right;
-        font-size:1.1em;
-    }
 
 </style>
