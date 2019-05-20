@@ -21,6 +21,7 @@
                 :items="orders"
                 :search="search"
                 item-key="id"
+                v-bind:pagination.sync="pagination"
                 select-all
                 hide-actions 
                 class="elevation-1">
@@ -59,6 +60,7 @@
             arrivedButtonDisabled: true,
             soldButtonDisabled: true,
             search: '',
+            pagination: {'sortBy': 'state', 'descending': true, 'rowsPerPage': -1},
             selected: [],
             headers: [
             { text: 'ID', align: 'left', value:'id'},

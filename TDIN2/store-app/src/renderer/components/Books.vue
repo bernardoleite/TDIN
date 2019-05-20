@@ -15,6 +15,38 @@
             hide-details
             ></v-text-field>
 
+            <v-dialog v-model="dialog" max-width="500px">
+                    <template v-slot:activator="{ on }">
+                        <v-btn color="accent" outline round v-on="on" class="add-book">Add Book</v-btn>
+                    </template>
+                    <v-card>
+                    <v-card-title>
+                        <span class="headline">Add Book</span>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-container grid-list-md>
+                        <v-layout wrap>
+                            <v-flex xs12 sm6 md4>
+                            <v-text-field autofocus v-model="editedItem.title" label="Title"></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm6 md4>
+                            <v-text-field v-model="editedItem.unitprice" :rules="[integerRule]" label="Unit Price (€)"></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm6 md4>
+                            <v-text-field v-model="editedItem.stock" :rules="[integerRule]" label="Stock"></v-text-field>
+                            </v-flex>
+                        </v-layout>
+                        </v-container>
+                    </v-card-text>
+            
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="accent" round flat @click="close">Cancel</v-btn>
+                        <v-btn color="accent" outline round flat @click="save">Save</v-btn>
+                    </v-card-actions>
+                    </v-card>
+            </v-dialog>
+
             <v-data-table
                 :loading="isLoading"
                 v-model="selected"
@@ -67,40 +99,6 @@
         </div>
         <div class="total-price"><p>{{totalPrice}} €</p></div>
         <div class="text-xs-right button-wrapper">
-
-                <v-dialog v-model="dialog" max-width="500px">
-                        <template v-slot:activator="{ on }">
-                            <v-btn color="accent" outline round v-on="on" class="add-book">Add Book</v-btn>
-                        </template>
-                        <v-card>
-                        <v-card-title>
-                            <span class="headline">Add Book</span>
-                        </v-card-title>
-                        <v-card-text>
-                            <v-container grid-list-md>
-                            <v-layout wrap>
-                                <v-flex xs12 sm6 md4>
-                                <v-text-field autofocus v-model="editedItem.title" label="Title"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md4>
-                                <v-text-field v-model="editedItem.unitprice" :rules="[integerRule]" label="Unit Price (€)"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md4>
-                                <v-text-field v-model="editedItem.stock" :rules="[integerRule]" label="Stock"></v-text-field>
-                                </v-flex>
-                            </v-layout>
-                            </v-container>
-                        </v-card-text>
-                
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="accent" round flat @click="close">Cancel</v-btn>
-                            <v-btn color="accent" outline round flat @click="save">Save</v-btn>
-                        </v-card-actions>
-                        </v-card>
-                </v-dialog>
-
-
             <v-btn round color="accent" v-on:click.native="sell">Sell</v-btn>
         </div>
     </div>
@@ -241,6 +239,7 @@
                         return p[prop] !== vm.$data.oldbooks[idx][prop];
                     })
                 })
+            
                 var difference = changed[0].totalprice - this.oldbooks.find(x => x.id ===  changed[0].id).totalprice;
 
                 vm.setValue();
@@ -255,13 +254,10 @@
                 
             },
             deep: true
+        },
+        dialog (val) {
+            val || this.close()
         }
-    },
-
-    watch: {
-      dialog (val) {
-        val || this.close()
-      }
     },
     mounted(){
         this.setValue();   
@@ -346,7 +342,9 @@
     button.add-book {
         margin-left: auto;
         margin-right: 0;
-
+        height: 2.6em;
+        font-size: 1.2em;
+        margin-bottom:.7em;
         font-weight: 300 !important;
     }
 
