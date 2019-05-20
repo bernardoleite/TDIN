@@ -14,6 +14,7 @@
             single-line
             hide-details
             ></v-text-field>
+
             <v-data-table
                 :loading="isLoading"
                 v-model="selected"
@@ -36,6 +37,11 @@
                     <td class="text-xs-right">{{ props.item.title }}</td>
                     <td class="text-xs-right">{{ props.item.unitprice }} €</td>
                     <td class="text-xs-right">{{ props.item.stock }}</td>
+                    <td class="text-xs-right">
+                        <v-icon
+                          @click="deleteBook(props.item)"
+                        > delete </v-icon>
+                    </td>
                     <v-autocomplete
                         class="desired-client"
                         v-model="props.item.client"
@@ -61,6 +67,40 @@
         </div>
         <div class="total-price"><p>{{totalPrice}} €</p></div>
         <div class="text-xs-right button-wrapper">
+
+                <v-dialog v-model="dialog" max-width="500px">
+                        <template v-slot:activator="{ on }">
+                            <v-btn color="accent" outline round v-on="on" class="add-book">Add Book</v-btn>
+                        </template>
+                        <v-card>
+                        <v-card-title>
+                            <span class="headline">Add Book</span>
+                        </v-card-title>
+                        <v-card-text>
+                            <v-container grid-list-md>
+                            <v-layout wrap>
+                                <v-flex xs12 sm6 md4>
+                                <v-text-field autofocus v-model="editedItem.title" label="Title"></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm6 md4>
+                                <v-text-field v-model="editedItem.unitprice" :rules="[integerRule]" label="Unit Price (€)"></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm6 md4>
+                                <v-text-field v-model="editedItem.stock" :rules="[integerRule]" label="Stock"></v-text-field>
+                                </v-flex>
+                            </v-layout>
+                            </v-container>
+                        </v-card-text>
+                
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="accent" round flat @click="close">Cancel</v-btn>
+                            <v-btn color="accent" outline round flat @click="save">Save</v-btn>
+                        </v-card-actions>
+                        </v-card>
+                </v-dialog>
+
+
             <v-btn round color="accent" v-on:click.native="sell">Sell</v-btn>
         </div>
     </div>
@@ -74,12 +114,34 @@
             isLoading: true,
             integerRule: v=> /^[0-9]*$/.test(v) || 'Input must be a integer',
             search: '',
+            dialog: false,
+            editedItem: {
+                id: 0,
+                title: '',
+                unitprice: 0,
+                stock: 0,
+                qnt: '',
+                totalprice: 0,
+                clientsearch:'',
+                client:'',
+            },
+            defaultItem: {
+                id: 0,
+                title: '',
+                unitprice: 0,
+                stock: 0,
+                qnt: '',
+                totalprice: 0,
+                clientsearch:'',
+                client:'',
+            },
             selected: [],
             headers: [
             { text: 'ID', align: 'left', value:'id'},
             { text: 'Title', align: 'right', value: 'title' },
             { text: 'Unit Price', align: 'right', value: 'unitprice' },
             { text: 'Stock', align: 'right', value: 'stock' },
+            { text: '', align: 'right' },
             { text: 'Client', align: 'right', value: 'qnt' },
             { text: 'Desired Quantity', align: 'right', value: 'qnt' },
             { text: 'Total Price', align: 'right', value:'totalprice'  },
@@ -195,6 +257,12 @@
             deep: true
         }
     },
+
+    watch: {
+      dialog (val) {
+        val || this.close()
+      }
+    },
     mounted(){
         this.setValue();   
     },
@@ -215,6 +283,24 @@
                     //TODO: make order
                 }       
             }  
+        },
+        deleteBook (item) {
+            const index = this.books.indexOf(item);
+            confirm('Are you sure you want to delete this book?') && this.books.splice(index, 1);
+
+            //TODO: Delete Book
+        },
+        close () {
+            this.dialog = false
+            setTimeout(() => {
+                this.editedItem = Object.assign({}, this.defaultItem)
+            }, 300)
+        },
+
+        save () {
+            this.editedItem.id=this.books[this.books.length-1].id + 1;
+            this.books.push(this.editedItem)
+            this.close()
         }
     },
     
@@ -228,7 +314,7 @@
     }
 
     .desired-input{
-        width: 70%;
+        width:70%;
         margin-right: 0;
         margin-left: auto;
         text-align: right !important;
@@ -237,7 +323,7 @@
     }
 
     .desired-client{
-        width: 70%;
+        width: 90%;
         margin-right: 0;
         margin-left: auto;
         text-align: right !important;
@@ -249,6 +335,19 @@
         text-align: right !important;
         font-size:1.1em !important;
         padding-right: .5em;
+    }
+    i.v-icon:hover{
+        color: #76a5af !important;
+    }
+
+    button{
+        width: 7em !important;
+    }
+    button.add-book {
+        margin-left: auto;
+        margin-right: 0;
+
+        font-weight: 300 !important;
     }
 
 </style>
