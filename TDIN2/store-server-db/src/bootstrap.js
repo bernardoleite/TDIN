@@ -33,7 +33,7 @@ module.exports = async () => {
 
     const order = await Order.create({ 
         uuid: uuidv1(),
-        clientId: client.id,
+        clientEmail: client.email,
         bookId: book.id,
         quantity: 2,
         totalPrice: 13.4,

@@ -15,7 +15,6 @@ const app = express();
 // Passport Config
 require('./config/passport')(passport);
 
-
 //Body Parser Middleware
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
