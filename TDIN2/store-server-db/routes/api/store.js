@@ -5,6 +5,15 @@ const Client = require('../../src/models/Client');
 const Sequelize = require('sequelize');
 let q = 'store_warehouse2';
 let open = require('amqplib').connect('amqp://localhost');
+let nodemailer = require('nodemailer');
+
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'tdinbookstore@gmail.com',
+    pass: 'tdinbookstore27'
+  }
+});
 
 
 function sendRequestToQueue(msg){
@@ -16,6 +25,25 @@ function sendRequestToQueue(msg){
       return ch.sendToQueue(q, Buffer.from(msg));
     });
   }).catch(console.warn);
+
+}
+
+function sendEmail(clientEmail, subject, msg){
+
+  let mailOptions = {
+    from: 'tdinbookstore@gmail.com',
+    to: clientEmail,
+    subject: subject,
+    text:  msg
+  };
+  
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
 
 }
 
