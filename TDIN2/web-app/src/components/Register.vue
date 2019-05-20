@@ -120,9 +120,17 @@
         },
 
         methods: {
-        submit () {
-            this.$v.$touch()
-        },
+            submit () {
+                this.$v.$touch();
+                
+                axios.post('localhost:5000/api/users/register', {
+                    name: this.data.name,
+                    address:this.data.address,
+                    email:this.data.email,
+                    password:this.data.password,
+                    repeatpassword:this.data.repeatpassword
+                })
+            },
     }
     }
 </script>
