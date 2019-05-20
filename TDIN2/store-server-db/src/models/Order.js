@@ -16,7 +16,7 @@ module.exports = sequelize.define("Order", {
         allowNull: false,
         primaryKey: false,
     },
-    clientId: Sequelize.INTEGER(11),
+    clientEmail: Sequelize.STRING(300),
     bookId: Sequelize.INTEGER(11),
     quantity: Sequelize.INTEGER(11),
     totalPrice: Sequelize.FLOAT,

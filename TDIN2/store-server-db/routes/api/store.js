@@ -70,19 +70,6 @@ router.delete('/deleteClient/:id', (req, res) => {
   .catch(err => res.send(err));
 });
 
-//Get Client Orders (cliendid)
-router.get('/getclientOrders/:id', (req, res) => {
-  let sql = `SELECT * FROM orders WHERE clientId = ${req.params.id}`;
-  db.query(sql, { type: Sequelize.QueryTypes.SELECT }, () => {})
-  .then(rows => {
-    if(rows.length == 0) 
-      res.sendStatus(404)
-    else 
-      res.send(rows);
-  })
-  .catch(err => res.send(err));
-});
-
 //Insert book (title, stock, price)
 router.post('/insertBook', (req, res) => {
   let sql = `INSERT INTO books (title, stock, price) VALUES ('${req.body.title}', '${req.body.stock}', '${req.body.price}')`;
@@ -145,9 +132,9 @@ router.put('/updateBookStock', (req, res) => {
   .catch(err => res.send(err));
 });
 
-//Create Order (clientId, bookTitle, quantity, state)
+//Create Order (clientEmail, bookTitle, quantity, state)
 router.post('/createOrder', (req, res) => {
-  let sql = `INSERT INTO orders (clientId, bookId, quantity, totalPrice, dispatchedDate, state) VALUES ('${req.body.clientId}', '${req.body.bookId}', '${req.body.quantity}', '${req.body.totalPrice}', '${req.body.dispatchedDate}', '${req.body.state}')`;
+  let sql = `INSERT INTO orders (clientEmail, bookId, quantity, totalPrice, dispatchedDate, state) VALUES ('${req.body.clientId}', '${req.body.bookId}', '${req.body.quantity}', '${req.body.totalPrice}', '${req.body.dispatchedDate}', '${req.body.state}')`;
   db.query(sql, { type: Sequelize.QueryTypes.INSERT }, {})
   .then(rows => {
     res.sendStatus(200);
@@ -156,7 +143,7 @@ router.post('/createOrder', (req, res) => {
 });
 
 
-//Update Order State (clientId, bookTitle, quantity, state)
+//Update Order State (clientEmail, bookTitle, quantity, state)
 router.put('/updateOrder/:orderId', (req, res) => {
   let sql = `UPDATE orders SET state = '${req.body.newstate}' WHERE id = ${req.params.orderId}`;
   db.query(sql,  {})
@@ -179,9 +166,9 @@ router.get('/getclientByName/:name', (req, res) => {
   .catch(err => console.log(err));
 });
 
-// Get Order By id
-router.get('/getOrder/:id', (req, res) => {
-  let sql = `SELECT * FROM orders WHERE id = ${req.params.id}`;
+// Get Orders By email
+router.get('/getOrdersByEmail', (req, res) => {
+  let sql = `SELECT * FROM orders WHERE clientEmail = '${req.body.email}'`;
   db.query(sql, { type: Sequelize.QueryTypes.SELECT }, () => {})
   .then(rows => {
     res.send(rows);
