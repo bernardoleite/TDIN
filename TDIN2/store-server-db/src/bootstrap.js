@@ -5,8 +5,8 @@ module.exports = async () => {
     const Book = require ("./models/Book");
     const uuidv1 = require('uuid/v1');
 
-    Client.hasMany(Order, {as: "Orders", foreignKey: 'clientId'});
-    Order.belongsTo(Client, { as: "Client", foreignKey: 'clientId'});
+    Client.hasMany(Order, {as: "Orders", foreignKey: 'clientEmail'});
+    Order.belongsTo(Client, { as: "Client", foreignKey: 'clientEmail'});
 
     Order.hasMany(Book, {as: "Books", foreignKey: 'bookId'});
     Book.belongsTo(Order, { as: "Order", foreignKey: 'bookId'});

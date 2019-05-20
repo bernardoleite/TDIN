@@ -24,14 +24,14 @@ router.get('/welcome', (req, res) => res.sendFile(path.join(__dirname, '../../pu
 
 //Register handler
 router.post('/register', (req,res) => {
-    const {name, address, email, password, password2} = req.body;
+    const {name, address, email, password, repeatpassword} = req.body;
     let errors = [];
 
-  if (!name || !email || !password || !password2 || !address) {
+  if (!name || !email || !password || !repeatpassword || !address) {
     errors.push('Please enter all fields');
   }
 
-  if (password != password2) {
+  if (password != repeatpassword) {
     errors.push('Passwords do not match');
   }
 
