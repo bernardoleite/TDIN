@@ -15,7 +15,6 @@ let transporter = nodemailer.createTransport({
   }
 });
 
-
 function sendRequestToQueue(msg){
 
   open.then(function(conn) {

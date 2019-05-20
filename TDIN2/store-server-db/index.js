@@ -3,6 +3,7 @@ const path = require ('path');
 //const myqueue = require("./src/queue");
 const passport = require('passport');
 const session = require('express-session');
+const cors = require('cors');
 
 // DB connection
 require("./src/database/connection");
@@ -18,6 +19,8 @@ require('./config/passport')(passport);
 //Body Parser Middleware
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+
+app.use(cors());
 
 // Express session
 app.use(

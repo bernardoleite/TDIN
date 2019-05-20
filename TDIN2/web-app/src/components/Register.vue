@@ -1,3 +1,4 @@
+
 <template>
     <div class="auth register">
         <h1 class="logo"><span>Book</span>Shop</h1>
@@ -61,6 +62,7 @@
 <script>
     import { validationMixin } from 'vuelidate'
     import { required, maxLength, email, sameAs } from 'vuelidate/lib/validators'
+    import axios from 'axios'
 
     export default {
         name: 'register',
@@ -122,14 +124,26 @@
         methods: {
             submit () {
                 this.$v.$touch();
+
+                console.log(this.name);
+
                 
-                axios.post('localhost:5000/api/users/register', {
-                    name: this.data.name,
-                    address:this.data.address,
-                    email:this.data.email,
-                    password:this.data.password,
-                    repeatpassword:this.data.repeatpassword
+                axios.post('http://localhost:5000/api/users/register', {
+                    name: this.name,
+                    address:this.address,
+                    email:this.email,
+                    password:this.password,
+                    repeatpassword:this.repeatpassword,
                 })
+                .then(function (response) {
+                // handle success
+                console.log(response);
+                })
+                .catch(function (error) {
+                // handle error
+                console.log(error);
+                })
+                
             },
     }
     }
