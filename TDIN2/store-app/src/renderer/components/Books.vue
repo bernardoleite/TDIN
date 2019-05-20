@@ -14,38 +14,70 @@
             single-line
             hide-details
             ></v-text-field>
-
-            <v-dialog v-model="dialog" max-width="500px">
-                    <template v-slot:activator="{ on }">
-                        <v-btn color="accent" outline round v-on="on" class="add-book">Add Book</v-btn>
-                    </template>
-                    <v-card>
-                    <v-card-title>
-                        <span class="headline">Add Book</span>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-container grid-list-md>
-                        <v-layout wrap>
-                            <v-flex xs12 sm6 md4>
-                            <v-text-field autofocus v-model="editedItem.title" label="Title"></v-text-field>
-                            </v-flex>
-                            <v-flex xs12 sm6 md4>
-                            <v-text-field v-model="editedItem.unitprice" :rules="[integerRule]" label="Unit Price (€)"></v-text-field>
-                            </v-flex>
-                            <v-flex xs12 sm6 md4>
-                            <v-text-field v-model="editedItem.stock" :rules="[integerRule]" label="Stock"></v-text-field>
-                            </v-flex>
-                        </v-layout>
-                        </v-container>
-                    </v-card-text>
             
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="accent" round flat @click="close">Cancel</v-btn>
-                        <v-btn color="accent" outline round flat @click="save">Save</v-btn>
-                    </v-card-actions>
-                    </v-card>
-            </v-dialog>
+            <div class="dialogs">
+                
+                <v-dialog v-model="dialogClient" max-width="500px">
+                        <template v-slot:activator="{ on }">
+                            <v-btn color="accent" outline round v-on="on" class="add-client">Add Client</v-btn>
+                        </template>
+                        <v-card>
+                        <v-card-title>
+                            <span class="headline">Add Client</span>
+                        </v-card-title>
+                        <v-card-text>
+                            <v-container grid-list-md>
+                            <v-layout wrap>
+                                <v-flex xs12 sm6 md6>
+                                <v-text-field v-model="editedClient.name" label="Name"></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm6 md6>
+                                <v-text-field v-model="editedClient.email" label="Email"></v-text-field>
+                                </v-flex>
+                            </v-layout>
+                            </v-container>
+                        </v-card-text>
+                
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="accent" round flat @click="closeClientDialog">Cancel</v-btn>
+                            <v-btn color="accent" outline round flat @click="saveClientDialog">Save</v-btn>
+                        </v-card-actions>
+                        </v-card>
+                </v-dialog>
+
+                <v-dialog v-model="dialogBook" max-width="500px">
+                        <template v-slot:activator="{ on }">
+                            <v-btn color="accent" round v-on="on" class="add-book">Add Book</v-btn>
+                        </template>
+                        <v-card>
+                        <v-card-title>
+                            <span class="headline">Add Book</span>
+                        </v-card-title>
+                        <v-card-text>
+                            <v-container grid-list-md>
+                            <v-layout wrap>
+                                <v-flex xs12 sm6 md4>
+                                <v-text-field v-model="editedBook.title" label="Title"></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm6 md4>
+                                <v-text-field v-model="editedBook.unitprice" :rules="[integerRule]" label="Unit Price (€)"></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm6 md4>
+                                <v-text-field v-model="editedBook.stock" :rules="[integerRule]" label="Stock"></v-text-field>
+                                </v-flex>
+                            </v-layout>
+                            </v-container>
+                        </v-card-text>
+                
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="accent" round flat @click="closeBookDialog">Cancel</v-btn>
+                            <v-btn color="accent" outline round flat @click="saveBookDialog">Save</v-btn>
+                        </v-card-actions>
+                        </v-card>
+                </v-dialog>
+            </div>
 
             <v-data-table
                 :loading="isLoading"
@@ -81,10 +113,11 @@
                         :search-input.sync="props.item.clientsearch"
                         color="accent"
                         hide-selected
-                        item-text="name"
+                        item-text="email"
                         item-value="id"
                         return-object
                     ></v-autocomplete>
+                    </v-flex>
                     <td class="text-xs-right">
                         <v-text-field
                             v-model="props.item.qnt"
@@ -112,18 +145,19 @@
             isLoading: true,
             integerRule: v=> /^[0-9]*$/.test(v) || 'Input must be a integer',
             search: '',
-            dialog: false,
-            editedItem: {
+            dialogClient: false,
+            dialogBook: false,
+            editedBook: {
                 id: 0,
                 title: '',
-                unitprice: 0,
-                stock: 0,
-                qnt: '',
+                unitprice: '',
+                stock: '',
+                qnt: 0,
                 totalprice: 0,
                 clientsearch:'',
                 client:'',
             },
-            defaultItem: {
+            defaultBook: {
                 id: 0,
                 title: '',
                 unitprice: 0,
@@ -218,15 +252,25 @@
             ],
             oldbooks:[],
             totalPrice: 0,
+            editedClient: {
+                id: 0,
+                name: '',
+                email: '',
+            },
+            defaultClient: {
+                id: 0,
+                name: '',
+                email: '',
+            },
             clients: [
-                { name: 'Sandra Adams', id:0 },
-                { name: 'Ali Connors', id:1 },
-                { name: 'Trevor Hansen', id:2 },
-                { name: 'Tucker Smith', id:3 },
-                { name: 'Britta Holt', id:4 },
-                { name: 'Jane Smith ', id:5 },
-                { name: 'John Smith', id:6 },
-                { name: 'Sandra Williams', id:7 }
+                { email:'sandraadams@gmail.com', name: 'Sandra Adams', id:0 },
+                { email:'aliconnors@gmail.com', name: 'Ali Connors', id:1 },
+                { email:'trevorhansen@gmail.com', name: 'Trevor Hansen', id:2 },
+                { email:'tuckersmith@gmail.com', name: 'Tucker Smith', id:3 },
+                { email:'brittahold@gmail.com', name: 'Britta Holt', id:4 },
+                { email:'janesmith@gmail.com', name: 'Jane Smith ', id:5 },
+                { email:'johnsmith@gmail.com', name: 'John Smith', id:6 },
+                { email:'sandrawilliams@gmail.com', name: 'Sandra Williams', id:7 }
             ],
         }
     },
@@ -286,17 +330,30 @@
 
             //TODO: Delete Book
         },
-        close () {
-            this.dialog = false
+        closeBookDialog() {
+            this.dialogBook = false
             setTimeout(() => {
-                this.editedItem = Object.assign({}, this.defaultItem)
+                this.editedBook = Object.assign({}, this.defaultBook)
             }, 300)
         },
 
-        save () {
-            this.editedItem.id=this.books[this.books.length-1].id + 1;
-            this.books.push(this.editedItem)
-            this.close()
+        saveBookDialog() {
+            this.editedBook.id=this.books[this.books.length-1].id + 1;
+            this.books.push(this.editedBook)
+            this.closeBookDialog()
+        },
+
+        closeClientDialog() {
+            this.dialogClient = false
+            setTimeout(() => {
+                this.editedClient = Object.assign({}, this.defaultClient)
+            }, 300)
+        },
+
+        saveClientDialog() {
+            this.editedClient.id=this.clients[this.clients.length-1].id + 1;
+            this.clients.push(this.editedClient)
+            this.closeClientDialog()
         }
     },
     
@@ -337,11 +394,20 @@
     }
 
     button{
-        width: 7em !important;
+        width: 8em !important;
     }
-    button.add-book {
+    .dialogs{
         margin-left: auto;
         margin-right: 0;
+    }
+    .dialogs button.add-book {
+        height: 2.6em;
+        font-size: 1.2em;
+        margin-bottom:.7em;
+        font-weight: 300 !important;
+    }
+
+     .dialogs button.add-client {
         height: 2.6em;
         font-size: 1.2em;
         margin-bottom:.7em;
