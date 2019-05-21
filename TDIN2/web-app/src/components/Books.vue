@@ -61,30 +61,6 @@
     export default {
         name: 'books',
         data () {
-        let receiveBooks = this.getAllBooks();
-        console.log(receiveBooks);
-/*
-        let books = [
-            {
-                id: 0,
-                title: 'Frozen Yogurt',
-                unitprice: 10,
-                stock: 6,
-                qnt: '',
-                totalprice: 0,
-            },
-            {
-                id: 1,
-                title: 'Ice cream sandwich',
-                unitprice: 25,
-                stock: 9,
-                qnt: '',
-                totalprice: 0,
-            }
-        ];
-
-*/
-
         return {
             isLoading: true,
             integerRule: v=> /^[0-9]*$/.test(v) || 'Input must be a integer',
@@ -98,7 +74,7 @@
             { text: 'Desired Quantity', align: 'right', value: 'qnt' },
             { text: 'Total Price', align: 'right', value:'totalprice'  },
             ],
-            books,
+            books : [],
             oldbooks:[],
             totalPrice: 0,
         }
@@ -129,20 +105,38 @@
         }
     },
     mounted(){
-        this.setValue();   
+        this.getAllBooks();   
+        this.setValue();
     },
     methods: {
-        getAllBooks: function () {
-            let strr = [];
-
+        getAllBooks(){
+            let vm=this;
+            vm.isLoading = true;
             axios.get('http://localhost:5000/api/store/getAllBooks')
-            .then(function(response){
-                    strr.push(response.data);
-                })
-            .catch(function(error){
-                    console.log(error);
-                });
-            return strr;
+            .then(function (response) {
+                // handle success
+                vm.books=[];
+                let allBooks = response.data;
+                for(let i=0; i< allBooks.length; i++){
+                    let book = {
+                        id: allBooks[i].id,
+                        title: allBooks[i].title,
+                        unitprice: allBooks[i].unitprice,
+                        stock: allBooks[i].stock,
+                        qnt: '',
+                        totalprice: 0,
+                    }
+
+                    vm.books.push(book);
+                }
+                vm.selected=[];
+                vm.isLoading = false;
+
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
         },
        setValue: function() {
             var _ = require('lodash');
