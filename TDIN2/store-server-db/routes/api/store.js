@@ -198,4 +198,14 @@ router.get('/getOrders', (req, res) => {
   .catch(err => console.log(err));
 });
 
+// Get Client by name
+router.get('/getClients', (req, res) => {
+  let sql = `SELECT * FROM clients`;
+  db.query(sql, { type: Sequelize.QueryTypes.SELECT }, () => {})
+  .then(rows => {
+    res.send(rows);
+  })
+  .catch(err => console.log(err));
+});
+
 module.exports = router;

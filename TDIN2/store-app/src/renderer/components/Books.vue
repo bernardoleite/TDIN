@@ -262,16 +262,7 @@
                 name: '',
                 email: '',
             },
-            clients: [
-                { email:'sandraadams@gmail.com', name: 'Sandra Adams', id:0 },
-                { email:'aliconnors@gmail.com', name: 'Ali Connors', id:1 },
-                { email:'trevorhansen@gmail.com', name: 'Trevor Hansen', id:2 },
-                { email:'tuckersmith@gmail.com', name: 'Tucker Smith', id:3 },
-                { email:'brittahold@gmail.com', name: 'Britta Holt', id:4 },
-                { email:'janesmith@gmail.com', name: 'Jane Smith ', id:5 },
-                { email:'johnsmith@gmail.com', name: 'John Smith', id:6 },
-                { email:'sandrawilliams@gmail.com', name: 'Sandra Williams', id:7 }
-            ],
+            clients: [],
         }
     },
     watch: {
@@ -304,12 +295,36 @@
         }
     },
     mounted(){
-        this.setValue();   
+        this.setValue(); 
+        this.getClients();  
     },
     methods: {
         setValue: function() {
             var _ = require('lodash');
             this.$data.oldbooks = _.cloneDeep(this.$data.books);
+        },
+        getClients(){
+            let vm=this;
+            axios.get('/getClients')
+            .then(function (response) {
+                console.log(response);
+                // handle success
+                vm.clients=[];
+                let clients = response.data;
+                for(let i=0; i< clients.length; i++){
+                    let request = {
+                        id: clients[i].id,
+                        name: clients[i].name,
+                        email:clients[i].email,
+                    };
+
+                    vm.clients.push(request);
+                }
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
         },
         sell(event) {
             //TODO: get client id
