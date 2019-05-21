@@ -27,7 +27,7 @@ module.exports = async () => {
     }).catch(errHandler);
 
     const book = await Book.create({ 
-        title: "IT - A COISA :)",
+        title: "IT - A Coisa",
         stock: 3,
         unitprice: 19.99,
     }).catch(errHandler);
@@ -42,7 +42,15 @@ module.exports = async () => {
         state: "waiting",
     }).catch(errHandler);
 
-
+    const sale = await Order.create({ 
+        uuid: uuidv1(),
+        clientEmail: client.email,
+        bookId: book.id,
+        quantity: 2,
+        totalPrice: 13.4,
+        //dispatchedDate: Sequelize.DATE,
+        state: "sold",
+    }).catch(errHandler);
 
     const clients = await Client.findAll({ where: { name: 'Bernardo'}, include: [{model: Order, as: "Orders"}]}).catch(errHandler);
 

@@ -37,81 +37,60 @@
  </template>
   
 <script>
-    export default {
-        name: 'sales',
-        data () {
-        return {
-            isLoading: true,
-            search: '',
-            headers: [
-            { text: 'ID', align: 'left', value:'id'},
-            { text: 'Client Name', align: 'right', value: 'client' },
-            { text: 'Title', align: 'right', value: 'title' },
-            { text: 'Unit Price', align: 'right', value: 'unitprice' },
-            { text: 'Quantity', align: 'right', value: 'qnt' },
-            { text: 'Total Price', align: 'right', value: 'totalprice' },
-            ],
-            sales: [
-            {
-                id: 0,
-                client:'Elit Sed',
-                title: 'Frozen Yogurt',
-                unitprice: 10,
-                qnt: 3,
-                totalprice: 30,
-            },
-            {
-                id: 1,
-                client: 'Lorem Ipsum',
-                title: 'Ice cream sandwich',
-                unitprice: 15,
-                qnt: 4,
-                totalprice: 60,
-            },
-            {
-                id: 2,
-                client: 'Dolor Dit Amet',
-                title: 'Eclair',
-                unitprice: 20,
-                qnt: 2,
-                totalprice: 40,
-            },
-            {
-                id: 3,
-                client: 'Consectet Adipiscing',
-                title: 'Cupcake',
-                unitprice: 5,
-                qnt: 3,
-                totalprice: 15,
-            },
-            {
-                id: 4,
-                client: 'Elit Sed',
-                title: 'Gingerbread',
-                unitprice: 10,
-                qnt: 1,
-                totalprice: 10,
-            },
-            {
-                id: 5,
-                client: 'Lorem Ipsum',
-                title: 'Jelly bean',
-                unitprice: 40,
-                qnt: 2,
-                totalprice: 80,
-            },
-            {
-                id: 6,
-                client: 'Dolor Dit Amet',
-                title: 'Lollipop',
-                unitprice: 17,
-                qnt: 4,
-                totalprice: 68,
-            },
-            ]
+export default {
+    name: 'sales',
+    data () {
+    return {
+        isLoading: true,
+        search: '',
+        headers: [
+        { text: 'ID', align: 'left', value:'id'},
+        { text: 'Client', align: 'right', value: 'client' },
+        { text: 'Title', align: 'right', value: 'title' },
+        { text: 'Unit Price', align: 'right', value: 'unitprice' },
+        { text: 'Quantity', align: 'right', value: 'qnt' },
+        { text: 'Total Price', align: 'right', value: 'totalprice' },
+        ],
+        sales: []
+        }
+    },
+    mounted: function () {
+        this.getSales();
+    },
+    methods:{
+        getSales(){
+            let vm=this;
+            vm.isLoading = true;
+            axios.get('/getSales')
+            .then(function (response) {
+                // handle success
+                vm.sales=[];
+                let sales = response.data;
+                for(let i=0; i< sales.length; i++){
+                    let request = {
+                        id: sales[i].id,
+                        client: sales[i].clientEmail,
+                        title: sales[i].title,
+                        unitprice: sales[i].unitprice,
+                        qnt: sales[i].quantity,
+                        totalprice: sales[i].totalPrice,
+                    };
+
+                    vm.sales.push(request);
+                }
+                vm.selected=[];
+                vm.isLoading = false;
+
+                console.log(sales);
+
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
         }
     }
-  }
+}
 </script>
   
 <style>
