@@ -83,22 +83,30 @@
         books: {
             handler: function (after, before) {
                 var vm = this;
-                var changed = after.filter( function( p, idx ) {
-                    return Object.keys(p).some( function( prop ) {
-                        return p[prop] !== vm.$data.oldbooks[idx][prop];
-                    })
-                })
-                var difference = changed[0].totalprice - this.oldbooks.find(x => x.id ===  changed[0].id).totalprice;
+               
 
-                vm.setValue();
-                var obj = changed[0];
-                if(!isNaN(obj.qnt) && Number.isInteger(parseFloat(obj.qnt,10))){
-                    obj.totalprice=obj.qnt*obj.unitprice;
-                }
-                else{
-                    obj.totalprice=0;
-                }
-                this.totalPrice = this.totalPrice + difference;
+                    var changed = after.filter( function( p, idx ) {
+                        return Object.keys(p).some( function( prop ) {
+                            return p[prop] !== vm.$data.oldbooks[idx][prop];
+                        })
+                    })
+
+                    if(changed.length != 0){
+                        
+                        var difference = changed[0].totalprice - this.oldbooks.find(x => x.id ===  changed[0].id).totalprice;
+                        
+                        vm.setValue();
+                        var obj = changed[0];
+                        
+                        if(!isNaN(obj.qnt) && Number.isInteger(parseFloat(obj.qnt,10))){
+                            obj.totalprice=obj.qnt*obj.unitprice;
+                        }
+                        else{
+                            obj.totalprice=0;
+                        }
+                        this.totalPrice = this.totalPrice + difference;
+                    }   
+                
                 
             },
             deep: true
@@ -117,6 +125,7 @@
                 // handle success
                 vm.books=[];
                 let allBooks = response.data;
+                let tempBooks =[];
                 for(let i=0; i< allBooks.length; i++){
                     let book = {
                         id: allBooks[i].id,
@@ -127,8 +136,13 @@
                         totalprice: 0,
                     }
 
-                    vm.books.push(book);
+                    tempBooks.push(book);
                 }
+                
+                vm.setValueWithArray(tempBooks);
+                vm.books=tempBooks;
+                //vm.setValueWithArray(tempBooks)
+
                 vm.selected=[];
                 vm.isLoading = false;
 
@@ -142,11 +156,14 @@
             var _ = require('lodash');
             this.$data.oldbooks = _.cloneDeep(this.$data.books);
         },
+        setValueWithArray: function(books) {
+            var _ = require('lodash');
+            this.$data.oldbooks = _.cloneDeep(books);
+        },
         buy(event) {
             //TODO: get client id
             console.log(this.selected);
            
-
             for(let i = 0; i < this.selected.length; i++){
                 if(!isNaN(this.selected[i].qnt) && Number.isInteger(parseFloat(this.selected[i].qnt, 10))){
                     console.log(parseFloat(this.selected[i].qnt, 10));
