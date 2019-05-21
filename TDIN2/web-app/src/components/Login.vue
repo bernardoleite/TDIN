@@ -37,6 +37,7 @@
 <script>
     import { validationMixin } from 'vuelidate'
     import { required, maxLength, email } from 'vuelidate/lib/validators'
+    import axios from 'axios'
 
     export default {
         name: 'login',
@@ -70,7 +71,21 @@
 
         methods: {
         submit () {
-            this.$v.$touch()
+            this.$v.$touch();
+
+            axios.post('http://localhost:5000/api/users/login', {
+                    email:this.email,
+                    password:this.password,
+                })
+                .then(function (response) {
+                // handle success
+                console.log(response);
+                })
+                .catch(function (error) {
+                // handle error
+                console.log(error);
+                })
+
         },
     }
   }

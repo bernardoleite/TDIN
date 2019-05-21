@@ -110,7 +110,7 @@ router.post('/register', (req,res) => {
                 .save()
                 .then(user => {   
                   //OK, registered - Redirect to Login
-                  res.status(200).send([newUser.name, newUser.email, newUser.address]);
+                  res.status(200).send([newUser.id, newUser.name, newUser.email, newUser.address]);
                 })
                 .catch(err => console.log(err));
             });
@@ -131,7 +131,7 @@ router.post('/login',
     function(req, res) {
   // If this function gets called, authentication was successful.
   // `req.user` contains the authenticated user.
-  res.status(200).send(req.user);
+  res.status(200).send([req.user.id, req.user.name, req.user.email, req.user.address]);
 });
 
   // Logout
