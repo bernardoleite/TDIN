@@ -4,6 +4,19 @@ const db = require('../../src/database/connection');
 const Request = require('../../src/models/Request');
 const Sequelize = require('sequelize');
 
+//Get All Books
+router.get('/getAllRequests', (req, res) => {
+  let sql = `SELECT * FROM requests`;
+  db.query(sql, { type: Sequelize.QueryTypes.SELECT }, () => {})
+  .then(rows => {
+    if(rows.length == 0) 
+      res.sendStatus(404)
+    else 
+      res.send(rows);
+  })
+  .catch(err => res.send(err));
+});
+
 //Insert Request (orderId, bookTitle, quantity, state)
 router.post('/insertRequest', (req, res) => {
     let sql = `INSERT INTO requests (orderId, bookTitle, quantity, state) VALUES (${req.body.orderId}, '${req.body.bookTitle}', ${req.body.quantity}, '${req.body.state}' )`;
