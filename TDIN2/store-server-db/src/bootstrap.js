@@ -18,6 +18,7 @@ module.exports = async () => {
     
     let emailR = Math.random().toString(36).substring(7);
     emailR = emailR + '@gmail.com';
+
     const client = await Client.create({ 
         name: "Bernardo", 
         email: emailR,
@@ -28,7 +29,7 @@ module.exports = async () => {
     const book = await Book.create({ 
         title: "IT - A COISA :)",
         stock: 3,
-        price: 19.99,
+        unitprice: 19.99,
     }).catch(errHandler);
 
     const order = await Order.create({ 

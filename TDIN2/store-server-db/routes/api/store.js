@@ -58,7 +58,7 @@ router.get('/', (req, res) =>
 
 //Insert book (title, stock, price)
 router.post('/insertBook', (req, res) => {
-  let sql = `INSERT INTO books (title, stock, price) VALUES ('${req.body.title}', '${req.body.stock}', '${req.body.price}')`;
+  let sql = `INSERT INTO books (title, stock, unitprice) VALUES ('${req.body.title}', '${req.body.stock}', '${req.body.unitprice}')`;
   db.query(sql, { type: Sequelize.QueryTypes.INSERT }, () => {})
   .then(rows => {
     res.sendStatus(200);

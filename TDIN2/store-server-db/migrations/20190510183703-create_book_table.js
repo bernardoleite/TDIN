@@ -13,7 +13,7 @@ module.exports = {
     },
     title: Sequelize.STRING(300),
     stock: Sequelize.INTEGER(11),
-    price: Sequelize.FLOAT,
+    unitprice: Sequelize.FLOAT,
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE,
     })

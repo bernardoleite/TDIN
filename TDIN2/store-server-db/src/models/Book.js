@@ -11,6 +11,6 @@ module.exports = sequelize.define("Book", {
     },
     title: Sequelize.STRING(300),
     stock: Sequelize.INTEGER(11),
-    price: Sequelize.FLOAT,
+    unitprice: Sequelize.FLOAT,
 
 });

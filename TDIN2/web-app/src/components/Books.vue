@@ -56,6 +56,8 @@
  </template>
   
 <script>
+    import axios from 'axios'
+
     export default {
         name: 'books',
         data () {
@@ -161,8 +163,23 @@
     },
     mounted(){
         this.setValue();   
+        this.getAllBooks();
     },
     methods: {
+        getAllBooks () {
+            
+            axios.get('http://localhost:5000/api/store/getAllBooks')
+            .then(function (response) {
+            // handle success
+            console.log(response);
+            })
+            .catch(function (error) {
+            // handle error
+            console.log(error);
+            })
+            
+        },
+
        setValue: function() {
             var _ = require('lodash');
             this.$data.oldbooks = _.cloneDeep(this.$data.books);
