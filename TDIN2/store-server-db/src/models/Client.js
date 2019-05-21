@@ -19,7 +19,7 @@ module.exports = sequelize.define("Client", {
     },
     password: {
         type: Sequelize.STRING(300),
-        allowNull: false,
+        allowNull: true,
     }
 
 });

@@ -3,6 +3,7 @@ const router = express.Router();
 const path = require ('path');
 const db = require('../../src/database/connection');
 const Client = require('../../src/models/Client');
+const Sequelize = require('sequelize');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const { ensureAuthenticated } = require('../../config/auth');
@@ -21,6 +22,42 @@ router.get('/about',ensureAuthenticated, (req, res) => res.sendFile(path.join(__
 
 router.get('/welcome', (req, res) => res.sendFile(path.join(__dirname, '../../public', 'welcome.html')));
 
+//Insert Client (name, address, email)
+router.post('/insertClient', (req, res) => {
+  let sql = `INSERT INTO clients (name, email) VALUES ('${req.body.name}', '${req.body.email}')`;
+  db.query(sql, { type: Sequelize.QueryTypes.INSERT }, () => {})
+  .then(rows => {
+    res.sendStatus(200);
+  })
+  .catch(err => res.send(err));
+});
+
+// Get Client by id
+router.get('/getclientById/:id', (req, res) => {
+  let sql = `SELECT * FROM clients WHERE id = ${req.params.id}`;
+  db.query(sql, { type: Sequelize.QueryTypes.SELECT }, () => {})
+  .then(rows => {
+    if(rows.length == 0) 
+      res.sendStatus(404)
+    else 
+      res.send(rows);
+  })
+  .catch(err => res.send(err));
+
+});
+
+//Delete Client (clientid)
+router.delete('/deleteClient/:id', (req, res) => {
+  let sql = `DELETE FROM clients WHERE id = ${req.params.id}`;
+  db.query(sql,  {})
+  .then(rows => {
+    if(rows[0].affectedRows == 0) 
+      res.sendStatus(404)
+    else if(rows[0].affectedRows == 1)
+      res.sendStatus(200);
+  })
+  .catch(err => res.send(err));
+});
 
 //Register handler
 router.post('/register', (req,res) => {
