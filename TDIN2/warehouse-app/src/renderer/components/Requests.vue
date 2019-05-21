@@ -50,6 +50,7 @@
         name: 'requests',
         data () {
         return {
+            componentKey: 0,
             isLoading: true,
             search: '',
             selected: [],
@@ -63,16 +64,40 @@
         }
     },
     mounted: function () {
-        this.$nextTick(function () {
-            // Code that will run only after the
-            // entire view has been rendered
-       
+        this.getAllPendingRequests();
+    },
+    methods: {
+        ship(event) {
+            //TODO: get client id
+            this.isLoading = true;
+            console.log(this.selected);
+
+            for(let i = 0; i < this.selected.length; i++){
+                let vm=this;
+                
+                axios.put('/updateRequestStateById/' + vm.selected[i].id , 
+                {
+                newstate: 'dispatched'
+                })
+                .then(function (response) {
+                    // handle success
+
+                    console.log(response);
+                    vm.isLoading = false;
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                })    
+            }
+        },
+        getAllPendingRequests(){
             let vm=this;
+            vm.isLoading = true;
             axios.get('/getAllPendingRequests')
             .then(function (response) {
                 // handle success
-                console.log(response);
-
+                vm.requests=[];
                 let pendingRequests = response.data;
                 for(let i=0; i< pendingRequests.length; i++){
                     let request = {
@@ -84,7 +109,7 @@
 
                     vm.requests.push(request);
                 }
-
+                vm.selected=[];
                 vm.isLoading = false;
 
             })
@@ -92,21 +117,6 @@
                 // handle error
                 console.log(error);
             })
-
-        })
-    },
-    methods: {
-        ship(event) {
-            //TODO: get client id
-            console.log(this.selected);
-            
-
-            for(let i = 0; i < this.selected.length; i++){
-                if(!isNaN(this.selected[i].qnt) && Number.isInteger(parseFloat(this.selected[i].qnt, 10))){
-                    console.log(parseFloat(this.selected[i].qnt, 10));
-                    //TODO: make order
-                }       
-            }  
         }
     }
 }
