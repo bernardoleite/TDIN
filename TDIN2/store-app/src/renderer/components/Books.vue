@@ -274,19 +274,22 @@
                         return p[prop] !== vm.$data.oldbooks[idx][prop];
                     })
                 })
-            
-                var difference = changed[0].totalprice - this.oldbooks.find(x => x.id ===  changed[0].id).totalprice;
-
-                vm.setValue();
-                var obj = changed[0];
-                if(!isNaN(obj.qnt) && Number.isInteger(parseFloat(obj.qnt,10))){
-                    obj.totalprice=obj.qnt*obj.unitprice;
-                }
-                else{
-                    obj.totalprice=0;
-                }
-                this.totalPrice = this.totalPrice + difference;
+                if(changed.length != 0){
                 
+                    var difference = changed[0].totalprice - this.oldbooks.find(x => x.id ===  changed[0].id).totalprice;
+
+                    vm.setValue();
+                    var obj = changed[0];
+                    if(!isNaN(obj.qnt) && Number.isInteger(parseFloat(obj.qnt,10))){
+                        obj.totalprice=obj.qnt*obj.unitprice;
+                    }
+                    else{
+                        obj.totalprice=0;
+                    }
+                    this.totalPrice = this.totalPrice + difference;
+
+                }
+               
             },
             deep: true
         },
@@ -295,13 +298,53 @@
         }
     },
     mounted(){
+        this.getAllBooks(); 
         this.setValue(); 
         this.getClients();  
     },
     methods: {
+        getAllBooks(){
+            let vm=this;
+            vm.isLoading = true;
+            axios.get('http://localhost:5000/api/store/getAllBooks')
+            .then(function (response) {
+                // handle success
+                vm.books=[];
+                let allBooks = response.data;
+                let tempBooks =[];
+                for(let i=0; i< allBooks.length; i++){
+                    let book = {
+                        id: allBooks[i].id,
+                        title: allBooks[i].title,
+                        unitprice: allBooks[i].unitprice,
+                        stock: allBooks[i].stock,
+                        qnt: '',
+                        totalprice: 0,
+                    }
+
+                    tempBooks.push(book);
+                }
+                
+                vm.setValueWithArray(tempBooks);
+                vm.books=tempBooks;
+                //vm.setValueWithArray(tempBooks)
+
+                vm.selected=[];
+                vm.isLoading = false;
+
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+        },
         setValue: function() {
             var _ = require('lodash');
             this.$data.oldbooks = _.cloneDeep(this.$data.books);
+        },
+        setValueWithArray: function(books) {
+            var _ = require('lodash');
+            this.$data.oldbooks = _.cloneDeep(books);
         },
         getClients(){
             let vm=this;

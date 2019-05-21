@@ -32,6 +32,18 @@ module.exports = async () => {
         unitprice: 19.99,
     }).catch(errHandler);
 
+    const book1 = await Book.create({ 
+        title: "The Girl With the Dragon Tattoo",
+        stock: 2,
+        unitprice: 29.99,
+    }).catch(errHandler);
+
+    const book2 = await Book.create({ 
+        title: "The Girl Who Dreamed With Fire",
+        stock: 5,
+        unitprice: 10.12,
+    }).catch(errHandler);
+
     const order = await Order.create({ 
         uuid: uuidv1(),
         clientEmail: client.email,
