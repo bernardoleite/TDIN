@@ -70,6 +70,7 @@
         ship(event) {
             //TODO: get client id
             this.isLoading = true;
+            let isError = false;
             console.log(this.selected);
 
             for(let i = 0; i < this.selected.length; i++){
@@ -77,18 +78,23 @@
                 
                 axios.put('/updateRequestStateById/' + vm.selected[i].id , 
                 {
-                newstate: 'dispatched'
+                    newstate: 'dispatched'
                 })
                 .then(function (response) {
                     // handle success
-
                     console.log(response);
                     vm.isLoading = false;
-                })
-                .catch(function (error) {
+                }).catch(function (error) {
                     // handle error
+                    isError=true;
                     console.log(error);
-                })    
+                })
+
+                if(!isError){
+                    vm.requests.splice(vm.requests.indexOf(vm.selected[i]),1)
+                    vm.selected.splice(i,1);
+                    i--; 
+                }
             }
         },
         getAllPendingRequests(){
