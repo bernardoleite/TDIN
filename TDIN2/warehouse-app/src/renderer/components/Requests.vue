@@ -66,7 +66,6 @@
     },
     methods: {
         ship(event) {
-            //TODO: get client id
 
             let isError = false;
             console.log(this.selected);

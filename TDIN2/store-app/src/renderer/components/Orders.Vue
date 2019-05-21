@@ -85,7 +85,7 @@
                 // handle success
                 vm.orders=[];
                 let orders = response.data;
-                console.log(orders);
+               
                 for(let i=0; i< orders.length; i++){
                     let order = {
                         id: orders[i].id,
@@ -109,15 +109,57 @@
             })
         },
         sold(event) {
-            for(let i = 0; i< this.selected.length; i++){
-                console.log(this.selected[i]);
-                //TODO: Change State
+            let isError = false;
+
+            for(let i = 0; i < this.selected.length; i++){
+                let vm=this;
+                
+                axios.put('/updateOrder/' + vm.selected[i].id , 
+                {
+                    newstate: 'sold'
+                })
+                .then(function (response) {
+                    // handle success
+                    console.log(response);
+  
+                }).catch(function (error) {
+                    // handle error
+                    isError=true;
+                    console.log(error);
+                })
+
+                if(!isError){
+                    vm.orders.splice(vm.orders.indexOf(vm.selected[i]),1)
+                    vm.selected.splice(i,1);
+                    i--; 
+                }
             }
         },
         arrived(event) {
-            for(let i = 0; i< this.selected.length; i++){
-                console.log(this.selected[i]);
-                //TODO: Change State
+            let isError = false;
+
+            for(let i = 0; i < this.selected.length; i++){
+                let vm=this;
+                
+                axios.put('/updateOrder/' + vm.selected[i].id , 
+                {
+                    newstate: 'ready'
+                })
+                .then(function (response) {
+                    // handle success
+                    console.log(response);
+  
+                }).catch(function (error) {
+                    // handle error
+                    isError=true;
+                    console.log(error);
+                })
+
+                if(!isError){
+                    vm.orders[vm.orders.indexOf(vm.selected[i])].state='ready';
+                    vm.selected.splice(i,1);
+                    i--; 
+                }
             }
         }
     },
