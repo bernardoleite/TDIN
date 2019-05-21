@@ -15,7 +15,6 @@
             hide-details
             ></v-text-field>
             <v-data-table
-                :loading="isLoading"
                 v-model="selected"
                 :headers="headers"
                 :items="requests"
@@ -51,7 +50,6 @@
         data () {
         return {
             componentKey: 0,
-            isLoading: true,
             search: '',
             selected: [],
             headers: [
@@ -69,7 +67,7 @@
     methods: {
         ship(event) {
             //TODO: get client id
-            this.isLoading = true;
+
             let isError = false;
             console.log(this.selected);
 
@@ -78,12 +76,12 @@
                 
                 axios.put('/updateRequestStateById/' + vm.selected[i].id , 
                 {
-                    newstate: 'dispatched'
+                    newstate: 'shipped'
                 })
                 .then(function (response) {
                     // handle success
                     console.log(response);
-                    vm.isLoading = false;
+  
                 }).catch(function (error) {
                     // handle error
                     isError=true;
@@ -99,7 +97,7 @@
         },
         getAllPendingRequests(){
             let vm=this;
-            vm.isLoading = true;
+           
             axios.get('/getAllPendingRequests')
             .then(function (response) {
                 // handle success
@@ -116,7 +114,6 @@
                     vm.requests.push(request);
                 }
                 vm.selected=[];
-                vm.isLoading = false;
 
             })
             .catch(function (error) {

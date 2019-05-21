@@ -15,7 +15,6 @@
             hide-details
             ></v-text-field>
             <v-data-table
-                :loading="isLoading"
                 v-model="selected"
                 :headers="headers"
                 :items="orders"
@@ -40,7 +39,8 @@
                     <td class="text-xs-right">{{ props.item.unitprice }} €</td>
                     <td class="text-xs-right">{{ props.item.qnt }}</td>
                     <td class="text-xs-right">{{ props.item.totalprice }} €</td>
-                    <td class="text-xs-right">{{ props.item.state }} {{ props.item.date }}</td>
+                    <td class="text-xs-right capitalize">{{ props.item.state }}</td>
+                    <td class="text-xs-right">{{ props.item.date }}</td>
                 </template>
             </v-data-table>
         </div>
@@ -56,7 +56,6 @@
         name: 'orders',
         data () {
         return {
-            isLoading: true,
             arrivedButtonDisabled: true,
             soldButtonDisabled: true,
             search: '',
@@ -70,82 +69,45 @@
             { text: 'Quantity', align: 'right', value: 'qnt' },
             { text: 'Total Price', align: 'right', value: 'totalprice' },
             { text: 'State', align: 'right', value: 'state' },
+            { text: 'Arrive Date', align: 'right', value: 'date' },
             ],
-            orders: [
-            {
-                id: 0,
-                client:'Elit Sed',
-                title: 'Frozen Yogurt',
-                unitprice: 10,
-                qnt: 3,
-                totalprice: 30,
-                state: 'Waiting Expedition',
-                date: ''
-            },
-            {
-                id: 1,
-                client: 'Lorem Ipsum',
-                title: 'Ice cream sandwich',
-                unitprice: 15,
-                qnt: 4,
-                totalprice: 60,
-                state: 'Dispatch Will Occur at',
-                date: '19/05/2019'
-            },
-            {
-                id: 2,
-                client: 'Dolor Dit Amet',
-                title: 'Eclair',
-                unitprice: 20,
-                qnt: 2,
-                totalprice: 40,
-                state: 'Waiting Expedition',
-                date: ''
-            },
-            {
-                id: 3,
-                client: 'Consectet Adipiscing',
-                title: 'Cupcake',
-                unitprice: 5,
-                qnt: 3,
-                totalprice: 15,
-                state: 'Dispatched at',
-                date: '17/05/2019'
-            },
-            {
-                id: 4,
-                client: 'Elit Sed',
-                title: 'Gingerbread',
-                unitprice: 10,
-                qnt: 1,
-                totalprice: 10,
-                state: 'Dispatch Will Occur at',
-                date: '19/05/2019'
-            },
-            {
-                id: 5,
-                client: 'Lorem Ipsum',
-                title: 'Jelly bean',
-                unitprice: 40,
-                qnt: 2,
-                totalprice: 80,
-                state: 'Dispatched at',
-                date: '17/05/2019'
-            },
-            {
-                id: 6,
-                client: 'Dolor Dit Amet',
-                title: 'Lollipop',
-                unitprice: 17,
-                qnt: 4,
-                totalprice: 68,
-                state: 'Dispatch Will Occur at',
-                date: '19/05/2019'
-            },
-            ]
+            orders: []
         }
     },
+    mounted: function () {
+        this.getOrders();
+    },
     methods: {
+        getOrders(){
+            let vm=this;
+            axios.get('/getOrders')
+            .then(function (response) {
+                // handle success
+                vm.orders=[];
+                let orders = response.data;
+                console.log(orders);
+                for(let i=0; i< orders.length; i++){
+                    let order = {
+                        id: orders[i].id,
+                        client:orders[i].clientEmail,
+                        title: orders[i].bookTitle,
+                        unitprice: orders[i].unitprice,
+                        qnt: orders[i].quantity,
+                        totalprice: orders[i].totalPrice,
+                        state: orders[i].state,
+                        date: orders[i].dispatchedDate
+                    };
+
+                    vm.orders.push(order);
+                }
+                vm.selected=[];
+
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+        },
         sold(event) {
             for(let i = 0; i< this.selected.length; i++){
                 console.log(this.selected[i]);
@@ -167,11 +129,11 @@
                 let expedition = false
     
                 for(var i = 0; i < Object.keys(val).length; i++){
-                    if(val[i].state=='Waiting Expedition')
+                    if(val[i].state=='waiting')
                         expedition=true;
-                    else if(val[i].state=='Dispatch Will Occur at')
+                    else if(val[i].state=='dispatched')
                         arrivedAble=true;
-                    else if(val[i].state=='Dispatched at')
+                    else if(val[i].state=='ready')
                         soldAble=true;
                 }
 
@@ -227,6 +189,9 @@
         width: 7em;
         font-size: 1.3em;
         margin-bottom:3em;
+    }
+    .capitalize:first-letter{
+        text-transform:capitalize;
     }
 
 </style>

@@ -15,7 +15,6 @@
             hide-details
             ></v-text-field>
             <v-data-table
-                :loading="isLoading"
                 :headers="headers"
                 :items="sales"
                 :search="search"
@@ -41,7 +40,6 @@ export default {
     name: 'sales',
     data () {
     return {
-        isLoading: true,
         search: '',
         headers: [
         { text: 'ID', align: 'left', value:'id'},
@@ -60,7 +58,6 @@ export default {
     methods:{
         getSales(){
             let vm=this;
-            vm.isLoading = true;
             axios.get('/getSales')
             .then(function (response) {
                 // handle success
@@ -79,9 +76,6 @@ export default {
                     vm.sales.push(request);
                 }
                 vm.selected=[];
-                vm.isLoading = false;
-
-                console.log(sales);
 
             })
             .catch(function (error) {
