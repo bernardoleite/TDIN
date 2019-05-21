@@ -61,20 +61,10 @@
     export default {
         name: 'books',
         data () {
-        return {
-            isLoading: true,
-            integerRule: v=> /^[0-9]*$/.test(v) || 'Input must be a integer',
-            search: '',
-            selected: [],
-            headers: [
-            { text: 'ID', align: 'left', value:'id'},
-            { text: 'Title', align: 'right', value: 'title' },
-            { text: 'Unit Price', align: 'right', value: 'unitprice' },
-            { text: 'Stock', align: 'right', value: 'stock' },
-            { text: 'Desired Quantity', align: 'right', value: 'qnt' },
-            { text: 'Total Price', align: 'right', value:'totalprice'  },
-            ],
-            books: [
+        let receiveBooks = this.getAllBooks();
+        console.log(receiveBooks);
+/*
+        let books = [
             {
                 id: 0,
                 title: 'Frozen Yogurt',
@@ -90,48 +80,25 @@
                 stock: 9,
                 qnt: '',
                 totalprice: 0,
-            },
-            {
-                id: 2,
-                title: 'Eclair',
-                unitprice: 15,
-                stock: 16,
-                qnt: '',
-                totalprice: 0,
-            },
-            {
-                id: 3,
-                title: 'Cupcake',
-                unitprice: 22,
-                stock: 3,
-                qnt: '',
-                totalprice: 0,
-            },
-            {
-                id: 4,
-                title: 'Gingerbread',
-                unitprice: 11,
-                stock: 16,
-                qnt: '',
-                totalprice: 0,
-            },
-            {
-                id: 5,
-                title: 'Jelly bean',
-                unitprice: 9,
-                stock: 0,
-                qnt: '',
-                totalprice: 0,
-            },
-            {
-                id: 6,
-                title: 'Lollipop',
-                unitprice: 6,
-                stock: 2,
-                qnt: '',
-                totalprice: 0,           
-            },
+            }
+        ];
+
+*/
+
+        return {
+            isLoading: true,
+            integerRule: v=> /^[0-9]*$/.test(v) || 'Input must be a integer',
+            search: '',
+            selected: [],
+            headers: [
+            { text: 'ID', align: 'left', value:'id'},
+            { text: 'Title', align: 'right', value: 'title' },
+            { text: 'Unit Price', align: 'right', value: 'unitprice' },
+            { text: 'Stock', align: 'right', value: 'stock' },
+            { text: 'Desired Quantity', align: 'right', value: 'qnt' },
+            { text: 'Total Price', align: 'right', value:'totalprice'  },
             ],
+            books,
             oldbooks:[],
             totalPrice: 0,
         }
@@ -163,23 +130,20 @@
     },
     mounted(){
         this.setValue();   
-        this.getAllBooks();
     },
     methods: {
-        getAllBooks () {
-            
-            axios.get('http://localhost:5000/api/store/getAllBooks')
-            .then(function (response) {
-            // handle success
-            console.log(response);
-            })
-            .catch(function (error) {
-            // handle error
-            console.log(error);
-            })
-            
-        },
+        getAllBooks: function () {
+            let strr = [];
 
+            axios.get('http://localhost:5000/api/store/getAllBooks')
+            .then(function(response){
+                    strr.push(response.data);
+                })
+            .catch(function(error){
+                    console.log(error);
+                });
+            return strr;
+        },
        setValue: function() {
             var _ = require('lodash');
             this.$data.oldbooks = _.cloneDeep(this.$data.books);
