@@ -6,7 +6,7 @@ const Sequelize = require('sequelize');
 
 //Get All Books
 router.get('/getAllPendingRequests', (req, res) => {
-  let sql = `SELECT * FROM requests WHERE state='waiting'`;
+  let sql = `SELECT * FROM requests WHERE state='pending'`;
   db.query(sql, { type: Sequelize.QueryTypes.SELECT }, () => {})
   .then(rows => {
     if(rows.length == 0) 
