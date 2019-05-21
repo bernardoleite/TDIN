@@ -18,7 +18,7 @@
                 :loading="isLoading"
                 v-model="selected"
                 :headers="headers"
-                :items="books"
+                :items="requests"
                 :search="search"
                 item-key="id"
                 select-all
@@ -59,51 +59,41 @@
             { text: 'Title', align: 'right', value: 'title' },
             { text: 'Quantity', align: 'right', value: 'qnt' },
             ],
-            books: [
-            {
-                id: 0,
-                orderid: 9,
-                title: 'Frozen Yogurt',
-                qnt: 5,
-            },
-            {
-                id: 1,
-                orderid: 21,
-                title: 'Ice cream sandwich',
-                qnt: 7,
-            },
-            {
-                id: 2,
-                orderid: 23,
-                title: 'Eclair',
-                qnt: 8
-            },
-            {
-                id: 3,
-                orderid: 67,
-                title: 'Cupcake',
-                qnt: 9
-            },
-            {
-                id: 4,
-                orderid: 23,
-                title: 'Gingerbread',
-                qnt: 3
-            },
-            {
-                id: 5,
-                orderid: 92,
-                title: 'Jelly bean',
-                qnt: 2,
-            },
-            {
-                id: 6,
-                orderid: 23,
-                title: 'Lollipop',
-                qnt: 1,           
-            },
-            ],
+            requests: [],
         }
+    },
+    mounted: function () {
+        this.$nextTick(function () {
+            // Code that will run only after the
+            // entire view has been rendered
+       
+            let vm=this;
+            axios.get('/getAllPendingRequests')
+            .then(function (response) {
+                // handle success
+                console.log(response);
+
+                let pendingRequests = response.data;
+                for(let i=0; i< pendingRequests.length; i++){
+                    let request = {
+                        id: pendingRequests[i].id,
+                        orderid: pendingRequests[i].orderId,
+                        title: pendingRequests[i].bookTitle,
+                        qnt: pendingRequests[i].quantity,
+                    }
+
+                    vm.requests.push(request);
+                }
+
+                vm.isLoading = false;
+
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+
+        })
     },
     methods: {
         ship(event) {
@@ -114,7 +104,6 @@
             for(let i = 0; i < this.selected.length; i++){
                 if(!isNaN(this.selected[i].qnt) && Number.isInteger(parseFloat(this.selected[i].qnt, 10))){
                     console.log(parseFloat(this.selected[i].qnt, 10));
-            
                     //TODO: make order
                 }       
             }  

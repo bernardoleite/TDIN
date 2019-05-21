@@ -3,6 +3,7 @@ const express = require('express');
 const newRequest = require("./src/createRequest");
 let q = 'store_warehouse2';
 let open = require('amqplib').connect('amqp://localhost');
+var cors = require('cors');
 
 // DB connection
 require("./src/database/connection");
@@ -11,6 +12,8 @@ require("./src/database/connection");
 require("./src/bootstrap")();
 
 const app = express();
+
+app.use(cors());
 
 // Consumes Messages
 open.then(function(conn) {

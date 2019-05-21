@@ -5,8 +5,8 @@ const Request = require('../../src/models/Request');
 const Sequelize = require('sequelize');
 
 //Get All Books
-router.get('/getAllRequests', (req, res) => {
-  let sql = `SELECT * FROM requests`;
+router.get('/getAllPendingRequests', (req, res) => {
+  let sql = `SELECT * FROM requests WHERE state='waiting'`;
   db.query(sql, { type: Sequelize.QueryTypes.SELECT }, () => {})
   .then(rows => {
     if(rows.length == 0) 
