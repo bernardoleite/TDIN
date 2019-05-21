@@ -6,6 +6,7 @@ const Sequelize = require('sequelize');
 let q = 'store_warehouse2';
 let open = require('amqplib').connect('amqp://localhost');
 let nodemailer = require('nodemailer');
+const { ensureAuthenticated } = require('../../config/auth');
 
 let transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -158,7 +159,7 @@ router.get('/getclientByName/:name', (req, res) => {
 });
 
 // Get Orders By email
-router.get('/getOrdersByEmail', (req, res) => {
+router.get('/getOrdersByEmail', ensureAuthenticated, (req, res) => {
   let sql = `SELECT * FROM orders WHERE clientEmail = '${req.body.email}'`;
   db.query(sql, { type: Sequelize.QueryTypes.SELECT }, () => {})
   .then(rows => {
