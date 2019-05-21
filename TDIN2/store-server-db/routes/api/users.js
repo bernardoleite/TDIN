@@ -110,7 +110,7 @@ router.post('/register', (req,res) => {
                 .save()
                 .then(user => {   
                   //OK, registered - Redirect to Login
-                  res.status(200).send("Register success.");
+                  res.status(200).send([newUser.name, newUser.email, newUser.address]);
                 })
                 .catch(err => console.log(err));
             });
