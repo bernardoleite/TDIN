@@ -124,14 +124,26 @@ router.put('/updateBookStock', (req, res) => {
   .catch(err => res.send(err));
 });
 
-//Create Order (clientEmail, bookTitle, quantity, state)
+//Create Order (clientEmail, bookId, quantity, totalPrice, dispatchedDate, state) and bookTitle
 router.post('/createOrder', (req, res) => {
-  let sql = `INSERT INTO orders (clientEmail, bookId, quantity, totalPrice, dispatchedDate, state) VALUES ('${req.body.clientId}', '${req.body.bookId}', '${req.body.quantity}', '${req.body.totalPrice}', '${req.body.dispatchedDate}', '${req.body.state}')`;
+  let sql = `INSERT INTO orders (clientEmail, bookId, quantity, totalPrice, dispatchedDate, state) VALUES ('${req.body.clientEmail}', '${req.body.bookId}', '${req.body.quantity}', '${req.body.totalPrice}', '${req.body.dispatchedDate}', '${req.body.state}')`;
   db.query(sql, { type: Sequelize.QueryTypes.INSERT }, {})
   .then(rows => {
+    
+  if(req.body.state == 'waiting')
+  {
+    let request = {
+      "orderId":rows[0],
+      "bookTitle": req.body.bookTitle || 'undefined',
+      "quantity":req.body.quantity,
+      "state":'pending'
+      }
+    sendRequestToQueue(JSON.stringify(request));
+  }
     res.sendStatus(200);
   })
   .catch(err => res.send(err));
+
 });
 
 

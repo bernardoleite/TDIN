@@ -23,7 +23,7 @@ open.then(function(conn) {
       return ch.consume(q, function(msg) {
         if (msg !== null) {
           console.log(msg.content.toString());
-          newRequest(msg.content.toString());
+          newRequest(JSON.parse(msg.content.toString()));
           ch.ack(msg);
         }
       });
