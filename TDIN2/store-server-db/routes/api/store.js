@@ -178,7 +178,7 @@ router.post('/createOrder', async (req, res) => {
         "orderId":rows[0],
         "bookTitle": BOOKTITLE || 'undefined',
         "quantity":req.body.quantity,
-        "state":state,
+        "state":'pending',
         }
       sendRequestToQueue(JSON.stringify(request));
     }
