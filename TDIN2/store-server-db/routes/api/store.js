@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../../src/database/connection');
 const Client = require('../../src/models/Client');
+const Book = require('../../src/models/Book');
 const Sequelize = require('sequelize');
 let q = 'store_warehouse2';
 let open = require('amqplib').connect('amqp://localhost');
@@ -27,6 +28,8 @@ function sendRequestToQueue(msg){
   }).catch(console.warn);
 
 }
+
+
 
 function sendEmail(clientEmail, subject, msg){
 
@@ -126,7 +129,50 @@ router.put('/updateBookStock', (req, res) => {
 
 //Create Order (clientEmail, bookId, quantity, totalPrice, dispatchedDate, state) and bookTitle
 router.post('/createOrder', (req, res) => {
-  let sql = `INSERT INTO orders (clientEmail, bookId, quantity, totalPrice, dispatchedDate, state) VALUES ('${req.body.clientEmail}', '${req.body.bookId}', '${req.body.quantity}', '${req.body.totalPrice}', '${req.body.dispatchedDate}', '${req.body.state}')`;
+
+
+let BOOKID = 1;
+let BOOKSTOCK = 1;
+let BOOKTITLE = 'qq coisa';
+let BOOKUNITPRICE = 1.2;
+
+let state;
+let currentDate = new Date();
+let dispatchedDate;
+let finalQty = 0;
+
+let totalPrice = req.body.quantity * BOOKUNITPRICE;
+
+  if(req.body.local == 'store' && req.body.quantity <= BOOKSTOCK )
+  {
+    state = 'sold';
+    dispatchedDate = currentDate;
+    dispatchedDate = dispatchedDate.toISOString().slice(0, 19).replace('T', ' ');
+    finalQty = req.body.quantity;
+  }
+  else if(req.body.local == 'store' && req.body.quantity > BOOKSTOCK )
+  {
+    state = 'waiting';
+    dispatchedDate = new Date(null).toISOString().slice(0, 19).replace('T', ' ');
+    finalQty = (req.body.quantity - BOOKSTOCK) + 10;
+    
+  }
+  else if(req.body.local == 'webapp' && req.body.quantity <= BOOKSTOCK )
+  {
+    state = 'dispatched';
+    dispatchedDate = currentDate;
+    dispatchedDate.setDate(currentDate.getDate()+1);
+    dispatchedDate = dispatchedDate.toISOString().slice(0, 19).replace('T', ' ');
+    finalQty = req.body.quantity;
+  }
+  else if(req.body.local == 'webapp' && req.body.quantity > BOOKSTOCK )
+  {
+    state = 'waiting';
+    dispatchedDate = new Date(null).toISOString().slice(0, 19).replace('T', ' ');
+    finalQty = (req.body.quantity - BOOKSTOCK) + 10;
+  }
+
+  let sql = `INSERT INTO orders (clientEmail, bookId, quantity, totalPrice, dispatchedDate, state) VALUES ('${req.body.clientEmail}', '${BOOKID}', '${finalQty}', '${totalPrice}', '${dispatchedDate}', '${state}')`;
   db.query(sql, { type: Sequelize.QueryTypes.INSERT }, {})
   .then(rows => {
     
@@ -134,9 +180,9 @@ router.post('/createOrder', (req, res) => {
   {
     let request = {
       "orderId":rows[0],
-      "bookTitle": req.body.bookTitle || 'undefined',
+      "bookTitle": BOOKTITLE || 'undefined',
       "quantity":req.body.quantity,
-      "state":'pending'
+      "state":state,
       }
     sendRequestToQueue(JSON.stringify(request));
   }
