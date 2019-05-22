@@ -172,7 +172,7 @@ router.post('/createOrder', async (req, res) => {
     db.query(sql, { type: Sequelize.QueryTypes.INSERT }, {})
     .then(rows => {
       
-    if(req.body.state == 'waiting')
+    if(state == 'waiting')
     {
       let request = {
         "orderId":rows[0],
