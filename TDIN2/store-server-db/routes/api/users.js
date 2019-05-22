@@ -22,16 +22,6 @@ router.get('/about',ensureAuthenticated, (req, res) => res.sendFile(path.join(__
 
 router.get('/welcome', (req, res) => res.sendFile(path.join(__dirname, '../../public', 'welcome.html')));
 
-//Insert Client (name, address, email)
-router.post('/insertClient', (req, res) => {
-  let sql = `INSERT INTO clients (name, email) VALUES ('${req.body.name}', '${req.body.email}')`;
-  db.query(sql, { type: Sequelize.QueryTypes.INSERT }, () => {})
-  .then(rows => {
-    res.sendStatus(200);
-  })
-  .catch(err => res.send(err));
-});
-
 // Get Client by id
 router.get('/getclientById/:id', (req, res) => {
   let sql = `SELECT * FROM clients WHERE id = ${req.params.id}`;

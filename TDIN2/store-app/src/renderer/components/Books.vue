@@ -367,9 +367,26 @@
         },
 
         saveClientDialog() {
-            this.editedClient.id=this.clients[this.clients.length-1].id + 1;
-            this.clients.push(this.editedClient)
+            this.addClient();
             this.closeClientDialog()
+        },
+
+        addClient(){
+            let vm=this;
+            axios.post('/insertClient', 
+            {
+                name: vm.editedClient.name,
+                email: vm.editedClient.email,
+            })
+            .then(function (response) {
+                // handle success
+                vm.editedClient.id=response.data[0];
+                vm.clients.push(vm.editedClient)
+
+            }).catch(function (error) {
+                // handle error
+                console.log(error);
+            })
         }
     },
     

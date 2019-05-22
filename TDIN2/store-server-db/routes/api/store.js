@@ -249,4 +249,14 @@ router.get('/getClients', (req, res) => {
   .catch(err => console.log(err));
 });
 
+//Insert Client (name, address, email)
+router.post('/insertClient', (req, res) => {
+  let sql = `INSERT INTO clients (name, email) VALUES ('${req.body.name}', '${req.body.email}')`;
+  db.query(sql, { type: Sequelize.QueryTypes.INSERT }, () => {})
+  .then(rows => {
+    res.send(rows);
+  })
+  .catch(err => res.send(err));
+});
+
 module.exports = router;
