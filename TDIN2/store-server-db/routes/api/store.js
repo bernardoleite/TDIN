@@ -123,69 +123,70 @@ router.put('/updateBookStock', (req, res) => {
 });
 
 //Create Order (clientEmail, bookId, quantity, totalPrice, dispatchedDate, state) and bookTitle
-router.post('/createOrder', (req, res) => {
+router.post('/createOrder', async (req, res) => {
 
-
-let BOOKID = 1;
-let BOOKSTOCK = 1;
-let BOOKTITLE = 'qq coisa';
-let BOOKUNITPRICE = 1.2;
-
-let state;
-let currentDate = new Date();
-let dispatchedDate;
-let finalQty = 0;
-
-let totalPrice = req.body.quantity * BOOKUNITPRICE;
-
-  if(req.body.local == 'store' && req.body.quantity <= BOOKSTOCK )
-  {
-    state = 'sold';
-    dispatchedDate = currentDate;
-    dispatchedDate = dispatchedDate.toISOString().slice(0, 19).replace('T', ' ');
-    finalQty = req.body.quantity;
-  }
-  else if(req.body.local == 'store' && req.body.quantity > BOOKSTOCK )
-  {
-    state = 'waiting';
-    dispatchedDate = new Date(null).toISOString().slice(0, 19).replace('T', ' ');
-    finalQty = (req.body.quantity - BOOKSTOCK) + 10;
-    
-  }
-  else if(req.body.local == 'webapp' && req.body.quantity <= BOOKSTOCK )
-  {
-    state = 'dispatched';
-    dispatchedDate = currentDate;
-    dispatchedDate.setDate(currentDate.getDate()+1);
-    dispatchedDate = dispatchedDate.toISOString().slice(0, 19).replace('T', ' ');
-    finalQty = req.body.quantity;
-  }
-  else if(req.body.local == 'webapp' && req.body.quantity > BOOKSTOCK )
-  {
-    state = 'waiting';
-    dispatchedDate = new Date(null).toISOString().slice(0, 19).replace('T', ' ');
-    finalQty = (req.body.quantity - BOOKSTOCK) + 10;
-  }
-
-  let sql = `INSERT INTO orders (clientEmail, bookId, quantity, totalPrice, dispatchedDate, state) VALUES ('${req.body.clientEmail}', '${BOOKID}', '${finalQty}', '${totalPrice}', '${dispatchedDate}', '${state}')`;
-  db.query(sql, { type: Sequelize.QueryTypes.INSERT }, {})
-  .then(rows => {
-    
-  if(req.body.state == 'waiting')
-  {
-    let request = {
-      "orderId":rows[0],
-      "bookTitle": BOOKTITLE || 'undefined',
-      "quantity":req.body.quantity,
-      "state":state,
-      }
-    sendRequestToQueue(JSON.stringify(request));
-  }
-    res.sendStatus(200);
-  })
-  .catch(err => res.send(err));
-
-});
+  let refbook = await Promise.resolve(db.query(`select title, stock, unitprice FROM books WHERE id = ${req.body.bookId}`));
+  
+  let BOOKID = req.body.bookId;
+  let BOOKSTOCK = refbook[0][0].stock;
+  let BOOKTITLE = refbook[0][0].title;
+  let BOOKUNITPRICE = refbook[0][0].unitprice;
+  
+  let state;
+  let currentDate = new Date();
+  let dispatchedDate;
+  let finalQty = 0;
+  
+  let totalPrice = req.body.quantity * BOOKUNITPRICE;
+  
+    if(req.body.local == 'store' && req.body.quantity <= BOOKSTOCK )
+    {
+      state = 'sold';
+      dispatchedDate = currentDate;
+      dispatchedDate = dispatchedDate.toISOString().slice(0, 19).replace('T', ' ');
+      finalQty = req.body.quantity;
+    }
+    else if(req.body.local == 'store' && req.body.quantity > BOOKSTOCK )
+    {
+      state = 'waiting';
+      dispatchedDate = new Date(null).toISOString().slice(0, 19).replace('T', ' ');
+      finalQty = (req.body.quantity - BOOKSTOCK) + 10;
+      
+    }
+    else if(req.body.local == 'webapp' && req.body.quantity <= BOOKSTOCK )
+    {
+      state = 'dispatched';
+      dispatchedDate = currentDate;
+      dispatchedDate.setDate(currentDate.getDate()+1);
+      dispatchedDate = dispatchedDate.toISOString().slice(0, 19).replace('T', ' ');
+      finalQty = req.body.quantity;
+    }
+    else if(req.body.local == 'webapp' && req.body.quantity > BOOKSTOCK )
+    {
+      state = 'waiting';
+      dispatchedDate = new Date(null).toISOString().slice(0, 19).replace('T', ' ');
+      finalQty = (req.body.quantity - BOOKSTOCK) + 10;
+    }
+  
+    let sql = `INSERT INTO orders (clientEmail, bookId, quantity, totalPrice, dispatchedDate, state) VALUES ('${req.body.clientEmail}', '${BOOKID}', '${finalQty}', '${totalPrice}', '${dispatchedDate}', '${state}')`;
+    db.query(sql, { type: Sequelize.QueryTypes.INSERT }, {})
+    .then(rows => {
+      
+    if(req.body.state == 'waiting')
+    {
+      let request = {
+        "orderId":rows[0],
+        "bookTitle": BOOKTITLE || 'undefined',
+        "quantity":req.body.quantity,
+        "state":state,
+        }
+      sendRequestToQueue(JSON.stringify(request));
+    }
+      res.sendStatus(200);
+    })
+    .catch(err => res.send(err));
+  
+  });
 
 
 //Update Order State (clientEmail, bookTitle, quantity, state)
