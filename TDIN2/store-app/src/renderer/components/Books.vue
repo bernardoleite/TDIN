@@ -152,7 +152,7 @@
                 title: '',
                 unitprice: '',
                 stock: '',
-                qnt: 0,
+                qnt: '',
                 totalprice: 0,
                 clientsearch:'',
                 client:'',
@@ -179,76 +179,6 @@
             { text: 'Total Price', align: 'right', value:'totalprice'  },
             ],
             books: [
-            {
-                id: 0,
-                title: 'Frozen Yogurt',
-                unitprice: 10,
-                stock: 6,
-                qnt: '',
-                totalprice: 0,
-                clientsearch:'',
-                client:'',
-            },
-            {
-                id: 1,
-                title: 'Ice cream sandwich',
-                unitprice: 25,
-                stock: 9,
-                qnt: '',
-                totalprice: 0,
-                clientsearch:'',
-                client:'',
-            },
-            {
-                id: 2,
-                title: 'Eclair',
-                unitprice: 15,
-                stock: 16,
-                qnt: '',
-                totalprice: 0,
-                clientsearch:'',
-                client:'',
-            },
-            {
-                id: 3,
-                title: 'Cupcake',
-                unitprice: 22,
-                stock: 3,
-                qnt: '',
-                totalprice: 0,
-                clientsearch:'',
-                client:'',
-            },
-            {
-                id: 4,
-                title: 'Gingerbread',
-                unitprice: 11,
-                stock: 16,
-                qnt: '',
-                totalprice: 0,
-                clientsearch:'',
-                client:'',
-            },
-            {
-                id: 5,
-                title: 'Jelly bean',
-                unitprice: 9,
-                stock: 0,
-                qnt: '',
-                totalprice: 0,
-                clientsearch:'',
-                client:'',
-            },
-            {
-                id: 6,
-                title: 'Lollipop',
-                unitprice: 6,
-                stock: 2,
-                qnt: '',
-                totalprice: 0, 
-                clientsearch:'',
-                client:'',          
-            },
             ],
             oldbooks:[],
             totalPrice: 0,
@@ -287,7 +217,6 @@
                         obj.totalprice=0;
                     }
                     this.totalPrice = this.totalPrice + difference;
-
                 }
                
             },
@@ -327,7 +256,6 @@
                 
                 vm.setValueWithArray(tempBooks);
                 vm.books=tempBooks;
-                //vm.setValueWithArray(tempBooks)
 
                 vm.selected=[];
                 vm.isLoading = false;
@@ -350,7 +278,6 @@
             let vm=this;
             axios.get('/getClients')
             .then(function (response) {
-                console.log(response);
                 // handle success
                 vm.clients=[];
                 let clients = response.data;
@@ -396,9 +323,29 @@
         },
 
         saveBookDialog() {
-            this.editedBook.id=this.books[this.books.length-1].id + 1;
-            this.books.push(this.editedBook)
+            this.addBook();
             this.closeBookDialog()
+        },
+        addBook(){
+            let vm=this;
+            axios.post('/insertBook' , 
+            {
+                title: vm.editedBook.title,
+                stock: vm.editedBook.stock,
+                unitprice: vm.editedBook.unitprice,
+            })
+            .then(function (response) {
+                // handle success
+                console.log(response.data[0]);
+                vm.editedBook.id=response.data[0];
+
+                vm.oldbooks.push(vm.editedBook);
+                vm.books.push(vm.editedBook);
+
+            }).catch(function (error) {
+                // handle error
+                console.log(error);
+            })
         },
 
         closeClientDialog() {

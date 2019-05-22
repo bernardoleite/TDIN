@@ -58,18 +58,13 @@ router.get('/', (req, res) =>
 
 //Insert book (title, stock, price)
 router.post('/insertBook', (req, res) => {
-  let sql = `INSERT INTO books (title, stock, unitprice) VALUES ('${req.body.title}', '${req.body.stock}', '${req.body.unitprice}')`;
-  db.query(sql, { type: Sequelize.QueryTypes.INSERT }, () => {})
+  let sql_insert = `INSERT INTO books (title, stock, unitprice) VALUES ('${req.body.title}', ${req.body.stock}, ${req.body.unitprice})`;
+  //let sql_get = `SELECT * FROM books WHERE title = '${req.body.title}' AND stock = '${req.body.stock}' AND uniprice '${req.body.unitprice}')`;
+  db.query(sql_insert, { type: Sequelize.QueryTypes.INSERT }, () => {})
   .then(rows => {
-    res.sendStatus(200);
+    res.send(rows)
   })
   .catch(err => res.send(err));
-
-  // Send Request to Queue
-
-  let msg = 'something to do';
-  sendRequestToQueue(msg);
-
 });
 
 //Get All Books
