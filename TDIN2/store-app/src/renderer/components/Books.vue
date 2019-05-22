@@ -310,10 +310,21 @@
             }  
         },
         deleteBook (item) {
-            const index = this.books.indexOf(item);
-            confirm('Are you sure you want to delete this book?') && this.books.splice(index, 1);
+            let bookId = item.id;
+            
+            let vm=this;
+            axios.delete('/deleteBook/' + bookId)
+            .then(function (response) {
+                // handle success
+                const index = vm.books.indexOf(item);
+                vm.oldbooks.splice(index,1);
+                vm.books.splice(index, 1);
 
-            //TODO: Delete Book
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
         },
         closeBookDialog() {
             this.dialogBook = false
