@@ -204,8 +204,8 @@
                         return p[prop] !== vm.$data.oldbooks[idx][prop];
                     })
                 })
-                if(changed.length != 0){
-                
+                //if(changed.length != 0){
+                for(let i = 0; i < changed.length; i++){
                     var difference = changed[0].totalprice - this.oldbooks.find(x => x.id ===  changed[0].id).totalprice;
 
                     vm.setValue();
@@ -216,7 +216,9 @@
                     else{
                         obj.totalprice=0;
                     }
-                    this.totalPrice = this.totalPrice + difference;
+                    let tp_temp = this.totalPrice + difference;
+                    
+                    this.totalPrice = parseFloat(tp_temp).toFixed( 2 ) * 1;
                 }
                
             },
