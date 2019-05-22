@@ -13,9 +13,14 @@
     components: {
       'nav-bar':NavBar
     },
+    created () {
+      if (!this.$session.exists()) {
+        this.$router.push('/')
+      }
+    },
     methods: {
       isAuth() {
-        return this.$route.path !== "/login" && this.$route.path !== "/register" ;
+        return this.$session.exists() ;
       }
     },
   }

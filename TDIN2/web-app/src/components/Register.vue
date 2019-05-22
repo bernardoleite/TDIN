@@ -61,7 +61,7 @@
     
 <script>
     import { validationMixin } from 'vuelidate'
-    import { required, maxLength, email, sameAs } from 'vuelidate/lib/validators'
+    import { required, maxLength, minLength, email, sameAs } from 'vuelidate/lib/validators'
     import axios from 'axios'
 
     export default {
@@ -72,7 +72,7 @@
             name: { required },
             address: { required },
             email: { required, email },
-            password: { required },
+            password: { required, minLength: minLength(6) },
             repeatpassword: {
                 sameAsPassword: sameAs('password')
             }
@@ -110,7 +110,7 @@
             passwordErrors () {
                 const errors = []
                 if (!this.$v.password.$dirty) return errors
-                !this.$v.password.required && errors.push('Password is required')
+                !this.$v.password.required && errors.push('Password is required and must have at least 6 characters')
                 return errors
             },
             repeatpasswordErrors () {
@@ -125,7 +125,7 @@
             submit () {
                 this.$v.$touch();
 
-                
+                let vm = this
                 axios.post('http://localhost:5000/api/users/register', {
                     name: this.name,
                     address:this.address,
@@ -136,6 +136,7 @@
                 .then(function (response) {
                 // handle success
                 console.log(response);
+                    vm.$router.push('/login')
                 })
                 .catch(function (error) {
                 // handle error

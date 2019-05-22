@@ -4,7 +4,7 @@
         <div>
             <router-link class="nav-link" to="/books">Books</router-link>
             <router-link  class="nav-link" to="/orders">My Orders</router-link>
-            <router-link  class="nav-link" to="/login">Logout</router-link>
+            <router-link  class="nav-link" to="" v-on:click.native="logout">Logout</router-link>
         </div>
     </nav>
 </template>
@@ -12,6 +12,12 @@
 <script>
     export default {
         name: 'navbar',
+        methods: {
+            logout: function () {
+                this.$session.destroy()
+                this.$router.push('/')
+            }
+        }
     }
 </script>
     

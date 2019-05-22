@@ -3,6 +3,7 @@ import './plugins/vuetify'
 import App from './App.vue'
 import router from './router'
 import Vuetify from 'vuetify'
+import VueSession from 'vue-session'
 
 Vue.use(Vuetify, {
   theme: {
@@ -12,6 +13,8 @@ Vue.use(Vuetify, {
     error: '#e06666'
   }
 })
+
+Vue.use(VueSession)
 
 Vue.config.productionTip = false
 

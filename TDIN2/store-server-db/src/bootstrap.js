@@ -46,7 +46,7 @@ module.exports = async () => {
 
     const order = await Order.create({ 
         uuid: uuidv1(),
-        clientEmail: client.email,
+        clientEmail: 'ju4@ju4.pt',
         bookId: book.id,
         quantity: 2,
         totalPrice: 13.4,
@@ -56,7 +56,7 @@ module.exports = async () => {
 
     const order1 = await Order.create({ 
         uuid: uuidv1(),
-        clientEmail: client.email,
+        clientEmail: 'ju4@ju4.pt',
         bookId: book.id,
         quantity: 2,
         totalPrice: 13.4,
@@ -66,7 +66,7 @@ module.exports = async () => {
 
     const order2 = await Order.create({ 
         uuid: uuidv1(),
-        clientEmail: client.email,
+        clientEmail:'ju4@ju4.pt',
         bookId: book.id,
         quantity: 2,
         totalPrice: 13.4,
@@ -76,7 +76,7 @@ module.exports = async () => {
 
     const sale = await Order.create({ 
         uuid: uuidv1(),
-        clientEmail: client.email,
+        clientEmail: 'ju4@ju4.pt',
         bookId: book.id,
         quantity: 2,
         totalPrice: 13.4,

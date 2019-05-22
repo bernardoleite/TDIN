@@ -73,13 +73,16 @@
         submit () {
             this.$v.$touch();
 
+            let vm=this;
             axios.post('http://localhost:5000/api/users/login', {
                     email:this.email,
                     password:this.password,
                 })
                 .then(function (response) {
                 // handle success
-                console.log(response);
+                    vm.$session.start();
+                    vm.$session.set('email', response.data[2]);
+                    vm.$router.push('/books');
                 })
                 .catch(function (error) {
                 // handle error

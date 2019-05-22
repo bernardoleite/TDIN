@@ -7,8 +7,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: require('@/components/Books').default
+      name: 'default',
+      component: require('@/components/Login').default
     },
     {
       path: '/login',
@@ -23,12 +23,12 @@ export default new Router({
     {
       path: '/books',
       name: 'books',
-      component: require('@/components/Books').default
+      component: require('@/components/Books').default,
     },
     {
       path: '/orders',
       name: 'orders',
-      component: require('@/components/Orders').default
+      component: require('@/components/Orders').default,
     },
     {
       path: '*',

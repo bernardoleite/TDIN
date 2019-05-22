@@ -79,6 +79,11 @@
             totalPrice: 0,
         }
     },
+    created () {
+      if (!this.$session.exists()) {
+        this.$router.push('/')
+      }
+    },
     watch: {
         books: {
             handler: function (after, before) {
@@ -91,7 +96,7 @@
                         })
                     })
 
-                    if(changed.length != 0){
+                    for(let i = 0; i < changed.length; i++){
                         
                         var difference = changed[0].totalprice - this.oldbooks.find(x => x.id ===  changed[0].id).totalprice;
                         
@@ -104,10 +109,10 @@
                         else{
                             obj.totalprice=0;
                         }
-                        this.totalPrice = this.totalPrice + difference;
-                    }   
-                
-                
+                        let tp_temp = this.totalPrice + difference;
+
+                        this.totalPrice = parseFloat(tp_temp).toFixed( 2 ) * 1;                    
+                    }            
             },
             deep: true
         }
