@@ -206,6 +206,9 @@ router.put('/updateOrder/:orderId', async (req, res) => {
       await Promise.resolve(db.query(`UPDATE books SET stock = stock + ${valueToAdd} WHERE id = ${refOrder[0][0].bookId}`));
     }
 
+    //updates dispatchedDate
+    let dateNow = new Date();
+    await Promise.resolve(db.query(`UPDATE orders SET dispatchedDate = ${dateNow.getDate()} WHERE id = ${req.params.orderId}`));
   }
 
   else if(req.body.newstate == 'sold' && refOrder[0][0].state != 'sold')
