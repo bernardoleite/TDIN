@@ -4,6 +4,7 @@ module.exports = async () => {
     const Order = require ("./models/Order");
     const Book = require ("./models/Book");
     const uuidv1 = require('uuid/v1');
+    const bcrypt = require('bcryptjs');
 
     Client.hasMany(Order, {as: "Orders", foreignKey: 'clientEmail'});
     Order.belongsTo(Client, { as: "Client", foreignKey: 'clientEmail'});
@@ -15,14 +16,25 @@ module.exports = async () => {
         console.error("Error: ", err);
     }
 
-    
+ 
+    let salt = bcrypt.genSaltSync(10);
+    let hash = bcrypt.hashSync("123456", salt);
+
+
     let emailR = Math.random().toString(36).substring(7);
     emailR = emailR + '@gmail.com';
 
-    const client = await Client.create({ 
+    const client1 = await Client.create({ 
+        name: "Julieta", 
+        email: 'ju4@ju4.pt',
+        password: hash,
+        address: "Rua da Feup",
+    }).catch(errHandler);
+
+    const client2= await Client.create({ 
         name: "Bernardo", 
         email: emailR,
-        password: 'fsmf4wfsdb2',
+        password: hash,
         address: "Rua da Feup",
     }).catch(errHandler);
 
@@ -69,6 +81,16 @@ module.exports = async () => {
         clientEmail:'ju4@ju4.pt',
         bookId: book.id,
         quantity: 2,
+        totalPrice: 13.4,
+        //dispatchedDate: Sequelize.DATE,
+        state: "ready",
+    }).catch(errHandler);
+
+    const order3 = await Order.create({ 
+        uuid: uuidv1(),
+        clientEmail: client2.email,
+        bookId: book.id,
+        quantity: 1,
         totalPrice: 13.4,
         //dispatchedDate: Sequelize.DATE,
         state: "ready",
