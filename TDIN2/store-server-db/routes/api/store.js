@@ -207,9 +207,8 @@ router.post('/createOrder', async (req, res) => {
     if(dispatchedDate == new Date(null).toISOString().slice(0, 19).replace('T', ' '))
       dispatchedDate = 'Waiting Expedition';
  
-    let emailContent = prepareEmail(dispatchedDate, BOOKTITLE, totalPrice, BOOKUNITPRICE, req.body.quantity);
-    console.log(emailContent);
-    //sendEmail(req.body.clientEmail, 'Your Order', emailContent);
+      let emailContent = prepareEmail(dispatchedDate, BOOKTITLE, totalPrice, BOOKUNITPRICE, req.body.quantity);
+      //sendEmail(req.body.clientEmail, 'Your Order', emailContent);
       res.sendStatus(200);
     })
     .catch(err => res.send(err));
@@ -221,10 +220,10 @@ router.post('/createOrder', async (req, res) => {
 router.put('/updateOrder/:orderId', async (req, res) => {
 
   //get order quantity
-  let refOrder = await Promise.resolve(db.query(`select quantity, bookId, state FROM orders WHERE id = ${req.params.orderId}`));
+  let refOrder = await Promise.resolve(db.query(`select totalPrice, quantity, bookId, state FROM orders WHERE id = ${req.params.orderId}`));
 
   //get book stock
-  let refBook = await Promise.resolve(db.query(`select stock FROM books WHERE id = ${refOrder[0][0].bookId}`));
+  let refBook = await Promise.resolve(db.query(`select unitprice, stock, title FROM books WHERE id = ${refOrder[0][0].bookId}`));
 
   if(req.body.newstate == 'ready' && refOrder[0][0].state != 'ready')
   {
@@ -236,6 +235,12 @@ router.put('/updateOrder/:orderId', async (req, res) => {
 
     //updates dispatchedDate
     await Promise.resolve(db.query(`UPDATE orders SET dispatchedDate = CURDATE() WHERE id = ${req.params.orderId}`));
+    let updatedOrderDate = await Promise.resolve(db.query(`SELECT dispatchedDate FROM orders WHERE id = ${req.params.orderId}`));
+
+    //TODO sends email 
+    let emailContent = prepareEmail(updatedOrderDate[0][0].dispatchedDate, refBook[0][0].title, refOrder[0][0].totalPrice, refBook[0][0].unitprice, refOrder[0][0].quantity);
+    console.log(emailContent);
+    //sendEmail(req.body.clientEmail, 'Your Order', emailContent);
   }
 
   else if(req.body.newstate == 'sold' && refOrder[0][0].state != 'sold')
