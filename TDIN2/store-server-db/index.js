@@ -9,7 +9,7 @@ const cors = require('cors');
 require("./src/database/connection");
 
 //Populate database
-require("./src/bootstrap")();
+//require("./src/bootstrap")();
 
 const app = express();
 
@@ -47,18 +47,6 @@ app.use('/api/store', require('./routes/api/store'));
 //Users API Routes
 app.use('/api/users', require('./routes/api/users'));
 
-//myqueue("request");
-//myqueue("request2");
-//myqueue("request3");
-
-
-// app.get ('/index', (req,res) => {
-//     res.sendFile(path.join(__dirname, 'public', 'index.html'));
-// });
-
-// app.get ('/about', (req,res) => {
-//     res.sendFile(path.join(__dirname, 'public', 'about.html'));
-// });
 
 const PORT = process.env.PORT || 5000;
 

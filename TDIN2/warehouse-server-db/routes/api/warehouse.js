@@ -46,13 +46,18 @@ router.put('/updateRequestStateByOrderId/:orderId', (req, res) => {
   });
 
 //Update Request State by internal Id
-router.put('/updateRequestStateById/:id', (req, res) => {
+router.put('/updateRequestStateById/:id', async (req, res) => {
+
+    let refRequest = await Promise.resolve(db.query(`select orderId FROM requests WHERE id = ${req.params.id}`));
+
     let sql = `UPDATE requests SET state = '${"shipped"}' WHERE id = ${req.params.id}`;
     db.query(sql,  {})
     .then(rows => {
       if(rows[0].affectedRows == 0) 
         res.sendStatus(404)
       else if(rows[0].affectedRows == 1)
+        //CALL STORE API - UPDATE
+        //updateStore(refRequest[0][0].orderId);
         res.sendStatus(200);
     })
     .catch(err => res.send(err));

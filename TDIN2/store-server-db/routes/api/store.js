@@ -168,7 +168,7 @@ router.post('/createOrder', async (req, res) => {
       finalQty = (req.body.quantity - BOOKSTOCK) + 10;
     }
   
-    let sql = `INSERT INTO orders (clientEmail, bookId, quantity, totalPrice, dispatchedDate, state) VALUES ('${req.body.clientEmail}', '${BOOKID}', '${finalQty}', '${totalPrice}', '${dispatchedDate}', '${state}')`;
+    let sql = `INSERT INTO orders (clientEmail, bookId, quantity, totalPrice, dispatchedDate, state) VALUES ('${req.body.clientEmail}', '${BOOKID}', '${req.body.quantity}', '${totalPrice}', '${dispatchedDate}', '${state}')`;
     db.query(sql, { type: Sequelize.QueryTypes.INSERT }, {})
     .then(rows => {
       
@@ -177,7 +177,7 @@ router.post('/createOrder', async (req, res) => {
       let request = {
         "orderId":rows[0],
         "bookTitle": BOOKTITLE || 'undefined',
-        "quantity":req.body.quantity,
+        "quantity":finalQty,
         "state":'pending',
         }
       sendRequestToQueue(JSON.stringify(request));
@@ -189,8 +189,35 @@ router.post('/createOrder', async (req, res) => {
   });
 
 
-//Update Order State (clientEmail, bookTitle, quantity, state)
-router.put('/updateOrder/:orderId', (req, res) => {
+//Update Order State (state)
+router.put('/updateOrder/:orderId', async (req, res) => {
+
+  //get order quantity
+  let refOrder = await Promise.resolve(db.query(`select quantity, bookId, state FROM orders WHERE id = ${req.params.orderId}`));
+
+  //get book stock
+  let refBook = await Promise.resolve(db.query(`select stock FROM books WHERE id = ${refOrder[0][0].bookId}`));
+
+  if(req.body.newstate == 'ready' && refOrder[0][0].state != 'ready')
+  {
+    //update book stock when books arrived
+    if(refBook[0][0].stock <= refOrder[0][0].quantity){
+      let valueToAdd = (refOrder[0][0].quantity - refBook[0][0].stock)+10;
+      await Promise.resolve(db.query(`UPDATE books SET stock = stock + ${valueToAdd} WHERE id = ${refOrder[0][0].bookId}`));
+    }
+
+  }
+
+  else if(req.body.newstate == 'sold' && refOrder[0][0].state != 'sold')
+  {
+    //update book stock (decrement)
+    if(refBook[0][0].stock >= refOrder[0][0].quantity)
+      await Promise.resolve(db.query(`UPDATE books SET stock = stock - ${refOrder[0][0].quantity} WHERE id = ${refOrder[0][0].bookId}`));
+
+    //TODO print recipt
+      
+  }
+
   let sql = `UPDATE orders SET state = '${req.body.newstate}' WHERE id = ${req.params.orderId}`;
   db.query(sql,  {})
   .then(rows => {
@@ -203,7 +230,6 @@ router.put('/updateOrder/:orderId', (req, res) => {
 });
 
 router.put('/updateOrdersAll', (req, res) => {
-  console.log("entered hereeee");
   let sql = `UPDATE orders SET state = '${req.body.newstate}', dispatchedDate = '${req.body.dispatchedDate}'  WHERE id = ${req.body.orderId}`;
   db.query(sql,  {})
   .then(rows => {

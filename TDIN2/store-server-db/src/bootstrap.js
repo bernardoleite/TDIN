@@ -16,21 +16,20 @@ module.exports = async () => {
         console.error("Error: ", err);
     }
 
- 
     let salt = bcrypt.genSaltSync(10);
     let hash = bcrypt.hashSync("123456", salt);
 
-
     let emailR = Math.random().toString(36).substring(7);
-    emailR = emailR + '@gmail.com';
+    emailR =  Math.random().toString(36).substring(7) + '@gmail.com';
 
+/*
     const client1 = await Client.create({ 
         name: "Julieta", 
         email: 'ju4@ju4.pt',
         password: hash,
         address: "Rua da Feup",
     }).catch(errHandler);
-
+*/
     const client2= await Client.create({ 
         name: "Bernardo", 
         email: emailR,
@@ -60,7 +59,7 @@ module.exports = async () => {
         uuid: uuidv1(),
         clientEmail: 'ju4@ju4.pt',
         bookId: book.id,
-        quantity: 2,
+        quantity: 6,
         totalPrice: 13.4,
         //dispatchedDate: Sequelize.DATE,
         state: "waiting",
@@ -88,7 +87,7 @@ module.exports = async () => {
 
     const order3 = await Order.create({ 
         uuid: uuidv1(),
-        clientEmail: client2.email,
+        clientEmail: 'ju4@ju4.pt',
         bookId: book.id,
         quantity: 1,
         totalPrice: 13.4,
@@ -106,6 +105,6 @@ module.exports = async () => {
         state: "sold",
     }).catch(errHandler);
 
-    const clients = await Client.findAll({ where: { name: 'Bernardo'}, include: [{model: Order, as: "Orders"}]}).catch(errHandler);
+
 
 }
