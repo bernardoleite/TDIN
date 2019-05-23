@@ -122,7 +122,7 @@ router.put('/updateBookStock', (req, res) => {
   .catch(err => res.send(err));
 });
 
-//Create Order (clientEmail, bookId, quantity, totalPrice, dispatchedDate, state) and bookTitle
+//Create Order (clientEmail, bookId, quantity, local) 
 router.post('/createOrder', async (req, res) => {
 
   let refbook = await Promise.resolve(db.query(`select title, stock, unitprice FROM books WHERE id = ${req.body.bookId}`));
@@ -207,8 +207,7 @@ router.put('/updateOrder/:orderId', async (req, res) => {
     }
 
     //updates dispatchedDate
-    let dateNow = new Date();
-    await Promise.resolve(db.query(`UPDATE orders SET dispatchedDate = ${dateNow.getDate()} WHERE id = ${req.params.orderId}`));
+    await Promise.resolve(db.query(`UPDATE orders SET dispatchedDate = CURDATE() WHERE id = ${req.params.orderId}`));
   }
 
   else if(req.body.newstate == 'sold' && refOrder[0][0].state != 'sold')
