@@ -50,6 +50,28 @@ function sendEmail(clientEmail, subject, msg){
 
 }
 
+// dispatchedDate, title, price, pricePerbook, qty
+function prepareEmail(dispDate, title, price, unitPrice, qty){
+
+  let all = "";
+  
+  let intro = "Thank you for your purchase from tdinstore ! \n \n";
+  let item = ""; item = item.concat("Item: ", title, "\n");
+  let dispatchedDate = ""; dispatchedDate = dispatchedDate.concat("Dispatched Date: ", dispDate, " \n \n \n");
+
+
+  let quantity= ""; quantity = quantity.concat("Quantity: ", qty.toString(), "\n");
+  let unitp= ""; unitp = unitp.concat("Unit Price: ", unitPrice.toString(), "\n");
+  let total= ""; total = total.concat("Total Price: ", price.toString(), "€", "\n");
+
+
+  all = all.concat(intro,item,dispatchedDate,quantity,unitp,total);
+
+  return all;
+
+
+}
+
 // Just an experiment
 router.get('/', (req, res) => 
   Client.findAll()
@@ -182,6 +204,12 @@ router.post('/createOrder', async (req, res) => {
         }
       sendRequestToQueue(JSON.stringify(request));
     }
+    if(dispatchedDate == new Date(null).toISOString().slice(0, 19).replace('T', ' '))
+      dispatchedDate = 'Waiting Expedition';
+ 
+    let emailContent = prepareEmail(dispatchedDate, BOOKTITLE, totalPrice, BOOKUNITPRICE, req.body.quantity);
+    console.log(emailContent);
+    //sendEmail(req.body.clientEmail, 'Your Order', emailContent);
       res.sendStatus(200);
     })
     .catch(err => res.send(err));
