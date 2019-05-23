@@ -34,7 +34,6 @@ router.put('/updateRequestStateByOrderId/:orderId', (req, res) => {
     db.query(sql,  {})
     .then(rows => {
       if(rows[0].affectedRows == 0){ 
-        updateStore(req.params.orderId);
         res.send("Nothing to change")
       }
       else if(rows[0].affectedRows == 1){
@@ -79,8 +78,6 @@ router.put('/updateRequestStateById/:id', (req, res) => {
       }
   }
   request(clientServerOptions, function (error, response) {
-    console.log("chega aqui");
-      console.log(error,response.body);
       return;
   });
 
