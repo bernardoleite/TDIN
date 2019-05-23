@@ -202,6 +202,19 @@ router.put('/updateOrder/:orderId', (req, res) => {
   .catch(err => res.send(err));
 });
 
+router.put('/updateOrdersAll', (req, res) => {
+  console.log("entered hereeee");
+  let sql = `UPDATE orders SET state = '${req.body.newstate}', dispatchedDate = '${req.body.dispatchedDate}'  WHERE id = ${req.body.orderId}`;
+  db.query(sql,  {})
+  .then(rows => {
+    if(rows[0].affectedRows == 0) 
+      res.sendStatus(404)
+    else if(rows[0].affectedRows == 1)
+      res.sendStatus(200);
+  })
+  .catch(err => res.send(err));
+});
+
 // Get Client by name
 router.get('/getclientByName/:name', (req, res) => {
   let sql = `SELECT * FROM clients WHERE name = ${req.params.name}`;
