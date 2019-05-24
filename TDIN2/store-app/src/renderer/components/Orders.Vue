@@ -90,7 +90,7 @@
                     let order = {
                         id: orders[i].id,
                         client:orders[i].clientEmail,
-                        title: orders[i].bookTitle,
+                        title: orders[i].title,
                         unitprice: orders[i].unitprice,
                         qnt: orders[i].quantity,
                         totalprice: orders[i].totalPrice,

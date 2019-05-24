@@ -304,10 +304,26 @@
             
 
             for(let i = 0; i < this.selected.length; i++){
+                
                 if(!isNaN(this.selected[i].qnt) && Number.isInteger(parseFloat(this.selected[i].qnt, 10))){
-                    console.log(parseFloat(this.selected[i].qnt, 10));
+                    let floatQnt = parseFloat(this.selected[i].qnt, 10);
             
-                    //TODO: make order
+                    axios.post('/createOrder', 
+                    {
+                        clientEmail: this.selected[i].client.email,
+                        bookId: this.selected[i].id,
+                        quantity: floatQnt,
+                        local: 'store'
+                    })
+                    .then(function (response) {
+                        // handle success
+                        console.log(response);
+    
+                    }).catch(function (error) {
+                        // handle error
+                        console.log(error);
+
+                    })
                 }       
             }  
         },
