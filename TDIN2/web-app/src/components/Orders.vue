@@ -68,11 +68,11 @@
     methods: {
         getOrders(){
             let vm=this;
-            console.log(vm.$session.get('email'));
+            
             axios.get('http://localhost:5000/api/store/getOrdersByEmail', {
                 params: {
                     email: vm.$session.get('email'),
-                }
+                },
             })
             .then(function (response) {
                 // handle success

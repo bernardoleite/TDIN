@@ -171,9 +171,24 @@
            
             for(let i = 0; i < this.selected.length; i++){
                 if(!isNaN(this.selected[i].qnt) && Number.isInteger(parseFloat(this.selected[i].qnt, 10))){
-                    console.log(parseFloat(this.selected[i].qnt, 10));
+                    let floatQnt = parseFloat(this.selected[i].qnt, 10);
             
-                    //TODO: make order
+                    axios.post('http://localhost:5000/api/store/createOrder', 
+                    {
+                        clientEmail: this.$session.get('email'),
+                        bookId: this.selected[i].id,
+                        quantity: floatQnt,
+                        local: 'webapp'
+                    })
+                    .then(function (response) {
+                        // handle success
+                        console.log(response);
+    
+                    }).catch(function (error) {
+                        // handle error
+                        console.log(error);
+
+                    })
                 }       
             }  
         }
