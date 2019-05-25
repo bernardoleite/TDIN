@@ -288,7 +288,7 @@
             var self= this;
             setInterval(function () {
                 self.getAllBooks(self);
-            },10000)
+            },20000)
         },
         setValue: function() {
             var _ = require('lodash');
