@@ -80,7 +80,6 @@
             </div>
 
             <v-data-table
-                :loading="isLoading"
                 v-model="selected"
                 :headers="headers"
                 :items="books"
@@ -142,7 +141,6 @@
         name: 'books',
         data () {
         return {
-            isLoading: true,
             integerRule: v=> /^[0-9]*$/.test(v) || 'Input must be a integer',
             search: '',
             dialogClient: false,
@@ -236,7 +234,6 @@
     methods: {
         getAllBooks(){
             let vm=this;
-            vm.isLoading = true;
             axios.get('http://localhost:5000/api/store/getAllBooks')
             .then(function (response) {
                 // handle success
@@ -260,7 +257,6 @@
                 vm.books=tempBooks;
 
                 vm.selected=[];
-                vm.isLoading = false;
 
             })
             .catch(function (error) {

@@ -73,7 +73,7 @@
             for(let i = 0; i < this.selected.length; i++){
                 let vm=this;
                 
-                axios.put('/updateRequestStateById/' + vm.selected[i].id , 
+                axios.put('/updateRequestStateByOrderId/' + vm.selected[i].orderid , 
                 {
                     newstate: 'shipped'
                 })
