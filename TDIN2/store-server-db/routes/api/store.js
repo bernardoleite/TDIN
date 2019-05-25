@@ -172,7 +172,7 @@ router.post('/createOrder', async (req, res) => {
       await Promise.resolve(db.query(`UPDATE books SET stock = stock - ${req.body.quantity} WHERE id = ${req.body.bookId}`));
 
       //client, item, quantity, unitprice, totalprice
-      printRecip(req.body.clientEmail, refBook[0][0].title, quantity, refBook[0][0].unitprice, totalPrice);
+      printRecip(req.body.clientEmail, refbook[0][0].title, req.body.quantity, refbook[0][0].unitprice, totalPrice);
         
     }
     else if(req.body.local == 'store' && req.body.quantity > BOOKSTOCK )
@@ -231,11 +231,11 @@ router.post('/createOrder', async (req, res) => {
   });
 
 
-//Update Order State (state)
+//Update Order State (body newstate, clientEmail)
 router.put('/updateOrder/:orderId', async (req, res) => {
 
   //get order quantity
-  let refOrder = await Promise.resolve(db.query(`select totalPrice, quantity, bookId, state FROM orders WHERE id = ${req.params.orderId}`));
+  let refOrder = await Promise.resolve(db.query(`select clientEmail, totalPrice, quantity, bookId, state FROM orders WHERE id = ${req.params.orderId}`));
 
   //get book stock
   let refBook = await Promise.resolve(db.query(`select unitprice, stock, title FROM books WHERE id = ${refOrder[0][0].bookId}`));
@@ -259,7 +259,7 @@ router.put('/updateOrder/:orderId', async (req, res) => {
   else if(req.body.newstate == 'sold' && refOrder[0][0].state != 'sold' )
   {
     //client, item, quantity, unitprice, totalprice
-    printRecip(req.body.clientEmail, refBook[0][0].title, refOrder[0][0].quantity, refBook[0][0].unitprice, refOrder[0][0].totalPrice);
+    printRecip(refOrder[0][0].clientEmail, refBook[0][0].title, refOrder[0][0].quantity, refBook[0][0].unitprice, refOrder[0][0].totalPrice);
       
   }
 
