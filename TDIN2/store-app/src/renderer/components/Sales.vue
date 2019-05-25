@@ -33,6 +33,14 @@
                 </template>
             </v-data-table>
         </div>
+        <v-snackbar
+            v-model="snackbar"
+            :color="snackcolor"
+            :timeout=5000
+        >
+            {{ snacktext }}
+            <v-btn dark flat @click="snackbar = false">Close </v-btn>
+        </v-snackbar>
     </div>
  </template>
   
@@ -41,6 +49,10 @@ export default {
     name: 'sales',
     data () {
     return {
+        snackbar: false,
+        snackcolor: '',
+        snacktext: '',
+
         search: '',
         headers: [
         { text: 'ID', align: 'left', value:'id'},
@@ -66,7 +78,7 @@ export default {
                 vm.sales=[];
                 let sales = response.data;
                 for(let i=0; i< sales.length; i++){
-                    let date = orders[i].dispatchedDate;
+                    let date = sales[i].dispatchedDate;
                     let dateParsed = date.split("T");
 
                     let request = {
@@ -86,7 +98,12 @@ export default {
             })
             .catch(function (error) {
                 // handle error
-                console.log(error);
+                if(!error.response.status==404){
+                    console.log(error);
+                    vm.snacktext='Something went wrong.';
+                    vm.snackcolor='error';
+                    vm.snackbar=true;
+                }
             })
         }
     }

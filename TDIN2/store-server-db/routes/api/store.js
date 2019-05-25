@@ -307,7 +307,7 @@ router.get('/getOrdersByEmail', ensureAuthenticated, (req, res) => {
 });
 
 router.get('/getSales', (req, res) => {
-  let sql = `SELECT O.id, O.clientEmail, B.title, B.unitprice, O.quantity, O.totalPrice FROM orders O INNER JOIN books B ON B.id = O.bookId WHERE O.state = 'sold'`;
+  let sql = `SELECT O.id, O.clientEmail, B.title, B.unitprice, O.quantity, O.totalPrice, O.dispatchedDate FROM orders O INNER JOIN books B ON B.id = O.bookId WHERE O.state = 'sold'`;
   db.query(sql, { type: Sequelize.QueryTypes.SELECT }, () => {})
   .then(rows => {
     res.send(rows);

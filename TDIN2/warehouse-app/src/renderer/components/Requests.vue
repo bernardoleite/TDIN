@@ -41,6 +41,14 @@
         <div class="text-xs-right button-wrapper">
             <v-btn round color="accent" v-on:click.native="ship">Ship</v-btn>
         </div>
+        <v-snackbar
+            v-model="snackbar"
+            :color="snackcolor"
+            :timeout=5000
+        >
+            {{ snacktext }}
+            <v-btn dark flat @click="snackbar = false">Close </v-btn>
+        </v-snackbar>
     </div>
     </template>
     
@@ -49,6 +57,10 @@
         name: 'requests',
         data () {
         return {
+            snackbar: false,
+            snackcolor: '',
+            snacktext: '',
+
             componentKey: 0,
             search: '',
             selected: [],
@@ -80,12 +92,17 @@
                 })
                 .then(function (response) {
                     // handle success
-                    console.log(response);
+                    vm.snacktext='Books successfully shipped.';
+                    vm.snackcolor='success';
+                    vm.snackbar=true;
   
                 }).catch(function (error) {
                     // handle error
                     isError=true;
                     console.log(error);
+                    vm.snacktext='Something went wrong.';
+                    vm.snackcolor='error';
+                    vm.snackbar=true;
                 })
 
                 if(!isError){
@@ -120,7 +137,12 @@
             })
             .catch(function (error) {
                 // handle error
-                console.log(error);
+                if(!error.response.status==404){
+                    console.log(error);
+                    vm.snacktext='Something went wrong.';
+                    vm.snackcolor='error';
+                    vm.snackbar=true;
+                }
             })
         },
         getAllPendingRequestsInterval(){

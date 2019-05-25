@@ -48,6 +48,14 @@
             <v-btn id="arrived_button" v-bind:disabled="arrivedButtonDisabled" round color="accent" v-on:click.native="arrived">Arrived</v-btn>
             <v-btn id="sold_button" v-bind:disabled="soldButtonDisabled" round color="accent" v-on:click.native="sold">Sold</v-btn>
         </div>
+        <v-snackbar
+            v-model="snackbar"
+            :color="snackcolor"
+            :timeout=5000
+        >
+            {{ snacktext }}
+            <v-btn dark flat @click="snackbar = false">Close </v-btn>
+        </v-snackbar>
     </div>
  </template>
   
@@ -56,6 +64,10 @@
         name: 'orders',
         data () {
         return {
+            snackbar: false,
+            snackcolor: '',
+            snacktext: '',
+
             arrivedButtonDisabled: true,
             soldButtonDisabled: true,
             search: '',
@@ -110,7 +122,13 @@
             })
             .catch(function (error) {
                 // handle error
-                console.log(error);
+                if(!error.response.status==404){
+                    console.log(error);
+                    vm.snacktext='Something went wrong.';
+                    vm.snackcolor='error';
+                    vm.snackbar=true;
+                }
+                
             });
         },
         getOrdersInterval(){
@@ -131,12 +149,17 @@
                 })
                 .then(function (response) {
                     // handle success
-                    console.log(response);
+                    vm.snacktext='Books successfully sold.';
+                    vm.snackcolor='success';
+                    vm.snackbar=true;
   
                 }).catch(function (error) {
                     // handle error
                     isError=true;
                     console.log(error);
+                    vm.snacktext='Something went wrong.';
+                    vm.snackcolor='error';
+                    vm.snackbar=true;
                 })
 
                 if(!isError){
@@ -158,12 +181,17 @@
                 })
                 .then(function (response) {
                     // handle success
-                    console.log(response);
+                    vm.snacktext='Books successfully arrived.';
+                    vm.snackcolor='success';
+                    vm.snackbar=true;
   
                 }).catch(function (error) {
                     // handle error
                     isError=true;
                     console.log(error);
+                    vm.snacktext='Something went wrong.';
+                    vm.snackcolor='error';
+                    vm.snackbar=true;
                 })
 
                 if(!isError){

@@ -133,6 +133,14 @@
         <div class="text-xs-right button-wrapper">
             <v-btn round color="accent" v-on:click.native="sell">Sell</v-btn>
         </div>
+        <v-snackbar
+            v-model="snackbar"
+            :color="snackcolor"
+            :timeout=5000
+        >
+            {{ snacktext }}
+            <v-btn dark flat @click="snackbar = false">Close </v-btn>
+        </v-snackbar>
     </div>
     </template>
     
@@ -141,6 +149,10 @@
         name: 'books',
         data () {
         return {
+            snackbar: false,
+            snackcolor: '',
+            snacktext: '',
+
             integerRule: v=> /^[0-9]*$/.test(v) || 'Input must be a integer',
             search: '',
             dialogClient: false,
@@ -158,8 +170,8 @@
             defaultBook: {
                 id: 0,
                 title: '',
-                unitprice: 0,
-                stock: 0,
+                unitprice: '',
+                stock: '',
                 qnt: '',
                 totalprice: 0,
                 clientsearch:'',
@@ -263,7 +275,13 @@
             })
             .catch(function (error) {
                 // handle error
-                console.log(error);
+                if(!error.response.status==404){
+                    console.log(error);
+                    vm.snacktext='Something went wrong.';
+                    vm.snackcolor='error';
+                    vm.snackbar=true;
+                }
+                
             })
         },
         getAllBooksInterval(){
@@ -299,19 +317,22 @@
             })
             .catch(function (error) {
                 // handle error
-                console.log(error);
+                if(!error.response.status==404){
+                    console.log(error);
+                    vm.snacktext='Something went wrong.';
+                    vm.snackcolor='error';
+                    vm.snackbar=true;
+                }
             })
         },
-        sell(event) {
-            //TODO: get client id
-            console.log(this.selected);
-            
+        sell(event) {        
 
             for(let i = 0; i < this.selected.length; i++){
                 
                 if(!isNaN(this.selected[i].qnt) && Number.isInteger(parseFloat(this.selected[i].qnt, 10))){
                     let floatQnt = parseFloat(this.selected[i].qnt, 10);
-            
+                    
+                    let vm=this;
                     axios.post('/createOrder', 
                     {
                         clientEmail: this.selected[i].client.email,
@@ -321,11 +342,16 @@
                     })
                     .then(function (response) {
                         // handle success
-                        console.log(response);
+                        vm.snacktext='Books successfully ordered.';
+                        vm.snackcolor='success';
+                        vm.snackbar=true;
     
                     }).catch(function (error) {
                         // handle error
                         console.log(error);
+                        vm.snacktext='Something went wrong.';
+                        vm.snackcolor='error';
+                        vm.snackbar=true;
 
                     })
                 }       
@@ -342,10 +368,17 @@
                 vm.oldbooks.splice(index,1);
                 vm.books.splice(index, 1);
 
+                vm.snacktext='Book successfully deleted.';
+                vm.snackcolor='success';
+                vm.snackbar=true;
+
             })
             .catch(function (error) {
                 // handle error
                 console.log(error);
+                vm.snacktext='Something went wrong.';
+                vm.snackcolor='error';
+                vm.snackbar=true;
             })
         },
         closeBookDialog() {
@@ -369,15 +402,20 @@
             })
             .then(function (response) {
                 // handle success
-                console.log(response.data[0]);
                 vm.editedBook.id=response.data[0];
-
                 vm.oldbooks.push(vm.editedBook);
                 vm.books.push(vm.editedBook);
+
+                vm.snacktext='Book successfully added.';
+                vm.snackcolor='success';
+                vm.snackbar=true;
 
             }).catch(function (error) {
                 // handle error
                 console.log(error);
+                vm.snacktext='Something went wrong.';
+                vm.snackcolor='error';
+                vm.snackbar=true;
             })
         },
 
@@ -405,9 +443,16 @@
                 vm.editedClient.id=response.data[0];
                 vm.clients.push(vm.editedClient)
 
+                vm.snacktext='Client successfully added.';
+                vm.snackcolor='success';
+                vm.snackbar=true;
+
             }).catch(function (error) {
                 // handle error
                 console.log(error);
+                vm.snacktext='Something went wrong.';
+                vm.snackcolor='error';
+                vm.snackbar=true;
             })
         }
     },
