@@ -56,6 +56,14 @@
                 <v-btn class="submit-login" round color="accent" @click="submit">Register</v-btn>
             </div>
         </form>
+        <v-snackbar
+            v-model="snackbar"
+            :color="snackcolor"
+            :timeout=5000
+        >
+            {{ snacktext }}
+            <v-btn dark flat @click="snackbar = false">Close </v-btn>
+        </v-snackbar>
     </div>
 </template>
     
@@ -84,6 +92,10 @@
         email: '',
         password: '',
         repeatpassword: '',
+        
+        snackbar: false,
+        snackcolor: '',
+        snacktext: '',
 
         }),
 
@@ -134,13 +146,13 @@
                     repeatpassword:this.repeatpassword,
                 })
                 .then(function (response) {
-                // handle success
-                console.log(response);
                     vm.$router.push('/login')
                 })
                 .catch(function (error) {
-                // handle error
-                console.log(error);
+                    console.log(error);
+                    vm.snacktext='Something went wrong.';
+                    vm.snackcolor='error';
+                    vm.snackbar=true;
                 })
                 
             },

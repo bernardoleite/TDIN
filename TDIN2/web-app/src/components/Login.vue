@@ -31,6 +31,14 @@
             </div>
             
         </form>
+        <v-snackbar
+            v-model="snackbar"
+            :color="snackcolor"
+            :timeout=5000
+        >
+            {{ snacktext }}
+            <v-btn dark flat @click="snackbar = false">Close </v-btn>
+        </v-snackbar>
     </div>
 </template>
     
@@ -51,6 +59,9 @@
         data: () => ({
         email: '',
         password: '',
+        snackbar: false,
+        snackcolor: '',
+        snacktext: '',
         }),
 
         computed: {
@@ -79,14 +90,16 @@
                     password:this.password,
                 })
                 .then(function (response) {
-                // handle success
+                    // handle success
                     vm.$session.start();
                     vm.$session.set('email', response.data[2]);
                     vm.$router.push('/books');
                 })
                 .catch(function (error) {
-                // handle error
-                console.log(error);
+                    console.log(error);
+                    vm.snacktext='Something went wrong.';
+                    vm.snackcolor='error';
+                    vm.snackbar=true;
                 })
 
         },
