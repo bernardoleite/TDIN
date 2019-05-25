@@ -87,15 +87,15 @@
         },
 
         data: () => ({
-        name:'',
-        address:'',
-        email: '',
-        password: '',
-        repeatpassword: '',
-        
-        snackbar: false,
-        snackcolor: '',
-        snacktext: '',
+            name:'',
+            address:'',
+            email: '',
+            password: '',
+            repeatpassword: '',
+            
+            snackbar: false,
+            snackcolor: '',
+            snacktext: '',
 
         }),
 

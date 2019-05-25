@@ -297,7 +297,7 @@ router.get('/getclientByName/:name', (req, res) => {
 });
 
 // Get Orders By email
-router.get('/getOrdersByEmail', ensureAuthenticated, (req, res) => {
+router.get('/getOrdersByEmail', (req, res) => {
   let sql = `SELECT O.id, O.clientEmail, B.title, B.unitprice, O.quantity, O.totalPrice, O.state, O.dispatchedDate FROM orders O INNER JOIN books B ON B.id = O.bookId WHERE clientEmail = '${req.query['email']}'`;
   db.query(sql, { type: Sequelize.QueryTypes.SELECT }, () => {})
   .then(rows => {
