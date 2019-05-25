@@ -67,7 +67,7 @@ router.put('/updateRequestStateById/:id', async (req, res) => {
 
     let dispatchedDate = new Date();
     dispatchedDate.setDate(dispatchedDate.getDate()+2);
-    dispatchedDate = dispatchedDate.toISOString().replace('Z', '').replace('T', '');
+    dispatchedDate = dispatchedDate.toISOString().replace('Z', '');
   
     let putData =  JSON.stringify({
       "newstate": "dispatched",
