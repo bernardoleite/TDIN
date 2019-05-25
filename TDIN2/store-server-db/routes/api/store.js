@@ -168,12 +168,20 @@ router.post('/createOrder', async (req, res) => {
       dispatchedDate = currentDate;
       dispatchedDate = dispatchedDate.toISOString().slice(0, 19).replace('T', ' ');
       finalQty = req.body.quantity;
+
+      await Promise.resolve(db.query(`UPDATE books SET stock = stock - ${req.body.quantity} WHERE id = ${req.body.bookId}`));
+
+      //client, item, quantity, unitprice, totalprice
+      printRecip(req.body.clientEmail, refBook[0][0].title, quantity, refBook[0][0].unitprice, totalPrice);
+        
     }
     else if(req.body.local == 'store' && req.body.quantity > BOOKSTOCK )
     {
       state = 'waiting';
       dispatchedDate = new Date(null).toISOString().slice(0, 19).replace('T', ' ');
       finalQty = (req.body.quantity - BOOKSTOCK) + 10;
+
+      await Promise.resolve(db.query(`UPDATE books SET stock = 0 WHERE id = ${req.body.bookId}`));
       
     }
     else if(req.body.local == 'webapp' && req.body.quantity <= BOOKSTOCK )
@@ -183,12 +191,18 @@ router.post('/createOrder', async (req, res) => {
       dispatchedDate.setDate(currentDate.getDate()+1);
       dispatchedDate = dispatchedDate.toISOString().slice(0, 19).replace('T', ' ');
       finalQty = req.body.quantity;
+
+      await Promise.resolve(db.query(`UPDATE books SET stock = stock - ${req.body.quantity} WHERE id = ${req.body.bookId}`));
+
     }
     else if(req.body.local == 'webapp' && req.body.quantity > BOOKSTOCK )
     {
       state = 'waiting';
       dispatchedDate = new Date(null).toISOString().slice(0, 19).replace('T', ' ');
       finalQty = (req.body.quantity - BOOKSTOCK) + 10;
+
+      await Promise.resolve(db.query(`UPDATE books SET stock = 0 WHERE id = ${req.body.bookId}`));
+
     }
   
     let sql = `INSERT INTO orders (clientEmail, bookId, quantity, totalPrice, dispatchedDate, state) VALUES ('${req.body.clientEmail}', '${BOOKID}', '${req.body.quantity}', '${totalPrice}', '${dispatchedDate}', '${state}')`;
@@ -229,9 +243,8 @@ router.put('/updateOrder/:orderId', async (req, res) => {
   if(req.body.newstate == 'ready' && refOrder[0][0].state != 'ready')
   {
     //update book stock when books arrived
-    if(refBook[0][0].stock <= refOrder[0][0].quantity){
-      let valueToAdd = (refOrder[0][0].quantity - refBook[0][0].stock)+10;
-      await Promise.resolve(db.query(`UPDATE books SET stock = stock + ${valueToAdd} WHERE id = ${refOrder[0][0].bookId}`));
+    if(refBook[0][0].stock == 0){
+      await Promise.resolve(db.query(`UPDATE books SET stock = 10 WHERE id = ${refOrder[0][0].bookId}`));
     }
 
     //updates dispatchedDate
@@ -240,16 +253,11 @@ router.put('/updateOrder/:orderId', async (req, res) => {
 
     //TODO sends email 
     let emailContent = prepareEmail(updatedOrderDate[0][0].dispatchedDate, refBook[0][0].title, refOrder[0][0].totalPrice, refBook[0][0].unitprice, refOrder[0][0].quantity);
-    console.log(emailContent);
     //sendEmail(req.body.clientEmail, 'Your Order', emailContent);
   }
 
   else if(req.body.newstate == 'sold' && refOrder[0][0].state != 'sold' )
   {
-    //update book stock (decrement)
-    if(refBook[0][0].stock >= refOrder[0][0].quantity)
-      await Promise.resolve(db.query(`UPDATE books SET stock = stock - ${refOrder[0][0].quantity} WHERE id = ${refOrder[0][0].bookId}`));
-
     //client, item, quantity, unitprice, totalprice
     printRecip(req.body.clientEmail, refBook[0][0].title, refOrder[0][0].quantity, refBook[0][0].unitprice, refOrder[0][0].totalPrice);
       
