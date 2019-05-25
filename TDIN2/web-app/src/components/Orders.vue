@@ -80,6 +80,9 @@
                 let orders = response.data;
                
                 for(let i=0; i< orders.length; i++){
+                    let date = orders[i].dispatchedDate;
+                    let dateParsed = date.split("T");
+
                     let order = {
                         id: orders[i].id,
                         title: orders[i].title,
@@ -87,7 +90,7 @@
                         qnt: orders[i].quantity,
                         totalprice: orders[i].totalPrice,
                         state: orders[i].state,
-                        date: orders[i].dispatchedDate
+                        date: dateParsed[0]
                     };
 
                     vm.orders.push(order);

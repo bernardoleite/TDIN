@@ -29,6 +29,7 @@
                     <td class="text-xs-right">{{ props.item.unitprice }} €</td>
                     <td class="text-xs-right">{{ props.item.qnt }}</td>
                     <td class="text-xs-right">{{ props.item.totalprice }} €</td>
+                    <td class="text-xs-right">{{ props.item.date }}</td>
                 </template>
             </v-data-table>
         </div>
@@ -48,6 +49,7 @@ export default {
         { text: 'Unit Price', align: 'right', value: 'unitprice' },
         { text: 'Quantity', align: 'right', value: 'qnt' },
         { text: 'Total Price', align: 'right', value: 'totalprice' },
+        { text: 'Arrive Date', align: 'right', value: 'date' },
         ],
         sales: []
         }
@@ -64,6 +66,9 @@ export default {
                 vm.sales=[];
                 let sales = response.data;
                 for(let i=0; i< sales.length; i++){
+                    let date = orders[i].dispatchedDate;
+                    let dateParsed = date.split("T");
+
                     let request = {
                         id: sales[i].id,
                         client: sales[i].clientEmail,
@@ -71,6 +76,7 @@ export default {
                         unitprice: sales[i].unitprice,
                         qnt: sales[i].quantity,
                         totalprice: sales[i].totalPrice,
+                        date: dateParsed[0]
                     };
 
                     vm.sales.push(request);
