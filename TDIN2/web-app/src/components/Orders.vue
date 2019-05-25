@@ -63,10 +63,12 @@
       }
     },
     mounted: function () {
-        this.getOrders();
+        this.getOrders(this);
+        this.getOrdersInterval();
     },
     methods: {
-        getOrders(){
+        getOrders(self){
+            console.log("Get Orders called");
             let vm=this;
             
             axios.get('http://localhost:5000/api/store/getOrdersByEmail', {
@@ -78,7 +80,7 @@
                 // handle success
                 vm.orders=[];
                 let orders = response.data;
-               
+            
                 for(let i=0; i< orders.length; i++){
                     let date = orders[i].dispatchedDate;
                     let dateParsed = date.split("T");
@@ -102,6 +104,12 @@
                 // handle error
                 console.log(error);
             })
+        },
+        getOrdersInterval(){
+            var self= this;
+            setInterval(function () {
+                self.getOrders(self);
+            },  10000);
         },
     }
   }

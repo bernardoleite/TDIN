@@ -75,17 +75,19 @@
         }
     },
     mounted: function () {
-        this.getOrders();
+        this.getOrders(this);
+        this.getOrdersInterval();
     },
     methods: {
-        getOrders(){
-            let vm=this;
+        getOrders(self){
+            console.log("Get Orders called");
+            let vm=self;
             axios.get('/getOrders')
             .then(function (response) {
                 // handle success
                 vm.orders=[];
                 let orders = response.data;
-               
+            
                 for(let i=0; i< orders.length; i++){
                     let date = orders[i].dispatchedDate;
                     let dateParsed = date.split("T");
@@ -109,7 +111,13 @@
             .catch(function (error) {
                 // handle error
                 console.log(error);
-            })
+            });
+        },
+        getOrdersInterval(){
+            var self= this;
+            setInterval(function () {
+                self.getOrders(self);
+            }, 10000)
         },
         sold(event) {
             let isError = false;

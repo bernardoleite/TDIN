@@ -62,7 +62,8 @@
         }
     },
     mounted: function () {
-        this.getAllPendingRequests();
+        this.getAllPendingRequests(this);
+        this.getAllPendingRequestsInterval();
     },
     methods: {
         ship(event) {
@@ -94,9 +95,11 @@
                 }
             }
         },
-        getAllPendingRequests(){
+        getAllPendingRequests(self){
+            console.log("Get Pending Requests called");
+
             let vm=this;
-           
+        
             axios.get('/getAllPendingRequests')
             .then(function (response) {
                 // handle success
@@ -119,6 +122,12 @@
                 // handle error
                 console.log(error);
             })
+        },
+        getAllPendingRequestsInterval(){
+            var self= this;
+            setInterval(function () {
+                self.getAllPendingRequests(self);
+            }, 10000);
         }
     }
 }

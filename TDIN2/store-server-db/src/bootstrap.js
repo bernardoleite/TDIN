@@ -1,6 +1,6 @@
 module.exports = async () => {
 
-    const Client = require ("./models/Client");
+    /*const Client = require ("./models/Client");
     const Order = require ("./models/Order");
     const Book = require ("./models/Book");
     const uuidv1 = require('uuid/v1');
@@ -22,14 +22,14 @@ module.exports = async () => {
     let emailR = Math.random().toString(36).substring(7);
     emailR =  Math.random().toString(36).substring(7) + '@gmail.com';
 
-/*
+
     const client1 = await Client.create({ 
         name: "Julieta", 
         email: 'ju4@ju4.pt',
         password: hash,
         address: "Rua da Feup",
     }).catch(errHandler);
-*/
+
     const client2= await Client.create({ 
         name: "Bernardo", 
         email: emailR,
@@ -123,7 +123,7 @@ module.exports = async () => {
         totalPrice: 13.4,
         //dispatchedDate: Sequelize.DATE,
         state: "sold",
-    }).catch(errHandler);
+    }).catch(errHandler);*/
 
 
 

@@ -1,6 +1,6 @@
 module.exports = async () => {
 
-    const Request = require ("./models/Request");
+    /*const Request = require ("./models/Request");
 
     const errHandler = (err) => {
         console.error("Error: ", err);
@@ -24,5 +24,5 @@ module.exports = async () => {
         bookTitle: 'The Girl Who Played With Fire',
         quantity: 2,
         state: 'pending',
-    }).catch(errHandler);
+    }).catch(errHandler);*/
 }

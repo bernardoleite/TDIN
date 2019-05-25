@@ -89,7 +89,6 @@
             handler: function (after, before) {
                 var vm = this;
                
-
                     var changed = after.filter( function( p, idx ) {
                         return Object.keys(p).some( function( prop ) {
                             return p[prop] !== vm.$data.oldbooks[idx][prop];
@@ -118,12 +117,14 @@
         }
     },
     mounted(){
-        this.getAllBooks();   
+        this.getAllBooks(this);   
+        this.getAllBooksInterval();
         this.setValue();
     },
     methods: {
-        getAllBooks(){
-            let vm=this;
+        getAllBooks(self){
+            console.log("Get All Books called");
+            let vm=self;
             vm.isLoading = true;
             axios.get('http://localhost:5000/api/store/getAllBooks')
             .then(function (response) {
@@ -156,6 +157,12 @@
                 // handle error
                 console.log(error);
             })
+        },
+        getAllBooksInterval(){
+            var self= this;
+            setInterval(function () {
+                self.getAllBooks(self);
+            },10000);
         },
        setValue: function() {
             var _ = require('lodash');
