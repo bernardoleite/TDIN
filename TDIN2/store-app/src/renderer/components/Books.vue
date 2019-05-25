@@ -105,7 +105,8 @@
                           @click="deleteBook(props.item)"
                         > delete </v-icon>
                     </td>
-                    <v-autocomplete
+                    <td>
+                        <v-autocomplete
                         class="desired-client"
                         v-model="props.item.client"
                         :items="clients"
@@ -113,9 +114,9 @@
                         color="accent"
                         hide-selected
                         item-text="email"
-                        item-value="id"
                         return-object
-                    ></v-autocomplete>
+                        ></v-autocomplete>
+                    </td>
                     </v-flex>
                     <td class="text-xs-right">
                         <v-text-field
@@ -216,6 +217,7 @@
                 })
                 //if(changed.length != 0){
                 for(let i = 0; i < changed.length; i++){
+                   
                     var difference = changed[0].totalprice - this.oldbooks.find(x => x.id ===  changed[0].id).totalprice;
 
                     vm.setValue();
