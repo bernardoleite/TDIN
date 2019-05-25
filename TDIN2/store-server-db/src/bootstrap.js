@@ -95,6 +95,26 @@ module.exports = async () => {
         state: "ready",
     }).catch(errHandler);
 
+    const order4 = await Order.create({ 
+        uuid: uuidv1(),
+        clientEmail: 'ju4@ju4.pt',
+        bookId: emailR,
+        quantity: 1,
+        totalPrice: 13.4,
+        //dispatchedDate: Sequelize.DATE,
+        state: "ready",
+    }).catch(errHandler);
+
+    const order5 = await Order.create({ 
+        uuid: uuidv1(),
+        clientEmail: 'ju4@ju4.pt',
+        bookId: emailR,
+        quantity: 1,
+        totalPrice: 13.4,
+        //dispatchedDate: Sequelize.DATE,
+        state: "ready",
+    }).catch(errHandler);
+
     const sale = await Order.create({ 
         uuid: uuidv1(),
         clientEmail: 'ju4@ju4.pt',

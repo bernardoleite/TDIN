@@ -8,6 +8,7 @@ let q = 'store_warehouse2';
 let open = require('amqplib').connect('amqp://localhost');
 let nodemailer = require('nodemailer');
 const { ensureAuthenticated } = require('../../config/auth');
+const request = require('request');
 
 let transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -196,13 +197,13 @@ router.post('/createOrder', async (req, res) => {
       
     if(state == 'waiting')
     {
-      let request = {
+      let newRequest = {
         "orderId":rows[0],
         "bookTitle": BOOKTITLE || 'undefined',
         "quantity":finalQty,
         "state":'pending',
         }
-      sendRequestToQueue(JSON.stringify(request));
+      sendRequestToQueue(JSON.stringify(newRequest));
     }
     if(dispatchedDate == new Date(null).toISOString().slice(0, 19).replace('T', ' '))
       dispatchedDate = 'Waiting Expedition';
@@ -243,13 +244,14 @@ router.put('/updateOrder/:orderId', async (req, res) => {
     //sendEmail(req.body.clientEmail, 'Your Order', emailContent);
   }
 
-  else if(req.body.newstate == 'sold' && refOrder[0][0].state != 'sold')
+  else if(req.body.newstate == 'sold' && refOrder[0][0].state != 'sold' )
   {
     //update book stock (decrement)
     if(refBook[0][0].stock >= refOrder[0][0].quantity)
       await Promise.resolve(db.query(`UPDATE books SET stock = stock - ${refOrder[0][0].quantity} WHERE id = ${refOrder[0][0].bookId}`));
 
-    //TODO print recipt
+    //client, item, quantity, unitprice, totalprice
+    printRecip(req.body.clientEmail, refBook[0][0].title, refOrder[0][0].quantity, refBook[0][0].unitprice, refOrder[0][0].totalPrice);
       
   }
 
@@ -333,5 +335,31 @@ router.post('/insertClient', (req, res) => {
   })
   .catch(err => res.send(err));
 });
+
+function printRecip(email, title, qty, unitPrice, totalPrice){
+
+  console.log("chega aqui");
+
+  let putData =  JSON.stringify({
+    "email": email,
+    "title": title,
+    "quantity": qty,
+    "unitPrice": unitPrice,
+    "totalPrice": totalPrice,
+})
+
+  let clientServerOptions = {
+    url: 'http://localhost:5002/printRecip',
+    body: putData,
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+}
+request(clientServerOptions, function (error, response) {
+    return;
+});
+
+}
 
 module.exports = router;

@@ -9,7 +9,7 @@ const cors = require('cors');
 require("./src/database/connection");
 
 //Populate database
-//require("./src/bootstrap")();
+require("./src/bootstrap")();
 
 const app = express();
 
