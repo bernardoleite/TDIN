@@ -271,6 +271,7 @@
                 vm.books=tempBooks;
 
                 vm.selected=[];
+                vm.totalPrice = 0;
 
             })
             .catch(function (error) {

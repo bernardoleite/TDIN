@@ -15,7 +15,6 @@
             hide-details
             ></v-text-field>
             <v-data-table
-                :loading="isLoading"
                 v-model="selected"
                 :headers="headers"
                 :items="books"
@@ -74,7 +73,6 @@
             snackcolor: '',
             snacktext: '',
 
-            isLoading: true,
             integerRule: v=> /^[0-9]*$/.test(v) || 'Input must be a integer',
             search: '',
             selected: [],
@@ -137,7 +135,7 @@
         getAllBooks(self){
             console.log("Get All Books called");
             let vm=self;
-            vm.isLoading = true;
+
             axios.get('http://localhost:5000/api/store/getAllBooks')
             .then(function (response) {
                 // handle success
@@ -162,7 +160,7 @@
                 //vm.setValueWithArray(tempBooks)
 
                 vm.selected=[];
-                vm.isLoading = false;
+                vm.totalPrice = 0;
 
             })
             .catch(function (error) {
