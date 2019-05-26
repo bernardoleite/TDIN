@@ -2,7 +2,7 @@
 
 #### Build Setup
 
-# Prerequisites
+#### Prerequisites
 Please check: https://github.com/bernardoleite/TDIN/blob/master/TDIN2/store-server-db/instructions
 
 ``` bash
