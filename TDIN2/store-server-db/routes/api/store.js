@@ -223,7 +223,7 @@ router.post('/createOrder', async (req, res) => {
       dispatchedDate = 'Waiting Expedition';
  
       let emailContent = prepareEmail(dispatchedDate, BOOKTITLE, totalPrice, BOOKUNITPRICE, req.body.quantity);
-      //sendEmail(req.body.clientEmail, 'Your Order', emailContent);
+      sendEmail(req.body.clientEmail, 'Your Order', emailContent);
       res.sendStatus(200);
     })
     .catch(err => res.send(err));
@@ -253,7 +253,7 @@ router.put('/updateOrder/:orderId', async (req, res) => {
 
     //TODO sends email 
     let emailContent = prepareEmail(updatedOrderDate[0][0].dispatchedDate, refBook[0][0].title, refOrder[0][0].totalPrice, refBook[0][0].unitprice, refOrder[0][0].quantity);
-    //sendEmail(req.body.clientEmail, 'Your Order', emailContent);
+    sendEmail(refOrder[0][0].clientEmail, 'Your Order', emailContent);
   }
 
   else if(req.body.newstate == 'sold' && refOrder[0][0].state != 'sold' )
